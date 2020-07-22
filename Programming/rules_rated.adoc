@@ -1,0 +1,30 @@
+= Rules
+
+Rating general programming rules of thumb I have come by.
+
+== S
+
+- Decomplect
+-- Single Responsiblity
+-- Seperation of Concern
+-- Do one thing, Do it well
+
+- Simple
+-- You aint gonna need it (YAGNI)
+-- Keep it simple stupid (KISS)
+
+- Open Closed
+- Dependency Inversion
+
+== A
+
+== B
+
+- Interface segregation
+- Don't repeat yourself (DRY)
+
+== C
+
+- Liskov Subitution
+
+== D
