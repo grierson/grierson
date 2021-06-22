@@ -1,4 +1,4 @@
-= Testing
+= How Testing
 
 * Red Green Refactor
 * Order of tests

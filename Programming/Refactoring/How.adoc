@@ -1,4 +1,4 @@
-= Refactoring
+= How Refactoring
 
 . Extract/Inline function/value
 - Give a name to something
