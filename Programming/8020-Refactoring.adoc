@@ -1,0 +1,10 @@
+= Refactoring
+
+. Extract/Inline function/value
+- Give a name to something
+. Rename function/symbol
+- Give a more meaning name to something as you learn more
+. Introduce Parameter map
+- Group related data
+. Split phase
+- Break things apart, divide and conquer
