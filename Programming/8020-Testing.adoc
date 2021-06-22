@@ -1,0 +1,33 @@
+= Testing
+
+* Red Green Refactor
+* Order of tests
+
+** Degenerate cases
+*** nil, empty, 0, default, etc..
+
+** Simple cases
+*** One element (Sort kata)
+*** A row (Diamond kata)
+*** All 0 (Bowling kata)
+*** (wrap 1 "a") (word wrap)
+
+** Specific cases
+*** Strike (Bowling kata)
+*** Handle new line (wrap 1 "aa") (word wrap)
+*** Word is mid line break (wrap 3 "a bb" (word wrap)
+
+* Write assertion first
+** So that the rest of the test writes itself
+
+* Fake it til you make (Triangulation)
+** "As the tests get more specific the code gets more generic"
+
+* Run fast or you won't run them
+* Readable
+** Use `Is` instead of `Should be`
+** Don't just follow Gherkin
+*** [Bad] Given Delivery has a past date When try to deliver Then delivery should be invalid
+*** [Good] Delivery with past date is invalid
+* Isolated
+** Tests need to be isolated from each other so tests can be run in parallel. If you share mutable state across tests it will lead to race conditions
