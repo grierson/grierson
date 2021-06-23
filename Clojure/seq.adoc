@@ -1,0 +1,43 @@
+= Seq
+
+> "Sequences are the key abstraction that connects two of the most important parts of Clojure - immutable persistent collections and the sequence library." - Alex Miller
+
+> "It is better to have 100 functions operate on one data structure than to have 10 functions operate on 10 data structures." - Alan Perlis
+
+NOTE: `Seq` is that one data structure
+
+Basically Lisp's core library only worked on lists because everything was just a list. 
+However Clojure added extra data structures so the `Seq` abstraction was created so the core library could support them (and more). 
+
+Data structures::
+* list = '()
+* vector = []
+* set = #{}
+* map = {}
+
+So the `Seq` abstraction let you use most of the clojure.core library such as `(first rest reduce sort reverse ...)` on all the different data structures. For example.
+
+[source, clojure]
+----
+(count '(1 2 3)) => 3
+(count [1 2 3]) => 3
+(count #{1 2 3}) => 3
+(count #{1 2 3}) => 3
+(count {:a 1 :b 2 :c 3}) => 3
+----
+
+== Implementation
+
+[source, clojure]
+----
+(defprotocol ISeq
+  "Persistent functional Sequence interface"
+  (first [_] "get first item in collection")
+  (rest [_] "get rest of collection")
+  (cons [_ x] "add item to collection")) 
+----
+
+== Notes
+
+* Vectors and Maps are not sequences but they are seqable, meaning that they can be converted to sequences.
+* Collection that can be viewed as `seqs` are `seq-able` 
