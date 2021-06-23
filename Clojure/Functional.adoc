@@ -1,0 +1,52 @@
+= Functional
+
+> The Clojure version is shorter. But even more important, it’s simpler: it has no variables, no mutable state, and no branches. This is possible thanks to higher-order functions - (Miller, Halloway and Bedra, 2018)
+
+.Java
+[source,java]
+----
+public class StringUtils {
+	public static boolean isBlank(final CharSequence str) {
+		int strLen;
+		if (str == null || (strLen = str.length()) == 0) {
+			return true; 
+		}
+
+		for (int i = 0; i < strLen; i++) {
+			if (Character.isWhitespace(str.charAt(i)) == false) {
+				return false; 
+				}
+		}
+
+		return true; 
+	}
+}
+----
+.Clojure
+[source, clojure]
+----
+(defn blank? [str]
+	(every? #(Character/isWhitespace %) str))
+----
+
+== PIE
+Main selling points of OOP
+
+=== Polymorphism
+Awesome! But not unique to OOP. 
+Clojure has Protocols/Interfaces and Records/Classes too for type dispatch.
+Additionally Clojure has Multimethods (dynamic dispatch) to also achieve polymorphism.
+
+=== Inheritance (Prefer composition of inheritance)
+If a new type doesn't fit your inheritance hierarchy perfectly then you either have to create a whole new hierarchy or live with the unnecessary extra. Whereas with composition you can just pick and choose what functionality you want.
+
+> The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle. - Joe Armstrong
+
+=== Encapsulation (Data hiding)
+* State is broken up across application (PLOP) have to be concerned about how calling that methods effects the world. (Use immutability instead)
+* https://www.youtube.com/watch?v=QM1iUe6IofM&ab_channel=BrianWill[Object-Oriented Programming is Bad]
+
+
+== References
+Miller, A., Halloway, S. and Bedra, A., 2018. 
+https://pragprog.com/titles/shcloj3/programming-clojure-third-edition/[Programming Clojure. 3rd ed.]

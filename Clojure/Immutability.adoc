@@ -1,0 +1,45 @@
+= Immutability
+
+== Place orientated programming (PLOP)
+
+== What
+
+New value replaces old
+
+=== Examples
+
+Updating name place and losing old value ("Alice")
+
+.C#
+[source, csharp]
+----
+class Object {
+	public string Name {get; set;}
+}
+
+var x = new Object();
+x.Name = "alice";
+Console.WriteLine(x.Name) => "alice";
+x.Name = "bob";
+Console.WriteLine(x.Name) => "bob";
+----
+
+.SQL
+[source, sql]
+----
+INSERT INTO table (id, name)
+VALUES (1, "alice")
+
+SELECT name => "alice"
+FROM table
+WHERE id = 1
+
+UPDATE table
+SET name = "bob"
+WHERE id = 1
+
+SELECT name => "bob"
+FROM table
+WHERE id = 1
+----
+
