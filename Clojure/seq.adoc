@@ -4,10 +4,10 @@
 
 > "It is better to have 100 functions operate on one data structure than to have 10 functions operate on 10 data structures." - Alan Perlis
 
-NOTE: `Seq` is that one data structure
+NOTE: `seq` is that one data structure
 
-Basically Lisp's core library only worked on lists because everything was just a list. 
-However Clojure added extra data structures so the `Seq` abstraction was created so the core library could support them (and more). 
+Basically Lisp's core library only worked on lists because everything was a list. 
+However Clojure added extra data structures so the `Sequence` abstraction was created so they could all be used the same, focusing on what we can do with the data structure and ignoring the implementation.
 
 Data structures::
 * list = '()
@@ -32,9 +32,9 @@ So the `Seq` abstraction let you use most of the clojure.core library such as `(
 ----
 (defprotocol ISeq
   "Persistent functional Sequence interface"
-  (first [_] "get first item in collection")
-  (rest [_] "get rest of collection")
-  (cons [_ x] "add item to collection")) 
+  (first [_] "get first item in sequence")
+  (rest [_] "get rest of sequence")
+  (cons [_ x] "add item to sequence")) 
 ----
 
 == Notes

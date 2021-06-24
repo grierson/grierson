@@ -1,45 +1,62 @@
 = Immutability
 
-== Place orientated programming (PLOP)
+Main issues with mutable data is the inconsistency/unpredictability. 
+Mutation hides change, which create (unexpected) side effects, which can cause nasty bugs. When you enforce immutability you can keep your application architecture and mental model simple, which makes it easier to reason about your application.
 
-== What
+.Python
+[source, python]
+----
+x = [5]
+process(x)
+x[0] = x[0] + 1
+print(x[0]) => ???
+----
 
-New value replaces old
+== Concurrency 
+=== OOP Concurrency
+Objects have no concurrency coordination leading to nondeterministic results. Multiple threads reading and writing the the same location (PLOP).
 
-=== Examples
+==== Race conditions
+As two threads are can read and write the same location the value depends on the order of the reads and writes.
 
-Updating name place and losing old value ("Alice")
+WARNING: One increment could be lost. If both Threads run simultaneously, both will read Count of 0 and update to 1 so one increment will be missed. 
 
-.C#
 [source, csharp]
 ----
-class Object {
-	public string Name {get; set;}
+private class Counter
+{
+    public int Count { get; set; }
 }
 
-var x = new Object();
-x.Name = "alice";
-Console.WriteLine(x.Name) => "alice";
-x.Name = "bob";
-Console.WriteLine(x.Name) => "bob";
+static void Main(string[] args)
+{
+    var myCount = new Counter();
+
+    var a = new Thread(() => { myCount.Count += 1; });
+    var b = new Thread(() => { myCount.Count += 1; });
+	
+	a.Start();
+	b.Start();
+	a.Join();
+	b.Join();
+
+    Console.WriteLine(myCount.Count); => ?? 1 or 2
+}
 ----
 
-.SQL
-[source, sql]
-----
-INSERT INTO table (id, name)
-VALUES (1, "alice")
+==== Mutual Exclusion (Mutex)
+Make your program single threaded.
 
-SELECT name => "alice"
-FROM table
-WHERE id = 1
+==== Deadlocks 
+Make your program single threaded.
 
-UPDATE table
-SET name = "bob"
-WHERE id = 1
+=== Clojure Concurrency
+Clojure adds concurrency models to handle updating state.
 
-SELECT name => "bob"
-FROM table
-WHERE id = 1
-----
+* atom
+** reference type like the epochal time model below 
+* refs
+** transactions - all or thing
+* core.async 
 
+image::time_model.jpg[Epochal Time Model, 640, 400]  
