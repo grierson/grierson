@@ -1,0 +1,14 @@
+= Models
+
+* On-Premises
+* Infrastructure
+** Frozen pizza
+* **Platform (Just build apps) ** (Azure App Service, AWS Beanstalk) 
+** Servers
+** Databases
+** Deployment
+** Scaling
+** Load balancing
+* Software (Azure DevOps, Sharepoint)
+
+image::model.jpg[Model]
