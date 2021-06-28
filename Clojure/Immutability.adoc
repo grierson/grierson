@@ -3,60 +3,76 @@
 Main issues with mutable data is the inconsistency/unpredictability. 
 Mutation hides change, which create (unexpected) side effects, which can cause nasty bugs. When you enforce immutability you can keep your application architecture and mental model simple, which makes it easier to reason about your application.
 
-.Python
+== Consistency
+
+|===
+| |Data |Pure |Impure
+
+| Consistency 
+| Transparent (Predictable)
+| Opaque + Predictable results
+| Opaque + Unpredictable result 
+
+| Consistency 
+a| 
+- Viewed many = same result 
+a| 
+- Called many = same result
+- When called = same result
+
+But we don't know the result until we call it, can only make prediction unless we read code.
+a| 
+- Called many = Maybe different results
+- When called = Maybe different result
+
+So we have to be aware of how many times the impure function as been called and when it's been called. But we won't know the result even if we read the code as we won't know what state the function is in.
+
+| Examples
+| 1 => 1
+| f(1) => 1
+
+f(1) => 1
+
+**(After being called multiple time on many threads)**
+
+f(1) => 1
+| f(1) => 1
+
+f(1) => 2
+
+**(After being called multiple time on many threads)**
+
+f(1) => ?
+
+| References
+3+a| 
+- https://www.youtube.com/watch?v=zznwKCifC1A&ab_channel=ClojureDays[Transparency through data by James Reeves]
+|===
+
+== Deterministic
+
+.Python - Impure
 [source, python]
 ----
-x = [5]
+x = 1
 process(x)
-x[0] = x[0] + 1
-print(x[0]) => ???
+print(x) #=> ? (We don't know, need to read how 'process' works)
 ----
 
-== Concurrency 
-=== OOP Concurrency
-Objects have no concurrency coordination leading to nondeterministic results. Multiple threads reading and writing the the same location (PLOP).
-
-==== Race conditions
-As two threads are can read and write the same location the value depends on the order of the reads and writes.
-
-WARNING: One increment could be lost. If both Threads run simultaneously, both will read Count of 0 and update to 1 so one increment will be missed. 
-
-[source, csharp]
+.Python - Pure
+[source, python]
 ----
-private class Counter
-{
-    public int Count { get; set; }
-}
-
-static void Main(string[] args)
-{
-    var myCount = new Counter();
-
-    var a = new Thread(() => { myCount.Count += 1; });
-    var b = new Thread(() => { myCount.Count += 1; });
-	
-	a.Start();
-	b.Start();
-	a.Join();
-	b.Join();
-
-    Console.WriteLine(myCount.Count); => ?? 1 or 2
-}
+x = 1
+y = process(x)
+print(x) #=> 1
+print(y) #=> ? (We don't know but at least 'x' not changed) 
 ----
 
-==== Mutual Exclusion (Mutex)
-Make your program single threaded.
+== Concurrency
 
-==== Deadlocks 
-Make your program single threaded.
+Mutable state breaks ACI(D).
 
-=== Clojure Concurrency
-Clojure adds concurrency models to handle updating state.
-
-* atom
-** reference type like the epochal time model below 
-* refs
-** transactions - all or thing
-* core.async 
-
-image::time_model.jpg[Epochal Time Model, 640, 400]  
+* Consistency
+** Two threads could read state at the same time, so one update will be lost or process could be applied multiple times even though we only want it run once. (Reference cell problem)
+* Isolation
+** One thread could be mutating the state while another is reading it.

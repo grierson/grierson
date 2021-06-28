@@ -1,12 +1,11 @@
 = Functional
 
-* Pure function
-** Doesn't depend on state
-** Doesn't update state
-* Higher Order Functions
-** Pass functions into functions (map filter reduce)
+* Prefers Pure function
+** No dependency on state or Update state
 * Immutability
 ** Prevent side effects
+* Higher Order Functions
+** Reduces amount of code which means less bugs 
 
 == Benefits
 
