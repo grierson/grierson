@@ -1,25 +1,40 @@
 = Kyle Grierson
 
-== About me
 Programmer/Software Develeper. Learning Clojure. Try to apply TDD. 
 
 == Experenience
 2.1 BSc Computing
 6 year development experience
 
-== Languages
+== Languages / Tools
 
-**Work**
+=== Current prefered languages
 
-image::https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white"[]
-image::https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"[]
+=== Current professionally
+* C#
+** Xamarin.Forms
+** Blazor
 
-**Personal**
+=== Past professionally
+* Javascript
+** Knockout.js
+** Angular.js
 
-image::https://img.shields.io/badge/Clojure-%23Clojure.svg?style=for-the-badge&logo=Clojure&logoColor=Clojure"[]
+* C#
+** Entity framework
+** MVC
+** WebAPI
 
-## Development
+=== Current Personal
+* Clojure
 
-image::https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white"[]
+=== Past personal
+* F#
+* Elm
+* Javascript
+** React
+** Vue.js
+* Python
+* Java
 
 
