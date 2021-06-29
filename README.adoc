@@ -1,10 +1,15 @@
 = Kyle Grierson
 
-Programmer/Software Develeper. Learning Clojure. Try to apply TDD. 
+Programmer/Software Develeper. Learning Clojure. Try to apply TDD.
+
+* Notes from books i've read
+** https://github.com/grierson/books
+* My Kata solutions
+** https://github.com/grierson/katas
 
 == Experenience
-2.1 BSc Computing
-6 year development experience
+* 2.1 BSc Computing
+* 6 year development experience
 
 == Languages / Tools
 
