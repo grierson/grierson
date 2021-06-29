@@ -1,0 +1,25 @@
+= Kyle Grierson
+
+== About me
+Programmer/Software Develeper. Learning Clojure. Try to apply TDD. 
+
+== Experenience
+2.1 BSc Computing
+6 year development experience
+
+== Languages
+
+**Work**
+
+image::https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white"[]
+image::https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"[]
+
+**Personal**
+
+image::https://img.shields.io/badge/Clojure-%23Clojure.svg?style=for-the-badge&logo=Clojure&logoColor=Clojure"[]
+
+## Development
+
+image::https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white"[]
+
+
