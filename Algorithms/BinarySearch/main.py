@@ -3,7 +3,7 @@ def binary_search(coll, x):
     high = len(coll) - 1
 
     while low <= high:
-        mid = (low + high)
+        mid = low + high
         guess = coll[mid]
 
         if guess == x:
