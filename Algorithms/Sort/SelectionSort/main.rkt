@@ -10,8 +10,8 @@
   (define (*selection-sort* state coll)
     (if (empty? coll) 
         state
-        (let ([smallest (apply max coll)])
-          (*selection-sort* (cons smallest state) (remove smallest coll)))))
+        (let ([biggest (apply max coll)])
+          (*selection-sort* (cons biggest state) (remove biggest coll)))))
   (*selection-sort* '() coll))
 
 (selection-sort (list 5 3 8 1 4))
