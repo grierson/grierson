@@ -1,45 +1,56 @@
 = Kyle Grierson
 
-Programmer/Software Develeper. Learning Clojure. Try to apply TDD.
+Programmer/Software Developer/Engineer. 
+Learning Clojure write lots of tests. 
 
-* Notes from books i've read
-** https://github.com/grierson/books
-* My Kata solutions
-** https://github.com/grierson/katas
 
-== Experenience
+== Experience
 * 2.1 BSc Computing
 * 6 year development experience
+* Completed many Katas https://github.com/grierson/katas[solutions here]
+
+=== Prior work
+* Mobile app for mental wellbeing
+** C# Xamarin.Forms Nunit NSubstitute
+* Ordering system working with 3rd party logistics company 
+** C# Angular.js
+* Internal Stock and Sales system
+** C# Angular.js
+* Help desk system 
+** C# MVC Razor
+* Bill generator
+** C#
 
 == Languages / Tools
+|===
+| | Previous | Current
 
-=== Current prefered languages
-
-=== Current professionally
-* C#
-** Xamarin.Forms
-** Blazor
-
-=== Past professionally
-* Javascript
-** Knockout.js
-** Angular.js
-
-* C#
-** Entity framework
-** MVC
-** WebAPI
-
-=== Current Personal
-* Clojure
-
-=== Past personal
+| **Personal** 
+a| 
 * F#
 * Elm
-* Javascript
-** React
-** Vue.js
+* Javascript (React, Vue) 
+
+a| 
+* Clojure
 * Python
-* Java
 
+| **Professional** 
+a|
+* C#
+** MVC
+** WebAPI
+** Entity framework
+** .Net Core
+* Javascript
+** Angular.js
+** Knockout.js 
 
+a|
+* C#
+** Blazor
+** Xamarin 
+|===
+
+== Other
+* https://github.com/grierson/books[Notes from books i've  read]
