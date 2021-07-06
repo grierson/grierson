@@ -1,0 +1,47 @@
+= Guide to Debugging
+
+== Concepts 
+
+=== Mine
+. Failure -> What are you doing? What is the defect? Why is it a defect?
+. Hypothesis -> Where is it happening? Why is it happening? 
+. Prediction -> Given this state then this should happen
+. Experiment -> Pass good or bad state into defect (Spy capture)
+. Observation -> 
+    * Check that your prediction was correct (Spy scope)
+    ** If it was refine to narrow down to defect
+    ** Come up with a new hypothesis
+    ** Diagnose the problem
+. Diagnosis -> Fix the problem
+
+=== Cambium
+. Observe the situation (problem)
+. Form a hypothesis to explain the problem
+. Devise and execute a test to show the correctness of your hypothesis
+* Inconclusive? Try again.
+* Conclusive? Good! The problem space has been reduced, try again with a smaller subset.
+
+== Concrete 
+
+. Scientific method (Methodology) 
+* Why is it a failure? 
+* Where it could of occurred?
+* What might of caused the failure? 
+** Function handles input incorrectly
+** Out of bounds
+** Time bomb (use case not handled)
+
+. Setup test/experiment (Debugging Tools)
+* I think this function is failing
+* I think the cause is because of this input value 
+* Add `(assert, spyscope)` to observe state
+* Add `scope capture` to bind all local var to REPL debug
+** So that you can REPL debug each section of the code in that state
+* Create `property test` to generate inputs and shrink bad input 
+
+. Run test/experiment (Methodology)
+* Test potential cause of failure (Calling function with suspect bad state) 
+* Did observations match prediction
+** If it did narrow down your hypothesis to find defect
+** If if it didn't replicate, new hypothesis 
+** Or fix defect

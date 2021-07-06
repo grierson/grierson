@@ -1,0 +1,23 @@
+= Overview
+
+. Manage
+.. Handle all information
+. Plan
+.. Plan how to tackle new project
+. Learn
+.. Handle new stuff
+. Process
+.. How to execute
+
+== Manage
+image::resources/gtd_workflow.png[Manage]
+
+== Plan
+image::resources/natural_planning_model.jpg[Planning]
+
+== Learn
+image::resources/feynman-technique.jpg[Understand]
+
+
+== Process
+image::resources/tdd.png[Process]

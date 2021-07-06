@@ -1,0 +1,11 @@
+= Scope capture
+
+Scope capture is more focused on interacting with code. 
+Whereas link:https://github.com/dgrnbrg/spyscope[spyscope] is more about observing infections, which you still need to do to discover the defect.
+
+* link:https://www.youtube.com/watch?v=dCInpNWlZ4k[Easier REPL-based debugging with scope-capture - Valentin Waeselynck]
+
+. Add spy to function with defect.
+. Pass bad data to function
+. `defsc 1` bind all values to each var within function
+. REPL Scientific method debugging 

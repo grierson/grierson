@@ -1,0 +1,50 @@
+= Problem solving
+
+Problems solving requires Understanding, Recognizing, and Stating the problem.
+As a Developer you are not delivering features you are solving problems. Features are results, not objectives. 
+The sum of features doesn't guarantee it will solve the problem.
+
+== Resources
+
+https://www.goodreads.com/book/show/192221.How_to_Solve_It[How to solve it] (book)
+
+== STATE THE PROBLEM!
+1. Write a Problem Statement 
+1. Current -> Gap -> Desired
+.. Fear Setting (If we don't do <x> then <y> will happen) 
+1. Deductive reasoning (Suduku)
+** What do we know? (Constraints, Facts)
+** What do we need to know? (What do we need to find out) 
+1. 5 W's (Who, Where, When, What, and Why)
+1. User story
+** As a <role> I can <capability>, so that <receive benefit>
+** In order to <receive benefit> as a <role>, I can <goal/desire>
+** As <who> <when> <where>, I <want> because <why>
+
+== Understand the problem
+* Rubber duck programming
+* Specification By Example
+* Sleep on it
+
+== Point at stuff
+* Event storming
+* UML (Box and arrows)
+* Charts
+** Bar chart
+** Flow chart
+
+== Break it down
+* Root cause analysis
+** Cause mapping
+
+== Prioritize
+* 80/20 principle 
+* Minimum viable product (MVP)
+* Work backwards 
+** Start from goal to find shortest path there
+** Force situations into known path
+
+== Clarify the problem
+* Update the problem statement
+* Write more specific Specification By Examples
+* Set a SMART goal
