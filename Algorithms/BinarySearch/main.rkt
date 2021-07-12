@@ -3,9 +3,9 @@
 (define (binary_search coll x)
   (define (*binary_search* low high)
     (if (<= low high)
-        (let* ([middle (quotient (+ low high) 2)] 
+        (let* ([middle (quotient (+ low high) 2)]
                [guess (list-ref coll middle)])
-          (cond 
+          (cond
             [(= guess x) middle]
             [(> guess x) (*binary_search* low (- middle 1))]
             [else (*binary_search* (+ middle 1) high)]))

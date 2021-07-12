@@ -3,17 +3,21 @@
 image::cheatsheet.png[cheatsheet]
 
 == Big O
-Is worst case scenario, measures how algorithm grows with size of operations.
+Worst case scenario of how algorithm grows.
+Some algorithms my have O(n^2) for worst case but on average will be O(N log N) so picking depends on context but Big O usually refers to worst case. 
+
+Also reduce O down to the worst case so if Algorithm is O(n) + O(n^2) just reduce it down to O(n^2)
 
 |===
-| O | Example | Note
+| Name | O | Example | Note
 
-| O(1) | Access hashmap | Constant time
-| O(log n) | Binary Search | Divide and Conquer
-| O(n) | Simple search | Grows linearly
-| O(n * log n) | Quick sort | 
-| O(n^2) | Selection sort |
-| O(n!) | Traveling sales man | Grows rapidly
+| Constant | O(1) | Access hashmap | Constant time
+| Logarithmic | O(log n) | Binary Search | Divide and Conquer
+| Linear | O(n) | Simple search | Grows linearly
+| Log-Linear | O(n * log n) | Quick sort | 
+| Quadratic | O(n^2) | Selection sort |
+| Exponential | O(2^n) | ? |
+| Factorial | O(n!) | Traveling sales man | Grows rapidly
 |===
 
 === Example
@@ -32,7 +36,13 @@ Is worst case scenario, measures how algorithm grows with size of operations.
 
 [glossary]
 == Glossary
+Big O:: Measure for algorithm (Default worst case)
+Time Complexity:: How fast an algorithm runs as input (n) size increases.
+Space Complexity:: How much memory an algorithm uses
 Logarithms:: wet, cold dirt
 Factorial:: wet, cold dirt
 
 == Resources
+
+* https://www.algoexpert.io/data-structures[AlgoExpert.io]
+* https://www.manning.com/books/grokking-algorithms[Grokking Algorithms]

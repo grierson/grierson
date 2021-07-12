@@ -1,8 +1,4 @@
-people = {
-    "alice": 22,
-    "bob": 49,
-    "charlie": 17
-}
+people = {"alice": 22, "bob": 49, "charlie": 17}
 
 
 def test_foo():
