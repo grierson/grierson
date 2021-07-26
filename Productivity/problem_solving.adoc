@@ -6,36 +6,37 @@ The sum of features doesn't guarantee it will solve the problem.
 
 == Resources
 
-https://www.goodreads.com/book/show/192221.How_to_Solve_It[How to solve it] (book)
+* https://www.goodreads.com/book/show/192221.How_to_Solve_It[How to solve it] (book)
+* Dynamic programming
 
 == STATE THE PROBLEM!
-1. Write a Problem Statement 
-1. Current -> Gap -> Desired
-.. Fear Setting (If we don't do <x> then <y> will happen) 
-1. Deductive reasoning (Suduku)
-** What do we know? (Constraints, Facts)
-** What do we need to know? (What do we need to find out) 
-1. 5 W's (Who, Where, When, What, and Why)
-1. User story
+* Write a Problem Statement! 
+* Current -> *Gap* -> Desired
+* Fear Setting (If we don't do <x> then <y> will happen) 
+* User story
 ** As a <role> I can <capability>, so that <receive benefit>
 ** In order to <receive benefit> as a <role>, I can <goal/desire>
 ** As <who> <when> <where>, I <want> because <why>
+* Specification By Example
 
 == Understand the problem
-* Rubber duck programming
-* Specification By Example
-* Sleep on it
-
-== Point at stuff
-* Event storming
-* UML (Box and arrows)
-* Charts
-** Bar chart
+* Visualise
+** Table
+** Acyclic graph
 ** Flow chart
+* Deductive reasoning (Suduku, Kakuro)
+** What do we know? (Constraints, Facts)
+* Break it down (Dynamic programming)
+** Root cause analysis (Cause mapping)
+* Visualise Specific use cases
+* Rubber duck programming
+* Sleep/Shower on it
 
-== Break it down
-* Root cause analysis
-** Cause mapping
+== Clarify the problem and new sub problems
+* Update problem statement
+* Create more problem statements
+* Write more specific Specification By Examples
+* Set a SMART goal
 
 == Prioritize
 * 80/20 principle 
@@ -43,8 +44,3 @@ https://www.goodreads.com/book/show/192221.How_to_Solve_It[How to solve it] (boo
 * Work backwards 
 ** Start from goal to find shortest path there
 ** Force situations into known path
-
-== Clarify the problem
-* Update the problem statement
-* Write more specific Specification By Examples
-* Set a SMART goal
