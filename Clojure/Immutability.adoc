@@ -10,22 +10,20 @@ Mutation hides change, which create (unexpected) side effects, which can cause n
 
 | Consistency 
 | Transparent (Predictable)
-| Opaque + Predictable results
-| Opaque + Unpredictable result 
+| Opaque but Predictable results
+| Opaque and Unpredictable result 
 
 | Consistency 
 a| 
 - Viewed many = same result 
 a| 
-- Called many = same result
 - When called = same result
 
 But we don't know the result until we call it, can only make prediction unless we read code.
 a| 
-- Called many = Maybe different results
 - When called = Maybe different result
 
-So we have to be aware of how many times the impure function as been called and when it's been called. But we won't know the result even if we read the code as we won't know what state the function is in.
+We have to be aware of how the impure function is being called (How many times prior, when it's called). Additionally we won't know the result even if we read the code as we won't know what context the function will be called.
 
 | Examples
 | 1 => 1

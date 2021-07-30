@@ -1,20 +1,19 @@
 = Functional
 
 * Prefers Pure function
-** No dependency on state or Update state
+** No dependency on state or updating state
 * Immutability
 ** Prevent side effects
 * Higher Order Functions
-** Reduces amount of code which means less bugs 
+** Reduces amount of code (less bugs) 
 
 == Benefits
 
 === Easier to reason about
-As pure functions are self isolated and don't change the world you don't have to worry about calling them.
-Whereas with impure functions you have to think how it effects the world, or inconsistent results when calling the function. 
+As pure functions are self isolated and don't change the world you don't have about the context.
+Whereas with impure functions you have to think how it effects the world or the current state context that it's being run.
 
 === Cleaner code
-
 > The Clojure version is shorter. But even more important, it’s simpler: it has no variables, no mutable state, and no branches. This is possible thanks to higher-order functions - (Miller, Halloway and Bedra, 2018)
 
 .Java
@@ -30,7 +29,7 @@ public class StringUtils {
 		for (int i = 0; i < strLen; i++) {
 			if (Character.isWhitespace(str.charAt(i)) == false) {
 				return false; 
-				}
+			}
 		}
 
 		return true; 
@@ -44,11 +43,11 @@ public class StringUtils {
 	(every? #(Character/isWhitespace %) str))
 ----
 
-== Object Orientated fallacy
-Polymorphism, Inheritance, and Encapsulation (PIE) is the main selling points of OOP but they don't quite hold up.
+== Object Orientated
+Polymorphism, Inheritance, and Encapsulation (PIE) is the main selling points of OOP. 
 
 === Polymorphism
-Awesome! But not unique to OOP. 
+Awesome! But not unique to OOP.
 Clojure has Protocols and Multimethods.
 
 === Inheritance (Prefer composition of inheritance)
@@ -59,7 +58,6 @@ If a new type doesn't fit your inheritance hierarchy perfectly then you either h
 === Encapsulation (Data hiding)
 * State is broken up across application (PLOP) have to be concerned about how calling that methods effects the world. (Use immutability instead)
 * https://www.youtube.com/watch?v=QM1iUe6IofM&ab_channel=BrianWill[Object-Oriented Programming is Bad]
-
 
 == References
 Miller, A., Halloway, S. and Bedra, A., 2018. 

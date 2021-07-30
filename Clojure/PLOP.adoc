@@ -2,8 +2,7 @@ Place orientated programming (PLOP)::
 When a new value replaces an old value
 
 == Examples
-
-Updating name place and losing old value ("Alice")
+Updating name place loses old value ("Alice")
 
 .Python - Global state
 [source, python]
@@ -12,6 +11,7 @@ foo = "alice"
 bar = foo
 foo = "bob"
 print(foo) => "bob"
+print(bar) => "bob"
 ----
 
 .C# - Objects
@@ -23,9 +23,9 @@ class Object {
 
 var x = new Object();
 x.Name = "alice";
-Console.WriteLine(x.Name) => "alice";
+Console.WriteLine(x.Name) //=> "alice";
 x.Name = "bob";
-Console.WriteLine(x.Name) => "bob";
+Console.WriteLine(x.Name) //=> "bob";
 ----
 
 .SQL - Databases

@@ -1,34 +1,33 @@
 = Concurrency 
 
-== OOP Concurrency
-Objects have no concurrency coordination leading to nondeterministic results. Multiple threads reading and writing the the same location (PLOP).
-
-=== Race conditions
+== Race conditions
 As two threads can read and write to the same location the value depends on the order of the reads and writes.
+
+=== OOP Concurrency
+Objects have no concurrency coordination leading to nondeterministic results. Multiple threads reading and writing the the same location (Object, PLOP).
 
 WARNING: One increment could be lost. If both Threads run simultaneously, both will read Count of 0 and update to 1 so one increment will be missed. 
 
-[source, csharp]
+[source, python]
 ----
-private class Counter
-{
-    public int Count { get; set; }
-}
+class Counter:
+    def __init__(self):
+        self.count = 0
 
-static void Main(string[] args)
-{
-    var myCount = new Counter();
+    def Increment():
+        self.counter += 1
 
-    var a = new Thread(() => { myCount.Count += 1; });
-    var b = new Thread(() => { myCount.Count += 1; });
-	
-	a.Start();
-	b.Start();
-	a.Join();
-	b.Join();
+myCount = new Counter()
 
-    Console.WriteLine(myCount.Count); => ?? 1 or 2
-}
+a = threading.Thread(myCount.Increment());
+b = threading.Thread(myCount.Increment());
+
+a.start();
+b.start();
+a.join();
+b.join();
+
+print(myCount.Count) # 1 or 2 ??
 ----
 
 === Mutual Exclusion (Mutex)

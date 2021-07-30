@@ -6,8 +6,28 @@
 
 NOTE: `seq` is that one data structure
 
-Basically Lisp's core library only worked on lists because everything was a list. 
-However Clojure added extra data structures so the `Sequence` abstraction was created so they could all be used the same, focusing on what we can do with the data structure and ignoring the implementation.
+Lisp's core library only worked on lists because everything was a list. 
+However Clojure created the `Sequence` abstraction so the same core library could operate on many data structures (list, vector, set, hashmap), focusing on what we can do with the data structure and ignoring the implementation.
+
+.Racket
+[source, racket]
+----
+(first (list 1 2 3)) # => works 
+(first (vector 1 2 3))
+
+#|
+first: contract violation
+  expected: (and/c list? (not/c empty?))
+  given: '#(1 2 3)
+|#
+----
+
+.Clojure
+[source, clojure]
+----
+(first (list 1 2 3)) ; => 1
+(first (vector 1 2 3)) ; => 1
+----
 
 Data structures::
 * list = '()
@@ -21,7 +41,6 @@ So the `Seq` abstraction let you use most of the clojure.core library such as `(
 ----
 (count '(1 2 3)) => 3
 (count [1 2 3]) => 3
-(count #{1 2 3}) => 3
 (count #{1 2 3}) => 3
 (count {:a 1 :b 2 :c 3}) => 3
 ----
@@ -38,6 +57,5 @@ So the `Seq` abstraction let you use most of the clojure.core library such as `(
 ----
 
 == Notes
-
 * Vectors and Maps are not sequences but they are seqable, meaning that they can be converted to sequences.
 * Collection that can be viewed as `seqs` are `seq-able` 
