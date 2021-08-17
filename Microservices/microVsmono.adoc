@@ -1,0 +1,90 @@
+= Micro VS Monolith
+Differences between the two
+
+== Microservices
+
+=== Pros
+[cols="1,9"]
+|===
+| Thing | Why
+
+| Develop 
+a| 
+* Each service is small and focused (No dependency conflicts from other features) 
+* Can pick best tools for the service 
+** If service is mainly write operations (RDBMS, Document, Graph)
+** If service is mainly read operations (RDBMS, Document, Graph)
+* Small so can be rewritten without impacting rest of the system 
+| Build | 
+| Test | 
+| Deploy 
+a| 
+* Only have to deploy single service which includes the new feature
+| Scale 
+a| 
+* Can increase/decrease the amount of instances of a specific service depending on load 
+| Team 
+a| 
+* Developer only focused on a specific service 
+** Less to learn in order to get up-to speed
+|===
+
+=== Cons
+[cols="1,9"]
+|===
+| Thing | Why
+
+| Orchestration 
+a|
+* Have to handle communications across many services
+
+| Deployment 
+a|
+* Have to handle multiple instances of many services 
+|===
+
+== Monolith
+
+=== Pros
+[cols="1,9"]
+|===
+| Thing | Why
+
+| Development 
+a| Can easily coordinate multiple parts of the system as it's all in one place  
+|===
+
+=== Cons
+[cols="1,9"]
+|===
+| Thing | Why
+
+| Develop 
+a| Growing team 
+
+| More code = Harder to understand
+a| Growing team 
+
+| New technology
+a| 
+* Another part of the system might out of date lib stopping new features from using it
+
+| Scale
+a| 
+* Have to deploy the entire system again if you want more instances
+** Even though it's only the `Photo upload` feature that's under heavy load and needs more resources 
+|===
+
+== Main points
+. Sub domain has it's own
+.. Team
+.. Repo/Code base
+.. Documentation
+
+== Technologies
+. Remote Procedure Call (RPC)
+.. Request reply
+. Messaging (Publish/Subscribe) 
+.. Channel
+. JSON || gRPC
+. API
