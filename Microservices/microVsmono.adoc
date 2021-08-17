@@ -8,18 +8,18 @@ Differences between the two
 |===
 | Thing | Why
 
-| Develop 
+| Development 
 a| 
 * Each service is small and focused (No dependency conflicts from other features) 
-* Can pick best tools for the service 
-** If service is mainly write operations (RDBMS, Document, Graph)
-** If service is mainly read operations (RDBMS, Document, Graph)
+* Use the best tool for the job
+** So if a service has heavy read operations use the best tools for reading or if the service is heavy on write operations then use the best tool for write operations. You don't have to use the same tool for everything  
 * Small so can be rewritten without impacting rest of the system 
 | Build | 
 | Test | 
 | Deploy 
 a| 
-* Only have to deploy single service which includes the new feature
+* Only have to deploy single service which includes the new feature meaning lower risk
+* Minimise downtime
 | Scale 
 a| 
 * Can increase/decrease the amount of instances of a specific service depending on load 
@@ -37,10 +37,16 @@ a|
 | Orchestration 
 a|
 * Have to handle communications across many services
+* Chatty communication can cause slow the system down
+* 
 
 | Deployment 
 a|
-* Have to handle multiple instances of many services 
+* Have to handle multiple instances of many services so needs to be automated 
+
+| Monitoring
+a|
+* Need centralised tool to monitor and check logs of entire system
 |===
 
 == Monolith
@@ -52,6 +58,8 @@ a|
 
 | Development 
 a| Can easily coordinate multiple parts of the system as it's all in one place  
+| Deployment 
+a| Only have to deploy one application
 |===
 
 === Cons
@@ -59,15 +67,24 @@ a| Can easily coordinate multiple parts of the system as it's all in one place
 |===
 | Thing | Why
 
-| Develop 
-a| Growing team 
+| Development 
+a| Modules become entangled causing coupling
 
-| More code = Harder to understand
-a| Growing team 
+| More code 
+a| 
+* Harder to maintain 
+** Complexity added over time
+** Technical debt (Old dependencies, bad design)
 
 | New technology
 a| 
 * Another part of the system might out of date lib stopping new features from using it
+
+| Deployment
+a|
+* Risky
+** Single line of code changes requires entire redeployment
+** Causes downtime
 
 | Scale
 a| 
