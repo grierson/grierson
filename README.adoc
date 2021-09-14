@@ -42,14 +42,14 @@ a|
 ** WebAPI
 ** Entity framework
 ** .Net Core
+** Blazor
+** Xamarin 
 * Javascript
 ** Angular.js
 ** Knockout.js 
 
 a|
-* C#
-** Blazor
-** Xamarin 
+* Clojure
 |===
 
 == Other
