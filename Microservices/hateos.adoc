@@ -1,0 +1,10 @@
+= HATEOS
+
+Provides way to traverse API
+At `/articles/123` how do comment on article?
+
+* `_links` - Associate resources and/or operations
+** self - current resource
+** comments
+*** Lists where comments are (Don't have to look at docs)
+*** Location transparency (Can change address without changing implementation) 

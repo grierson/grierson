@@ -7,21 +7,21 @@ Collaborator::
 Shared and/or mutable dependency (Database, FileSystem, API, Object, Atom)
 
 Stub (Query)::
-Predefined return value so you can test specific cases
+Predefined return value so you can test specific return cases without calling call
 
 Mock (Command)::
 Verify collaborator's private implementation is called with specific parameters and certain amount of times
 
 London style::
-Isolate class from all collaborators
+Isolate class from all collaborators so that you are only testing that class
 
 Classical style::
-Isolate test from shared dependencies (Database)
-* If all tests only Query the Database then that's ok, but if one test writes to database then that would cause other tests to fail 
+Isolate test from other tests so that you are only testing that process separate from other tests
+* If all tests only Query the Database then that's ok, but if one test writes to database then race conditions can occur
 * If set-up a fresh database foreach unit test then that's ok as it isn't shared across tests 
 
 Degenerate cases::
-Handle bad/problematic inputs e.g. (nil, empty collection, string start with space)
+Handle bad/problematic/edge case inputs e.g. (nil, empty collection, string start with space)
 
 Triangulation:: 
 Add more examples to further exercise test case (Theory (xunit), tabular (midje))
