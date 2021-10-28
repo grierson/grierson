@@ -1,8 +1,7 @@
 = Problem solving
 
 Problems solving requires Understanding, Recognizing, and Stating the problem.
-As a Developer you are not delivering features you are solving problems. Features are results, not objectives. 
-The sum of features doesn't guarantee it will solve the problem.
+As a Developer you are not delivering features you are solving problems. Features are results, not objectives. The sum of features doesn't guarantee it will solve the problem.
 
 == Resources
 
@@ -28,19 +27,19 @@ The sum of features doesn't guarantee it will solve the problem.
 ** What do we know? (Constraints, Facts)
 * Break it down (Dynamic programming)
 ** Root cause analysis (Cause mapping)
-* Visualise Specific use cases
+* Visualise specific use cases
 * Rubber duck programming
-* Sleep/Shower on it
+* Sleep/Shower/Smoke on it
 
-== Clarify the problem and new sub problems
+== Break it down 
+* Root cause analysis (Cause mapping)
 * Update problem statement
-* Create more problem statements
-* Write more specific Specification By Examples
-* Set a SMART goal
+** Create more smaller problem statements
+* Dynamic programming
 
 == Prioritize
 * 80/20 principle 
 * Minimum viable product (MVP)
 * Work backwards 
-** Start from goal to find shortest path there
+** Start from goal to find shortest path to starting point
 ** Force situations into known path
