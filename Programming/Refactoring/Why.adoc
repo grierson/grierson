@@ -1,4 +1,0 @@
-# Why Refactoring
-
-* Cleaning up the mess you created so it's readable in the future.
-* It's fun
