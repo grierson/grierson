@@ -11,9 +11,10 @@ As a Developer you are not delivering features you are solving problems. Feature
 == STATE THE PROBLEM!
 * Write a Problem Statement! 
 * Current -> *Gap* -> Desired
-* Fear Setting (If we don't do <x> then <y> will happen) 
+* Fear Setting 
+** If we don't do <x> then <y> will happen
 * User story
-** As a <role> I can <capability>, so that <receive benefit>
+** As a <role> I want <capability>, so that <receive benefit>
 ** In order to <receive benefit> as a <role>, I can <goal/desire>
 ** As <who> <when> <where>, I <want> because <why>
 * Specification By Example
@@ -27,9 +28,9 @@ As a Developer you are not delivering features you are solving problems. Feature
 ** What do we know? (Constraints, Facts)
 * Break it down (Dynamic programming)
 ** Root cause analysis (Cause mapping)
-* Visualise specific use cases
-* Rubber duck programming
-* Sleep/Shower/Smoke on it
+* Run through specific use cases
+* Rubber duck/Pair programming
+* Sleep/Shower/Smoke/Walk on it
 
 == Break it down 
 * Root cause analysis (Cause mapping)
