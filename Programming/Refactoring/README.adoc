@@ -1,4 +1,13 @@
-= How Refactoring
+= Refactoring
+
+Code cleanup after testing
+
+== Why 
+
+* Make code more readable. (Developers spend most time reading code)
+* It’s fun
+
+== How
 
 . Extract/Inline function/value
 - Give a name to something
