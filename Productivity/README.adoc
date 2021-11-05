@@ -1,23 +1,16 @@
 = Overview
 
-. Manage
-.. Handle all information
-. Plan
-.. Plan how to tackle new project
-. Learn
-.. Handle new stuff
-. Process
-.. How to execute
+. Management
+.. Handle novelty
+.. Plan
+. Execute
+.. Understand problem (Aim small)
+.. TDD
 
-== Manage
+== Management
 image::resources/gtd_workflow.png[Manage]
-
-== Plan
 image::resources/natural_planning_model.jpg[Planning]
 
-== Learn
+== Execute
 image::resources/feynman-technique.jpg[Understand]
-
-
-== Process
 image::resources/tdd.png[Process]
