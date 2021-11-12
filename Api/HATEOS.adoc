@@ -1,0 +1,206 @@
+= HATEOS
+
+== Glossary
+
+HATEOS::
+Hypermedia as the Engine of Application State
+
+== Richardson Maturity Model
+
+|===
+| Level | Description
+
+| 0 |
+| 1 |
+| 2 |
+| 3 |
+
+| Level 0
+|===
+
+=== Level 0
+
+* Single endpoint
+
+==== Get Doctor's appointments
+
+|===
+| Name | Request | Response
+
+| Get appointments
+a|
+[source,http request]
+----
+POST /appointmentService
+Content-Type: application/json
+
+{
+  "date": "2010-01-04",
+  "doctor": "mjones"
+}
+----
+a|
+[source,http request]
+----
+200 OK
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones"
+}
+{
+  "start": "16:00",
+  "end": "16:50",
+  "doctor": "mjones"
+}
+----
+
+| (Success) Set appointments
+a|
+[source,http request]
+----
+POST /appointmentService
+Content-Type: application/json
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones"
+}
+----
+
+a|
+[source,http request]
+----
+200 OK
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones"
+}
+
+----
+
+| (Failure) Set appointments
+a|
+[source,http request]
+----
+POST /appointmentService
+Content-Type: application/json
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones"
+}
+----
+
+a|
+[source,http request]
+----
+200 OK
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones",
+  "reason": "Slot not available"
+}
+
+----
+|===
+
+=== Level 1
+
+* Adds resources
+
+==== Get Doctor's appointments
+
+|===
+| Name | Request | Response
+
+| Get appointments
+a|
+[source,http request]
+----
+POST /doctor/mjones
+Content-Type: application/json
+
+{
+  "date": "2010-01-04",
+}
+----
+a|
+[source,http request]
+----
+200 OK
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones"
+}
+{
+  "start": "16:00",
+  "end": "16:50",
+  "doctor": "mjones"
+}
+----
+
+| (Success) Set appointments
+a|
+[source,http request]
+----
+POST /slot
+Content-Type: application/json
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones"
+}
+----
+
+a|
+[source,http request]
+----
+200 OK
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones"
+}
+
+----
+
+| (Failure) Set appointments
+a|
+[source,http request]
+----
+POST /appointmentService
+Content-Type: application/json
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones"
+}
+----
+
+a|
+[source,http request]
+----
+200 OK
+
+{
+  "start": "14:00",
+  "end": "14:50",
+  "doctor": "mjones",
+  "reason": "Slot not available"
+}
+
+----
+|===
