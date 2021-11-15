@@ -286,22 +286,38 @@ OR
 
 Hypertext As The Engine Of Application State (HATEOS)
 
-* Links provide indirection for URLs so that URL can be changed without breaking structure
-* Links tell you what you can do
-
-.HTTP Verbs
-|===
-| Verb | Description | Examples
-
-| GET | Read a| `GET /user/123`
-| POST | Create a| `POST /user/ {"name": "alice"}`
-| PUT | Update a| `PUT /user/alice {"name": "alice wonderland"}`
-| DELETE | Delete a| `DELETE /user/alice`
-|===
+* Links provide
+** Location transparency
+*** Creates internal navigation so that external links can changed without breaking changes.
+(Indirection)
+** Links to what you can do next
 
 [cols="1,2,2"]
 |===
 | Name | Request | Response
+
+| Discovery
+a|
+[source,http request]
+----
+GET /
+----
+a|
+[source,http request]
+----
+200 OK
+
+{
+    "_links": {
+        "self": "https://website.com",
+        "discovery": "https://website.com",
+        "health": "https://website.com/health",
+        "slots": "https://slots-service.com/slots",
+        "doctors": "https://doctor-service.com/",
+        "schedule": "https://website.com/schedule",
+    }
+}
+----
 
 | Get appointments
 a|
@@ -316,28 +332,25 @@ a|
 ----
 200 OK
 
-[
-    {
-      "id": 1234
-      "start": "14:00",
-      "end": "14:50",
-      "doctor": "mjones",
+{
       "_links": {
-        "rel": "/slots/1234",
-        "book": "/slots/book"
-      }
-    },
-    {
-      "id": 5678
-      "start": "16:00",
-      "end": "16:50",
-      "doctor": "mjones",
-      "_links": {
-        "rel": "/slots/1234",
-        "book": "/slots/book"
-      }
-    }
-]
+        "self": "/slots"
+      },
+     "slots": [
+        {
+          "id": 1234
+          "start": "14:00",
+          "end": "14:50",
+          "doctor": "mjones"
+        },
+        {
+          "id": 5678
+          "start": "16:00",
+          "end": "16:50",
+          "doctor": "mjones",
+        }
+    ]
+}
 ----
 
 | Set appointments a|
