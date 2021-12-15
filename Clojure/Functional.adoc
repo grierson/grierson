@@ -39,8 +39,7 @@ public class StringUtils {
 .Clojure
 [source, clojure]
 ----
-(defn blank? [str]
-	(every? #(Character/isWhitespace %) str))
+(def blank? [s] (every? #(Character/isWhitespace %) s))
 ----
 
 == Object Orientated

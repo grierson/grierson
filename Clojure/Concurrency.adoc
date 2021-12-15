@@ -42,7 +42,7 @@ Clojure adds concurrency models to handle updating state.
 * atom
 ** reference type like the epochal time model below 
 * refs
-** transactions - all or thing
+** transactions - all or nothing
 * core.async 
 
 image::time_model.jpg[Epochal Time Model, 640, 400]  

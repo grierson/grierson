@@ -1,17 +1,17 @@
-# Why programs fail
+= Why programs fail
 
-## Explanation
+== Explanation
 
 Data goes through a series of transformations, need to discover transformation that contains defect which causes infection to cascade throughout system.
 
-## Glossary
+== Glossary
 
 * Failure -> Visible incorrect result
 * Defect -> Good state -> Bad state
 * Infection -> Cascading bad state caused by Defect
 * Time bomb -> Undetected defect and no failures when ran (code not executed)
 
-## Print debugging
+== Print debugging
 
 .Pro 
 * You can inspect state at different points in your system
@@ -23,7 +23,7 @@ Data goes through a series of transformations, need to discover transformation t
 ** Leaving prints in can cause bugs itself
 * Can produce long and unreadable logs
 
-## Scientific Method
+== Scientific Method
 
 Process to follow when trying to understand failure
 
@@ -38,7 +38,7 @@ Process to follow when trying to understand failure
 
 Failure -> Hypothesis -> Prediction -> Experiment -> Observation -> Diagnosis
 
-## Explicit debugging
+== Explicit debugging
 
 * Writing down what you doing (clear goal, Acts as log of what you've already done)
 * Rubber duck programming (solves 2/3 of problems)
@@ -53,7 +53,7 @@ Failure -> Hypothesis -> Prediction -> Experiment -> Observation -> Diagnosis
 *** Catch errors (Highlight edge cases not considered)
 *** Documentation (Expected properties of function)
 
-## Delta Debugging (Binary search / Shrink)
+== Delta Debugging (Binary search / Shrink)
 
 * Property based testing
 ** Get failing input or Generate lots of inputs

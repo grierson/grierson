@@ -1,5 +1,4 @@
 = Micro VS Monolith
-Differences between the two
 
 == Microservices
 

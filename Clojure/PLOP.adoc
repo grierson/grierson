@@ -1,4 +1,5 @@
-Place orientated programming (PLOP)::
+= Place orientated programming (PLOP)
+
 When a new value replaces an old value
 
 == Examples
