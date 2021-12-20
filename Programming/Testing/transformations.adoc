@@ -1,18 +1,104 @@
-* Transformation Priority Premise
+= Transformation Priority Premise
 
-| Transformation                 | Description                                          |
-| ---                            | ---                                                  |
-| {} → nil                       | no code at all → code that employs nil               |
-| nil → constant                 | nil -> [] or 0 or ""                                 |
-| constant → constant+           | a simple constant to a more complex constant         |
-| constant → scalar              | replacing a constant with a variable or an argument  |
-| statement → statements         | adding more unconditional statements.                |
-| unconditional → if             | splitting the execution path                         |
-| scalar → array                 |                                                      |
-| array → container              |                                                      |
-| statement → tail-recursion     |                                                      |
-| if → while                     |                                                      |
-| statement → non-tail-recursion |                                                      |
-| expression → function          | replacing an expression with a function or algorithm |
-| variable → assignment          | replacing the value of a variable.                   |
-| case                           | adding a case (or else) to an existing switch or if  |
+|===
+| Transformation                 | Description                                          | Example
+
+| {} → nil                       | no code at all → code that employs nil
+a|
+[source,clojure]
+----
+(defn foo [] nil)
+----
+
+| nil → constant                 | nil -> [], 0, ""
+a|
+[source,clojure]
+----
+(defn foo [] 0)
+----
+
+| constant → constant+           | a simple constant to a more complex constant
+a|
+[source,clojure]
+----
+(defn foo [] 0)
+----
+
+| constant → scalar              | replacing a constant with a variable or an argument
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+
+| statement → statements         | adding more unconditional statements.
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+| unconditional → if             | splitting the execution path
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+| scalar → array                 |
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+| array → container              |
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+| statement → tail-recursion     |
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+| if → while                     |
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+| statement → non-tail-recursion |
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+| expression → function          | replacing an expression with a function or algorithm
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+| variable → assignment          | replacing the value of a variable.
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+
+| case                           | adding a case (or else) to an existing switch or if
+a|
+[source,clojure]
+----
+(defn foo [x] x)
+----
+|===

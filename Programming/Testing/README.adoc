@@ -13,10 +13,10 @@ Tests continually add constraints to code making the code fit the specification,
 * Easier to write than Property Based
 
 == Cons
-* Crashing into barriers to end up where you need to go, no thought how you go there. (Transformation Priority Premise is just a PREMISE) 
+* Crashing into barriers to end up where you need to go, no thought in how you go there. (Transformation Priority Premise is just a PREMISE)
 * Can't prove program is correct
-* 100% Test coverage doesn't mean program is correct 
-* Not as tougher as Property based test
+** 100% Test coverage doesn't mean program is correct
+* Not as thorough as Property based test
   ** Diamond kata
   ** Highlight bugs/edge cases you didn't think of
  
@@ -54,11 +54,13 @@ Tests continually add constraints to code making the code fit the specification,
 
 
 == How to write tests
-Three laws of TDD:: 
-Follow the laws
+Three laws of TDD::
+* Write production code only to pass a failing unit test.
+* Write no more of a unit test than sufficient to fail (compilation failures are failures).
+* Write no more production code than necessary to pass the one failing unit test.
 
 Assert first:: 
-Prioritize what you want to prove first. Then let errors grow the arrange, act, and code.
+Prioritize what you want to prove first. Then let errors grow. (arrange, act, and code)
 
 One-To-Many::
 If collection, handle single element first then handle collection
@@ -68,16 +70,14 @@ Transformation Priority Premise::
 Apply transformations to production code
 
 Fake it til you make it (Triangulation)::
-Use basic implementations then add more and more logic the more tests you add (As the tests get more specific the code gets more generic)
+Use basic implementations then adding more logic the more you test (As the tests get more specific the code gets more generic)
 
 == How to handle Collaborators
-* Classical
-  ** Stub shared collaborators (Database, File System)
-  ** Blackbox testing
-* London
+* Classical (Blackbox testing)
+  ** Stub shared collaborators (External state such as Database, File System)
+* London (Whitebox testing)
   ** Stub all queries except values 
   ** Spy all commands
-  ** Whitebox testing
 
 == Examples
 
