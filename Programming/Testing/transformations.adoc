@@ -1,5 +1,6 @@
 = Transformation Priority Premise
 
+[cols="2,2,3"]
 |===
 | Transformation                 | Description                                          | Example
 
@@ -7,27 +8,35 @@
 a|
 [source,clojure]
 ----
-(defn foo [] nil)
+;; 1: Write test (Still test expected outcome and handling degenerate test case first)
+(= (wrap nil 10) "")
+
+;; 2: Write code (Ensuring unit test is failing)
+(defn wrap [s l] nil)
 ----
 
 | nil → constant                 | nil -> [], 0, ""
 a|
 [source,clojure]
 ----
-(defn foo [] 0)
+;; Now we can make it pass (Law 3)
+(defn wrap [s l] "")
 ----
 
 | constant → constant+           | a simple constant to a more complex constant
 a|
 [source,clojure]
 ----
-(defn foo [] 0)
+???
 ----
 
 | constant → scalar              | replacing a constant with a variable or an argument
 a|
 [source,clojure]
 ----
+(= (wrap "" 10) "")
+(= (wrap "word" 10) "word")
+
 (defn foo [x] x)
 ----
 
@@ -36,14 +45,21 @@ a|
 a|
 [source,clojure]
 ----
-(defn foo [x] x)
+???
 ----
 
 | unconditional → if             | splitting the execution path
 a|
 [source,clojure]
 ----
-(defn foo [x] x)
+;; 1: Testing a short word
+(= (wrap "word" 10) "word")
+
+;; 2: Write code (Ensuring unit test is failing)
+(defn wrap [s l]
+  (if (nil? s)
+    ""
+    s))
 ----
 
 | scalar → array                 |
@@ -85,7 +101,12 @@ a|
 a|
 [source,clojure]
 ----
-(defn foo [x] x)
+(= (wrap "word word" 6) "word\nword")
+
+(defn wrap [s l]
+  (if (nil? s)
+    ""
+    (str/replace s #" " "\n")))
 ----
 
 | variable → assignment          | replacing the value of a variable.
