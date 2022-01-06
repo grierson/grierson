@@ -12,19 +12,25 @@ a|
 * Each service is small and focused (No dependency conflicts from other features) 
 * Use the best tool for the job
 ** So if a service has heavy read operations use the best tools for reading or if the service is heavy on write operations then use the best tool for write operations. You don't have to use the same tool for everything  
-* Small so can be rewritten without impacting rest of the system 
-| Build | 
-| Test | 
+* Small so can be rewritten without impacting rest of the system
+
+| Build
+a|
+
+| Test
+a| Smaller capability so easier to test
+
 | Deploy 
 a| 
-* Only have to deploy single service which includes the new feature meaning lower risk
-* Minimise downtime
+Only deploying new/updated service with new features/updates
+
 | Scale 
 a| 
-* Can increase/decrease the amount of instances of a specific service depending on load 
+Can scale the amount of instances of a service depending on load
+
 | Team 
 a| 
-* Developer only focused on a specific service 
+* Developer only focused on a specific service
 ** Less to learn in order to get up-to speed
 |===
 
@@ -33,15 +39,19 @@ a|
 |===
 | Thing | Why
 
+| Testing workflow across many services
+a|
+* Have to setup many services test entire workflow
+
 | Orchestration 
 a|
-* Have to handle communications across many services
-* Chatty communication can cause slow the system down
-* 
+* Have to handle communication across many services
+* Chatty communication can cause performance issues
 
 | Deployment 
 a|
-* Have to handle multiple instances of many services so needs to be automated 
+* Have to handle multiple instances of many services
+** Need a CI pipeline and container orchestra (Kubernetes)
 
 | Monitoring
 a|

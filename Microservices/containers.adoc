@@ -1,0 +1,49 @@
+= Containerisation
+
+== Glossary
+Dockerfile (Start script)::
+List all specific dependencies and how to run project
+
+Image (Constructor/Factory/Make)::
+All dependencies bundled and used to create Containers
+
+Container (Instance)::
+A running image
+
+Container Orchestrator (Manage many containers)::
+* Scale amount of running containers depending on demand
+* Handle deployment of new instances of containers
+* Tools [Kubernetes, Swarm]
+
+== Why
+* Run many apps on one server
+* VM's require Hypervisor + Guest OS, Containers don't, so it's smaller and faster
+* Fixes "It works on my machine" problem as Dockerfile list all specific versions
+
+== Docker CLI
+* docker ps - List all containers
+* docker build - Dockerfile -> Dockerimage
+** -t <name> | Add name to image
+* docker push - Push image to cloud provider to host or run
+* docker run - Run docker image
+** -p <Local port>:<Container port> | Port forwarding within docker container
+* docker compose up/down - Run many containers
+** docker-compose.yaml
+
+== Dockerfile
+* FROM
+** Must be first instruction
+** Is the base image
+* WORKDIR
+** Set working diretory for all following instructions
+* COPY
+** Copy files to docker image
+* RUN
+** Runs command
+* .dockerignore
+** Files for docker to ignore
+* EXPOSE
+* ?
+* CMD
+** Only one instruction in dockerfile
+** How to run project
