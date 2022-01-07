@@ -1,5 +1,8 @@
 = Containerisation
 
+Dockerfile -> Image -> Container
+Deps + files + build script -> Image (Like .ios image) -> Running Image
+
 == Glossary
 Dockerfile (Start script)::
 List all specific dependencies and how to run project
