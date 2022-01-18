@@ -1,7 +1,7 @@
 = Containerisation
 
-Dockerfile -> Image -> Container
-Deps + files + build script -> Image (Like .ios image) -> Running Image
+* Dockerfile -> Image -> Container
+** Deps + files + build script -> Image (Like .iso image) -> Running Image
 
 == Glossary
 Dockerfile (Start script)::

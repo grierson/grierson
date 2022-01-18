@@ -1,0 +1,112 @@
+= HATEOS
+Author: Kyle Grierson
+
+:toc:
+
+== Glossary
+
+HATEOS::
+Hypermedia As The Engine Of State
+
+Provides way to traverse API At `/articles/123` how do comment on article?
+
+* `_links` - Associate resources and/or operations
+** self - current resource
+** comments
+*** Lists where comments are (Don't have to look at docs)
+*** Location transparency (Can change address without changing implementation)
+
+== Why
+
+Why use HATEOS
+
+`Links` provide `href` to other aggregates or operations.
+
+=== Puts business logic on the backend (Avoids duplication)
+
+Links provide all the logic that clients are allowed to preform.
+
+Example
+
+* New feature: User can not withdraw if overdrawn
+** [Client] Logic needs to be replicated across all clients (web, mobile, ...)
+** [HATEOS] Don't provide a `withdraw` link in the response.
+Clients just check what links are available.
+
+=== Service changes (Indirection)
+
+Currently use old deposits service for deposits
+
+[source,json]
+----
+{
+	"_links": {
+		"deposits": "/accounts/12345/deposits"
+	},
+	"id": 12345,
+	"balance": {
+		"currency": "usd",
+		"amount": 100.00
+	}
+}
+----
+
+If we update to using a new deposits service, as we follow the links instead of constructed hrefs then `_links -> deposits` still works without having to update clients
+
+[source,json]
+----
+{
+	"_links": {
+		"deposits": "/deposits/12345"
+	},
+	"id": 12345,
+	"balance": {
+		"currency": "usd",
+		"amount": -25.00
+	}
+}
+----
+
+=== API versioning
+
+Current api returns balance as a string and version 1 of the app use this response.
+
+[source,json]
+----
+{
+	"_links": {
+		"deposits": "/accounts/12345/deposits"
+	},
+	"id": 12345,
+	"balance": "-25.00usd"
+}
+----
+
+However, version 2 will return body as an object.
+We can check the API version and only return this response if the app is newer than version 1.
+
+[source,json]
+----
+{
+	"_links": {
+		"deposits": "/accounts/12345/deposits"
+	},
+	"id": 12345,
+	"balance": {
+		"currency": "usd",
+		"amount": -25.00
+	}
+}
+----
+
+==== Testing
+
+Only have to test that API returns correct links.
+
+* User balance tests
+** Overdrawn so can't withdraw
+*** No withdraw link provided
+** Positive balance
+*** Withdraw link provide
+
+Whereas you have to write more slow and brittle UI tests that ensure client are now allowed to make a bad network call.
