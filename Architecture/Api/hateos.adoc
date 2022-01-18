@@ -104,9 +104,9 @@ We can check the API version and only return this response if the app is newer t
 Only have to test that API returns correct links.
 
 * User balance tests
-** Overdrawn so can't withdraw
-*** No withdraw link provided
+** Overdrawn so can't `withdraw`
+*** No `withdraw` link provided
 ** Positive balance
-*** Withdraw link provide
+*** `withdraw` link provide
 
-Whereas you have to write more slow and brittle UI tests that ensure client are now allowed to make a bad network call.
+Whereas you have to write more slow and brittle UI tests that ensure client can't make bad network call.
