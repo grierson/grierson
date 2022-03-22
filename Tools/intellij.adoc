@@ -1,9 +1,9 @@
 = Intellij keyboard shortcuts
 
-* ⇧ Shfit
-* ⌃ Ctrl
-* ⌥ Opt/Alt
-* ⌘ Cmd/Super
+* S OR ⇧ - Shfit
+* C OR ⌃ - Ctrl
+* M OR ⌥ - Opt/Alt
+* CMD OR ⌘ - Cmd/Super
 
 == Essentials
 
@@ -22,7 +22,7 @@
 | Command | Vim | What
 
 | ⌃ Space | | Complete
-| ⌃ Space ⌃ Space | | Futher completion
+| ⌃ Space ⌃ Space | | Further completion
 | ⌃ Up/Down | | Code selection
 | ⌘ / | | Comment line
 | ⌥ ⇧ Up/Down | | Move line
@@ -39,3 +39,22 @@
 | ⌘ ⌥ M | | Extract method
 |===
 
+|===
+| `M-Up/Down` | Selection Up or Down
+| `C-M-Up/Down` | Move to function Up or Down
+| `M-M+Up/Down` | Multi-cursor Up or Down
+| `M-S-Up/Down` | Move line Up or Down
+| `CMD-M-Left/Right` | Move Back or Forward between actions
+| `CMD-<b>` | Go to Def
+| `CMD-Down` | Jump to source (Git windows)
+| `Select multiple items in project window` - `CMD-D` | Compare difference
+|===
+
+== Windows
+
+|===
+| `CMD-1` | Open Project window
+| `CMD-7` | Open Structure window (See all functions in file)
+| `CMD-9` | Open Git log window
+| `CMD-0` | Open Git status window
+|===
