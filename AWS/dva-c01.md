@@ -12,21 +12,21 @@
 Write Serverless application
 * Compare server vs serverless
 	* Microservices
-	* Statles nature of serverless
+	* Stateless nature of serverless
 	* Scaling serverless
-	* Decoulping layers of serverless 
+	* Decoupling layers of serverless 
 * Tools
-	* AWS Lamda
+	* AWS Lambda
 	* API Gateway
 	* DynamoDB
 	* S3 Events
 	* Kinesis
 
-Usecase -> Application design
+Use case -> Application design
 * Real-time vs batch processing
 * Sync vs Async
 * Event vs Polling
-* Tradeoffs for consistency models
+* Trade-offs for consistency models
 
 Design -> Code
 * Use SQS, SNS, ElastiCache, DynamoDB, S3, Lambda
@@ -37,7 +37,7 @@ Interact with AWS services
 
 ## Security
 Authenticated calls to AWS
-* Create roles and polcies
+* Create roles and policies
 
 Implement encryption
 * Encrypt data at rest and transit
@@ -63,12 +63,12 @@ Deploy application
 	* Instrument application
 
 Prepare application for deployment
-* Manage dependencies (enviorment variables, config)
+* Manage dependencies (environment variables, config)
 * Project structure
 
 Deploy serverless application
-* Usecase -> AWS Serverless Application Model (AWS SAM)
-* Manage enviroments in individual AWS services
+* Use case -> AWS Serverless Application Model (AWS SAM)
+* Manage environments in individual AWS services
 
 ## Monitoring
 Write code to be monitored
@@ -80,7 +80,7 @@ Perform root cause analysis
 * Find faulty component
 * Tools
 	* Cloudwatch
-	* VPC flowlogs
+	* VPC flow logs
 	* X-Ray
 
 ## Refactoring
