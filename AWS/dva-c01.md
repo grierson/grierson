@@ -8,6 +8,29 @@
 | Monitoring and Troubleshooting | 12% |
 | Refactoring | 10% |
 
+* Development - 30%
+	* Lambda
+	* API Gateway
+	* DynamoDB
+* Security - 26%
+	* Key Management Service
+	* Cognito
+	* IAM
+* Deployment - 22%
+	* Code commit
+	* Code build
+	* Code deploy
+	* Code pipeline
+	* Elastic Beanstalk
+	* Cloud Formation
+* Monitoring and Troubleshooting - 12%
+	* X-Ray
+	* Config
+	* Cloud Trail
+	* Cloud Watch
+* Refactoring - 10%
+	* Migrate to AWS
+
 ## Development
 Write Serverless application
 * Compare server vs serverless
