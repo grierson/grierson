@@ -1,4 +1,4 @@
 # Analytics
 
-* Amazon Elasticsearch Service (Amazon ES)
-* Amazon Kinesis
+* Elasticsearch Service (Amazon ES)
+* Kinesis

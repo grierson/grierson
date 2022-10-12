@@ -1,11 +1,10 @@
 # Developer Tools
 
-* AWS CodeArtifact
-* AWS CodeBuild
-* AWS CodeCommit
-* AWS CodeDeploy
-* Amazon CodeGuru
-* AWS CodePipeline
-* AWS CodeStar
-* AWS Fault Injection Simulator
-* AWS X-Ray
+* CodeStar
+* CodeCommit
+* CodeArtifact
+* CodeBuild
+* CodeDeploy
+* CodePipeline
+* X-Ray
+* Fault Injection Simulator (FIS)

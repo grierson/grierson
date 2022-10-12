@@ -2,14 +2,14 @@
 
 ## Services
 
-* Amazon Elastic Container Registry (Amazon ECR)
+* Elastic Container Registry (Amazon ECR)
   * Store docker registry
-* Amazon Elastic Container Service (Amazon ECS)
+* Elastic Container Service (Amazon ECS)
   * Contain orchestaion service
   * Install and Scale cluster
   * Task defintion groups into ECS service
   * Runs on Elastic Compute Cloud
-* Amazon Elastic Kubernetes Services (Amazon EKS)
+* Elastic Kubernetes Services (Amazon EKS)
   * Fully managed Kubernetes
   * Run on EC2
 * AWS Fargate

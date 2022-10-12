@@ -1,15 +1,12 @@
 # Compute
 
 * Virtual Machine (IaaS)
-  * Amazon EC2
-  * Amazon LightSail
-  * AWS Outposts
+  * Elastic Compute Cloud (EC2)
+  * LightSail
+  * Outposts
 * Serverless (FaaS)
-  * AWS Lambda
-  * AWS Fargate
+  * Lambda
+  * Fargate
 * Orchestration
-  * AWS Elastic Beanstalk
-  * AWS Batch
-* Container
-  * Amazon EKS
-  * Amazon ECS
+  * Elastic Beanstalk
+  * Batch

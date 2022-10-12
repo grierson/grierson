@@ -1,10 +1,11 @@
 # Networking
 
-* Amazon API Gateway
-* Amazon CloudFront
+* Virtual Private Cloud (VPC)
+* CloudFront
+* Route53
+* API Gateway
 * Elastic Load Balancing
-* VPC - Virtual Private Cloud
 
-## VPC - Virtual Private Cloud
+## Virtual Private Cloud (VPC)
 
 Create  

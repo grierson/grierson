@@ -1,3 +1,3 @@
 # Storage
 
-* Amazon S3
+* Simple Storage Service (S3)
