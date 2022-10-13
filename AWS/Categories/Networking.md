@@ -9,3 +9,7 @@
 ## Virtual Private Cloud (VPC)
 
 Create  
+
+## Route53
+
+DNS servers use port 53

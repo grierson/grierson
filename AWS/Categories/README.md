@@ -1,9 +1,13 @@
 # Categories
 
+* Analytics
+* Application Integration
 * Compute
 * Containers
 * Database
-* Network
-* Storage
-* Security, Identity
+* Developer
+* Management
 * Monitoring
+* Network
+* Security
+* Storage
