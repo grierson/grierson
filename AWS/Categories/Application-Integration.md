@@ -1,20 +1,18 @@
 # Application Integration
 
-
-
 * Simple Notification Service (Amazon SNS)
-	* Fan out - filter
+  * Fan out - filter
 * Simple Queue Service (Amazon SQS)
-	* Messaging queueing service
+  * Messaging queueing service
 * Amazon MQ
-	* Managed Apache ActiveMQ
-	* Handles different messaging protocols (AMQP, MQTT, Websockets)
+  * Managed Apache ActiveMQ
+  * Handles different messaging protocols (AMQP, MQTT, Websockets)
 * EventBridge (Amazon CloudWatch Events)
 
 * AppSync
-	* Managed GraphQL
+  * Managed GraphQL
 * AppFlow
-	* Transfer data between SaaS (Salesforce, Slack, Marketo) 
+  * Transfer data between SaaS (Salesforce, Slack, Marketo)
 
 * Step Functions
-	* Orchestrate multiple Lambda functions
+  * Orchestrate multiple Lambda functions

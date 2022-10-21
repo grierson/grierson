@@ -3,10 +3,10 @@
 * Web Service
   * Service on the web/Cloud Service Provider
 
-* Data Center
+* Data Centre
   * Warehouse of servers
 * Availability Zone
-  * Has many Data Center
+  * Has many Data Centre
 * Region
   * Examples (us-east-1, eu-west-1, ap-southeast-2)
   * Has many Availability Zone

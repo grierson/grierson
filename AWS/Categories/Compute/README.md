@@ -7,7 +7,7 @@
 Can run virtual servers (Run Linux, OSX)
 
 AWS handles hardware and host operating system.
-Customer handles client software and guest operatiog system
+Customer handles client software and guest operating system
 
 ### LightSail
 
@@ -23,7 +23,11 @@ Local AWS infrastructure at your office
 ### Lambda
 
 Just hosts functions.
-Only pay for compute time
+
+* Pros
+	* Only pay for compute time
+	* Scales
+	* Fault tolerant
 
 ## Orchestration
 
@@ -35,5 +39,5 @@ Runs on EC2
 
 ### Beanstalk
 
-Manges deployment, health monitoring, load balancing, database management, auto-scaling
+Manges deployment, auto-scaling, health, load balancing
 Just upload application
