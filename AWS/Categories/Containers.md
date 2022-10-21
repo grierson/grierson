@@ -6,9 +6,9 @@ Store docker registry
 
 ## Elastic Container Service (Amazon ECS)
 
-Contain orchestaion service
+Contain orchestration service
 Install and Scale cluster
-Task defintion groups into ECS service
+Task definition groups into ECS service
 Runs on Elastic Compute Cloud
 
 ## Elastic Kubernetes Services (Amazon EKS)

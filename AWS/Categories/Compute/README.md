@@ -25,9 +25,9 @@ Local AWS infrastructure at your office
 Just hosts functions.
 
 * Pros
-	* Only pay for compute time
-	* Scales
-	* Fault tolerant
+  * Only pay for compute time
+  * Scales
+  * Fault tolerant
 
 ## Orchestration
 

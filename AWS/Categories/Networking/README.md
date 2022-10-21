@@ -34,10 +34,15 @@ Works with
 * ECS
 * Lamda
 
+## Global Accelerator
+
+Non-HTTP protocols
+Static IP
+
 ## CloudFront (CDN)
 
 Global cache servers so it closer to user
 
 ## API Gateway
 
-Monitoring and Metrics on API calls
+onitoring and Metrics on API calls

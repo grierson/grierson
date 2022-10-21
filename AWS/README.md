@@ -9,7 +9,7 @@ Core AWS Services
 * Relation Database Service (RDS)
 * Route53
 
-## Extented
+## Extended
 
 Extras
 
