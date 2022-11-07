@@ -9,7 +9,7 @@
 .. TDD
 ... Understand problem - Set a goal/test
 .. Challenge self
-... Feynman technique - explain undestanding simply
+... Feynman technique - explain understanding simply
 ... Create something (Project)
 ... Practise test
 

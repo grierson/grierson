@@ -11,7 +11,6 @@ Queues (Kafka), HTTP (HATEOS)
 == Why
 
 * Independently deployable
-** MVP - Can deliver services incrementally
+**MVP - Can deliver services incrementally
 ** Scale - Some services will require more instances than others
 ** Can fix/update one service independently without impacting others
-
