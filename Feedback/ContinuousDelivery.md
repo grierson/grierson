@@ -3,6 +3,7 @@
 ## Continuous integration - Always releasable
 
 Small releasable commits to master
+Combining code changes frequently, with each change verified on check-in.
 
 * Small releasable commits
   * Committed to master

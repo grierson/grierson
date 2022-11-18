@@ -1,0 +1,77 @@
+= Domain Driven Design
+
+== Domain Model
+
+Focus on defining the domain of the problem::
+Work with Domain experts on the definition and creating a Ubiquitous language
+
+== Bounded Context / Ubiquitous Language
+
+Words mean different things in different contexts
+
+[mermaid]
+----
+flowchart TB
+    subgraph Concrete
+    cset[set]
+    cpour[pour]
+    cbreak[break]
+    end
+
+    subgraph Restaurant
+    rset[set]
+    rpour[serve]
+    rbreak[pour]
+    end
+
+    subgraph Tennis
+    tset[set]
+    tpour[serve]
+    tbreak[break]
+    end
+----
+
+
+== Entity
+
+An entity is something that is uniquely identifiable. (Stateful)
+Can contain other Entities and/or Values
+
+Each game may of had the same outcome but both are unique from each other
+
+[mermaid]
+----
+flowchart TB
+    subgraph Liverpool vs Everton 2010 FA cup round 1
+    ko[Kick off] -->
+    ls[Liverpool score] --> 
+    es[Everton score] --> 
+    Draw
+    end
+----
+
+[mermaid]
+----
+flowchart TB
+    subgraph Liverpool vs Everton 2022 Premier League game 8
+    ko[Kick off] -->
+    ls[Liverpool score] --> 
+    es[Everton score] --> 
+    Draw
+    end
+----
+
+
+== Value
+
+I need $10 I don't care which you give me, $10 is $10. (Immutable)
+
+[mermaid]
+----
+flowchart TB
+    m1[$10]
+    m2[$10]
+    m3[$10]
+----
+
+NOTE: If I was collecting $10 notes and I wanted the serial numbers to be sequential then the notes would then become an Entities 
