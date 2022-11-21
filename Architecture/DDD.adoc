@@ -34,30 +34,21 @@ flowchart TB
 
 == Entity
 
-An entity is something that is uniquely identifiable. (Stateful)
-Can contain other Entities and/or Values
+An entity is something that is uniquely identifiable and stateful
 
-Each game may of had the same outcome but both are unique from each other
+NOTE: Can contain other Entities and/or Values
 
-[mermaid]
-----
-flowchart TB
-    subgraph Liverpool vs Everton 2010 FA cup round 1
-    ko[Kick off] -->
-    ls[Liverpool score] --> 
-    es[Everton score] --> 
-    Draw
-    end
-----
+You might change parts of your car but it's still the same car.
+
+IMPORTANT: Another model of the same car might make the same modifications but the two cars are still unique from one another by the license plate (Identifier).
 
 [mermaid]
 ----
 flowchart TB
-    subgraph Liverpool vs Everton 2022 Premier League game 8
-    ko[Kick off] -->
-    ls[Liverpool score] --> 
-    es[Everton score] --> 
-    Draw
+    subgraph BU66 ETY
+    tyres[Change Tyres] -->
+    paint[Paint it orange] --> 
+    brakes[Change brake pads]
     end
 ----
 
@@ -74,4 +65,4 @@ flowchart TB
     m3[$10]
 ----
 
-NOTE: If I was collecting $10 notes and I wanted the serial numbers to be sequential then the notes would then become an Entities 
+NOTE: If I was collecting $10 notes and I wanted the serial numbers to be sequential order then the notes would then be treated as Entities 
