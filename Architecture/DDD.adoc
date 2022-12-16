@@ -5,6 +5,10 @@
 Focus on defining the domain of the problem::
 Work with Domain experts on the definition and creating a Ubiquitous language
 
+Core domain - Unique business model (Twitter - tweet, Youtube - videos)
+Support subdomain - Support core (Comments, Reviews)
+Generic subdomain - Login, User
+
 == Bounded Context / Ubiquitous Language
 
 Words mean different things in different contexts
@@ -66,3 +70,30 @@ flowchart TB
 ----
 
 NOTE: If I was collecting $10 notes and I wanted the serial numbers to be sequential order then the notes would then be treated as Entities 
+
+== Aggregate
+
+* Host entity, guest entity, and value objects within Aggregate must be consistent
+* Acts as Unit of Work for database transactions.
+* Ensure Aggregate is always in a consistent state.
+
+.Aggregate consistency
+[example]
+Reservation should only have 2 guests in total.
+
+
+[source,clojure]
+----
+(Root)
+{:id 12
+ :date 2022-01-01T01:00:00
+ :amount 2
+ :deposit (Value) {
+ 	:amount 10
+	:currency "USD"
+ }
+ :host (Entity) {:id 33 :name Max}
+ :guests [
+	(Entity) {:id 44 :name Lewis}
+ ]}
+----
