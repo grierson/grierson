@@ -5,9 +5,9 @@
 Focus on defining the domain of the problem::
 Work with Domain experts on the definition and creating a Ubiquitous language
 
-Core domain - Unique business model (Twitter - tweet, Youtube - videos)
-Support subdomain - Support core (Comments, Reviews)
-Generic subdomain - Login, User
+* Core domain - Unique business model (Twitter - tweet, Youtube - videos)
+* Support subdomain - Support core (Comments, Reviews)
+* Generic subdomain - Login, User
 
 == Bounded Context / Ubiquitous Language
 
@@ -40,11 +40,10 @@ flowchart TB
 
 An entity is something that is uniquely identifiable and stateful
 
-NOTE: Can contain other Entities and/or Values
-
 You might change parts of your car but it's still the same car.
 
-IMPORTANT: Another model of the same car might make the same modifications but the two cars are still unique from one another by the license plate (Identifier).
+IMPORTANT: Another model of the same car might make the same modifications but 
+the two cars are still unique from one another by the license plate (Identifier).
 
 [mermaid]
 ----
@@ -69,25 +68,33 @@ flowchart TB
     m3[$10]
 ----
 
-NOTE: If I was collecting $10 notes and I wanted the serial numbers to be sequential order then the notes would then be treated as Entities 
+NOTE: If I was collecting $10 notes and I wanted the serial numbers to be 
+in sequential order then the notes would then be treated as Entities by their
+serial number
 
 == Aggregate
 
-* Host entity, guest entity, and value objects within Aggregate must be consistent
-* Acts as Unit of Work for database transactions.
-* Ensure Aggregate is always in a consistent state.
+* Contains Entities and Values
+* Acts as a Unit of Work for transactions
+* Ensure Aggregate is always in a consistent state
+* Changes to aggregate is done via the Root (Enforce invariants)
+* Changes to Aggregate should be message based
+
+* Does entity make sense without others?
+* Look up
+* Referenced by other aggregates
+
 
 .Aggregate consistency
 [example]
-Reservation should only have 2 guests in total.
-
+Reservation should only have 3 guests in total.
 
 [source,clojure]
 ----
 (Root)
 {:id 12
  :date 2022-01-01T01:00:00
- :amount 2
+ :amount 3
  :deposit (Value) {
  	:amount 10
 	:currency "USD"
@@ -95,5 +102,6 @@ Reservation should only have 2 guests in total.
  :host (Entity) {:id 33 :name Max}
  :guests [
 	(Entity) {:id 44 :name Lewis}
+	(Entity) {:id 63 :name George}
  ]}
 ----
