@@ -72,36 +72,74 @@ NOTE: If I was collecting $10 notes and I wanted the serial numbers to be
 in sequential order then the notes would then be treated as Entities by their
 serial number
 
-== Aggregate
+== Aggregate Root
 
 * Contains Entities and Values
 * Acts as a Unit of Work for transactions
+* Invariant's - Rules that must always be consistent
 * Ensure Aggregate is always in a consistent state
 * Changes to aggregate is done via the Root (Enforce invariants)
-* Changes to Aggregate should be message based
-
-* Does entity make sense without others?
-* Look up
-* Referenced by other aggregates
 
 
-.Aggregate consistency
-[example]
-Reservation should only have 3 guests in total.
+=== Aggregate consistency
 
-[source,clojure]
+Everything in aggregate should be valid. 
+No invariants.
+Everything is updated as a transaction
+
+.Reservation should only have 2 guests in total.
+[mermaid]
 ----
-(Root)
-{:id 12
- :date 2022-01-01T01:00:00
- :amount 3
- :deposit (Value) {
- 	:amount 10
-	:currency "USD"
- }
- :host (Entity) {:id 33 :name Max}
- :guests [
-	(Entity) {:id 44 :name Lewis}
-	(Entity) {:id 63 :name George}
- ]}
+flowchart LR
+    subgraph reservation[Reservation Aggregate]
+			root[Reservation] 
+			root --> guests
+			guests --> Alice
+			guests --> Bob
+			root --> time
+			root --> host
+    end
+    request[Add guest] -->|Rejected| root
+----
+
+=== Reference by Id
+
+* Aggregates can't reach in and change other aggregates
+
+.Aggregates only hold id to aggregate
+[mermaid]
+----
+flowchart TD
+    subgraph product[Product Aggregate]
+			Product --> Id
+    end
+    subgraph cart[Cart Aggregate]
+			Cart --> CartProductId["ProductId"]
+    end
+    subgraph warehouse[Warehouse Aggregate]
+			Warehouse --> WarehouseProductId["ProductId"]
+			Warehouse --> Stock
+    end
+    subgraph marketing[Marketing Aggregate]
+			Marketing --> MarketingProductId["ProductId"]
+			Marketing --> Description
+    end
+----
+
+=== Eventual consistency
+
+
+.Aggregates only hold id to aggregate
+[mermaid]
+----
+flowchart TD
+    subgraph cart[Cart Aggregate]
+			Cart --> CartProductId["ProductId"]
+    end
+    subgraph warehouse[Warehouse Aggregate]
+			Warehouse --> WarehouseProductId["ProductId"]
+			Warehouse --> Stock
+    end
+		cart --> ProductAddedToCart:::someclass --> warehouse
+		classDef someclass fill:#f96
 ----
