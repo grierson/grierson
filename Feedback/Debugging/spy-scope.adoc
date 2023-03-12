@@ -1,6 +1,0 @@
-= Spy scope
-
-Used to observe state and infections.
-
-* link:https://github.com/dgrnbrg/spyscope[Spyscope]
-* link:https://cambium.consulting/articles/2018/2/8/the-power-of-clojure-debugging[THE POWER OF CLOJURE: DEBUGGING]

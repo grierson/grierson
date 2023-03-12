@@ -1,5 +1,0 @@
-= Assert
-
-* A well-written assertion can tell you not just what happened and where but why.
-* Assertions double as documentation, telling other developers what implied assumptions your code depends on.
-* Don't get run in production
