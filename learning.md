@@ -1,5 +1,24 @@
 # How to learn
 
+## Work iteratively (Don't be Don Quixote)
+
+Don't try and plan everything upfront unless you can accuratly predict
+
+* Users needs
+* Time/Cost and if it's profitable
+* Accurate plan that doesn't need adjusting
+
+Instead work in small units of work then get feedback to determine if you're
+heading in the right direction
+
+"Do users like the feature?" It's better to learn user don't like the feature
+after 1 month rather than 1 year of development
+
+* Contionus integration
+* Test Driven development
+
+## Study
+
 * What
   * 80/20 rule (Prioritise, Gaps in knowledge, Need to know)
 * Learning
