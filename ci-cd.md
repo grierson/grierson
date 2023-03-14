@@ -1,4 +1,4 @@
-# Continuous Delivery
+# Continuous Integration and Continuous Delivery
 
 ## Continuous integration - Always releasable
 
