@@ -164,6 +164,7 @@ An event preceding an effect without which the effect would not have occurred
 * :fire: Write down your hypothesises
 * Include silly ideas
 * Priortise
+  * Use deductive reasoning to remove possible hypothesises
 * Hammock time
 * Only move foward when you have enough data
 
