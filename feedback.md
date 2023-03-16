@@ -17,8 +17,8 @@ after 1 month rather than 1 year of development
 Try and get feedback as quickly as possible (Fail fast)
 
 * Hypothesis - I think hypothesis will help
-* Experiment - Create experiment to test hypothesis
-* Observe - View if hypothesis is beneficial
+* Experiment - Test to Prove or Disprove hypothesis
+* Observe - That the results to see if it matches your hypthesis
 
 * **Experiment Driven Development** - Feedback from user metrics
 * **Contious integration** - Feedback feature integrates into project

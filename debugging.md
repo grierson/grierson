@@ -165,6 +165,7 @@ An event preceding an effect without which the effect would not have occurred
 * Include silly ideas
 * Priortise
   * Use deductive reasoning to remove possible hypothesises
+  * Think of tests to prove or disprove hypothesis
 * Hammock time
 * Only move foward when you have enough data
 
