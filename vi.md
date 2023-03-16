@@ -31,7 +31,23 @@ foo
 world
 bar
 
+```:s/.*/\0_url```
+
 hello_url
 foo_url
 world_url
 bar_url
+
+## Insert in line
+
+hello: "http://foo.bar"
+foo: "http://foo.bar"
+world: "http://foo.bar"
+bar: "http://foo.bar"
+
+```:s/\v(\w+)/\0_url```
+
+hello_url: "http://foo.bar"
+foo_url: "http://foo.bar"
+world_url: "http://foo.bar"
+bar_url: "http://foo.bar"
