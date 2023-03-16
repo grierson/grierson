@@ -18,6 +18,7 @@ bar
 baz
 
 ```:s/\(.*\)/\U\1\e: "%hiera{'\1'}"/g```
+```:s/\v.*/\U\0\e: "%hiera{'\0'}"/g```
 
 FOO: "%hiera{'foo'}"
 BAR: "%hiera{'bar'}"
