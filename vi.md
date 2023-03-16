@@ -17,8 +17,8 @@ foo
 bar
 baz
 
-```:s/\(.*\)/\U\1\e: "%hiera{'\1'}"/g```
-```:s/\v.*/\U\0\e: "%hiera{'\0'}"/g```
+```:s/\(.*\)/\U\1\e: "%hiera{'\1'}"/g``` (One eyed fighting kirby)
+```:s/\v.*/\U\0\e: "%hiera{'\0'}"/g``` (`\v` very magic) (`\0` group)
 
 FOO: "%hiera{'foo'}"
 BAR: "%hiera{'bar'}"
