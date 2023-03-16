@@ -23,3 +23,15 @@ baz
 FOO: "%hiera{'foo'}"
 BAR: "%hiera{'bar'}"
 BAZ: "%hiera{'baz'}"
+
+## Insert end of multiple lines
+
+hello
+foo
+world
+bar
+
+hello_url
+foo_url
+world_url
+bar_url
