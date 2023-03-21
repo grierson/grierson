@@ -14,10 +14,10 @@ Having the right mindset
 flowchart LR
     Failure -->|Why?| Hypothesis
     Hypothesis -->|Suggests| Experiment
-    Experiment -->|Produces| Observation
-    Observation -->|Falsified?/Needs refinement| Hypothesis
-    Observation -->|Something is wrong| Failure
-    Observation -->|Actual cause| Theory
+    Experiment -->|Produces| Analysis
+    Analysis -->|Falsified?/Needs refinement| Hypothesis
+    Analysis -->|Something is wrong| Failure
+    Analysis -->|Actual cause| Theory
 ```
 
 ## Failure
@@ -30,22 +30,18 @@ Something isn't working as expected.
 
 <img align="right" src="./resources/writing.png">
 
-1. Steps you/they took
-2. What you/they expected
+1. Steps taken
+2. What was expected
 3. What actually happend
 
+### Challenge understanding
+
+<img align="right" src="./resources/rubber-duck.png">
+
 * Write down your understanding and improve as you go along
-  * Does you explanation cover every point
-* Iterative process
-  * Progressively ask less stupid questions
-* Feynman technique
-  * Explaining the problem to a rubber duck helps finds the gaps in your understanding
-* Deductive reasoning (Suduku)
-  * What do we know? (Constraints, Facts)
-  * What do we need to know?
-    * What is `x`?
-    * Does `y` work how I expect?
-* Talk to Pair
+  * Does you explanation cover every point?
+* __Iterative process__ - Progressively ask less stupid questions
+* __Feynman technique__ - Teach problem to finds the gaps in your understanding
 
 ### Sequence of events
 
@@ -65,13 +61,26 @@ Something isn't working as expected.
 * Read the stacktrace __carefully!!!__
 * Check recent commits (Git bisect:fire:)
 
+### Observation
+
+<img align="right" src="./resources/identify.png">
+
+* What do we know? (Constraints, Facts)
+* What do we need to know?
+  * What is `x`?
+  * Does `y` work how I expect?
+
 ### Reproduce the bug
+
+<img align="right" src="./resources/bug-report.png">
 
 * Reproducing the bug means you can control each variable while you experiment
 * Create a smaller program with the same bug so you have less variables
 and a quicker feedback loop
 
 #### Skepticism
+
+<img align="right" src="./resources/question.png">
 
 * "There were no footmarks" - Man
 * "Meaing that you saw none?" - Sherlock
@@ -84,12 +93,17 @@ have no other dependencies.
 The problem was actually a miscommunication problem,
 reproducing the issue showed the problem occured on both databases
 
-#### Print statements
+#### Instrument
 
 <img align="right" src="./resources/pressure.png">
 
 Just like gauges in mechanical systems, add instrumentation to
 your system so you can see whats happening
+
+* REPL
+* Print statements
+* Logging
+* Tracing
 
 ```clojure
 (defn n 24)
@@ -108,8 +122,6 @@ your system so you can see whats happening
 ;; (- (first n) 20) -> Exception
 ;; 0 -> 0
 ```
-
-Or better yet just eval each expression in the REPL
 
 ### Research
 
@@ -163,9 +175,10 @@ An event preceding an effect without which the effect would not have occurred
 
 * :fire: Write down your hypothesises
 * Include silly ideas
-* Priortise
-  * Use deductive reasoning to remove possible hypothesises
-  * Think of tests to prove or disprove hypothesis
+* Use deductive reasoning to remove bad hypothesises
+* "Eliminate all other factors, and the one which remains must be the truth" - The Sign of Four
+* Priortise by likeliness
+* Think of tests to prove or disprove hypothesis
 * Hammock time
 * Only move foward when you have enough data
 
@@ -199,7 +212,7 @@ An event preceding an effect without which the effect would not have occurred
   * Unit test
   * Try good and bad inputs to demonstrate defect
 
-## Observation
+## Analysis
 
 1. Understand all the outputs
    1. Don't know the output? How do you know if it's related to the problem or not
@@ -218,11 +231,17 @@ An event preceding an effect without which the effect would not have occurred
 
 <img align="right" src="./resources/lightbulb.png">
 
-*
 * A hypothesis offering valid predictions that can be observed
 * Blog/tell a friend what you learned
 * Does theory cover all of you problems
 * Take a break
+
+## Tools
+
+* Debugger
+* Profilers - perf
+* Tracers - strace
+* Network spy - ngrep
 
 ## Resources
 
@@ -233,9 +252,12 @@ An event preceding an effect without which the effect would not have occurred
 * [REPL DEBUGGING: NO STACKTRACE REQUIRED](http://blog.cognitect.com/blog/2017/6/5/repl-debugging-no-stacktrace-required)
 * [Clojure from the ground up: debugging](https://aphyr.com/posts/319-clojure-from-the-ground-up-debugging)
 
-### Tools
+## Attribute
 
-* Debugger
-* Profilers - perf
-* Tracers - strace
-* Network spy - ngrep
+* <a href="https://www.flaticon.com/free-icons/duck" title="duck icons">Duck icons created by Freepik - Flaticon</a>
+* <a href="https://www.flaticon.com/free-icons/sherlock" title="sherlock icons">Sherlock icons created by Freepik - Flaticon</a>
+* <a href="https://www.flaticon.com/free-icons/identify" title="identify icons">Identify icons created by Eucalyp - Flaticon</a>
+* <a href="https://www.flaticon.com/free-icons/sequence" title="sequence icons">Sequence icons created by Freepik - Flaticon</a>
+* <a href="https://www.flaticon.com/free-icons/experiment" title="experiment icons">Experiment icons created by Freepik - Flaticon</a>
+* <a href="https://www.flaticon.com/free-icons/bug" title="bug icons">Bug icons created by Freepik - Flaticon</a>
+* <a href="https://www.flaticon.com/free-icons/question" title="question icons">Question icons created by Freepik - Flaticon</a>
