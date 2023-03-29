@@ -1,4 +1,4 @@
-#lang racket
+(require rackunit)
 
 (define (binary_search coll x)
   (define (*binary_search* low high)
@@ -12,6 +12,5 @@
         high))
   (*binary_search* 0 (- (length coll) 1)))
 
-(display (binary_search (list 1 3 5 7 9) 0))
-(display "\n")
-(display (binary_search (list 1 3 5 7 9) 7))
+(check-equal? (binary_search (list 1 3 5 7 9) 0) -1 "-1 when not found")
+(check-equal?  (binary_search (list 1 3 5 7 9) 7) 3 "Return index when found")
