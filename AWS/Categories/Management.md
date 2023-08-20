@@ -1,4 +1,4 @@
 # Management & Governance
 
-* CloudWatch
-* CloudFormation
+- CloudWatch
+- CloudFormation

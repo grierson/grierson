@@ -7,22 +7,22 @@ Stores data across multiple availability zones
 Access files by URL
 Static web host
 
-* Standard - Frequent access data
-* Standard-Infrequent Access - Many AZs
-* One Zone-Infrequent Access - One AZ (Cheaper)
-* Intelligent tiering
-  * Moves files between Standard and Infrequent Access (Cost saving)
+- Standard - Frequent access data
+- Standard-Infrequent Access - Many AZs
+- One Zone-Infrequent Access - One AZ (Cheaper)
+- Intelligent tiering
+  - Moves files between Standard and Infrequent Access (Cost saving)
 
 Cons
 
-* Fee for retrieval fee
+- Fee for retrieval fee
 
 ## S3 Glacier
 
 Cheaper files storage but longer read times
 
-* 180 day minimum storage
-* 23x cheaper than standard S3
+- 180 day minimum storage
+- 23x cheaper than standard S3
 
 ## Elastic Block Store
 

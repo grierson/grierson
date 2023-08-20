@@ -1,5 +1,5 @@
 # Database
 
-* DynamoDB
-* ElastiCache
-* Relational Database Service (RDS)
+- DynamoDB
+- ElastiCache
+- Relational Database Service (RDS)

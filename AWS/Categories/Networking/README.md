@@ -1,10 +1,10 @@
 # Networking
 
-* Virtual Private Cloud (VPC)
-* CloudFront
-* Route53
-* API Gateway
-* Elastic Load Balancing
+- Virtual Private Cloud (VPC)
+- CloudFront
+- Route53
+- API Gateway
+- Elastic Load Balancing
 
 ## Virtual Private Cloud (VPC)
 
@@ -22,7 +22,7 @@ DNS translate domain names to the IP address
 
 Pros
 
-* Re-route to a health server (High availability)
+- Re-route to a health server (High availability)
 
 ## Elastic Load Balancing
 
@@ -30,9 +30,9 @@ Distribute traffic across many targets
 
 Works with
 
-* EC2
-* ECS
-* Lamda
+- EC2
+- ECS
+- Lamda
 
 ## Global Accelerator
 

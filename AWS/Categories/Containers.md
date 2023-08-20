@@ -22,7 +22,7 @@ Serverless compute
 
 ## CLI
 
-* App2Container (A2C)
-  * app -> container
-* AWS Copilot
-  * Helps with whole app -> hosted container
+- App2Container (A2C)
+  - app -> container
+- AWS Copilot
+  - Helps with whole app -> hosted container

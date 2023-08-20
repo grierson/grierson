@@ -60,16 +60,17 @@ Event Log
 Projection
 
 ```json
- {
+{
   "account": 123,
   "balance": "$5"
- }
+}
 ```
 
 Reaction
 
 ```javascript
 function notify(event) {
- if (event.type === "Withdraw") send.email(event.account, "You withdrew money")
- }
+  if (event.type === "Withdraw")
+    send.email(event.account, "You withdrew money");
+}
 ```

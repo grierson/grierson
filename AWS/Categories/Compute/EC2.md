@@ -7,28 +7,28 @@ Suitable for predicable workloads
 
 Pros
 
-* Cheaper than on-demand
+- Cheaper than on-demand
 
 Cons
 
-* Large upfront cost and commitment
+- Large upfront cost and commitment
 
 ## Spot
 
 Uses spare EC2 capacity
 Suitable for interrupt-able jobs
 
-* data analysis
-* batch jobs
-* background processing
+- data analysis
+- batch jobs
+- background processing
 
 Pros
 
-* Cheaper than on-demand
+- Cheaper than on-demand
 
 Cons
 
-* Job must be interrupt-able tasks
+- Job must be interrupt-able tasks
 
 ## On Demand
 
@@ -37,8 +37,8 @@ Suitable for unexpected computing needs
 
 Pros
 
-* Only pay for demand when you need it
+- Only pay for demand when you need it
 
 Cons
 
-* More expensive
+- More expensive
