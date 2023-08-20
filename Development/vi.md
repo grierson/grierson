@@ -2,12 +2,12 @@
 
 ## Global rename
 
-* Populate Quickfix list
-  * Telescope live grep
-  * `tab` the instances you want
-  * `<C-q>` to send to Quickfix list
-* `:cdo s/<find>/<replace>/gc`
-  * `gc` to confirm each change
+- Populate Quickfix list
+  - Telescope live grep
+  - `tab` the instances you want
+  - `<C-q>` to send to Quickfix list
+- `:cdo s/<find>/<replace>/gc`
+  - `gc` to confirm each change
 
 ## Rename services for env
 
@@ -19,8 +19,8 @@ bar
 baz
 ```
 
-* ```:s/\(.*\)/\U\1\e: "%hiera{'\1'}"/g``` (One eyed fighting kirby)
-* ```:s/\v.*/\U\0\e: "%hiera{'\0'}"/g``` (`\v` very magic) (`\0` group)
+- `:s/\(.*\)/\U\1\e: "%hiera{'\1'}"/g` (One eyed fighting kirby)
+- `:s/\v.*/\U\0\e: "%hiera{'\0'}"/g` (`\v` very magic) (`\0` group)
 
 ```
 FOO: "%hiera{'foo'}"
@@ -37,7 +37,7 @@ world
 bar
 ```
 
-* ```:s/.*/\0_url```
+- `:s/.*/\0_url`
 
 ```
 hello_url
@@ -55,7 +55,7 @@ world: "http://foo.bar"
 bar: "http://foo.bar"
 ```
 
-* ```:s/\v(\w+)/\0_url```
+- `:s/\v(\w+)/\0_url`
 
 ```
 hello_url: "http://foo.bar"
