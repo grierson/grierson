@@ -1,4 +1,6 @@
-# README
+# AWS
+
+(WIP) Just AWS notes for AWS certs
 
 ## Core
 
