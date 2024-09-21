@@ -2,54 +2,65 @@
 
 Record everything that happens.
 
-## Story time
+## Where's my money? (Transaction History)
 
-You wake up and discover you only have $2 left in your account.
+You wake up and discover you only have $10 left in your account.
 
-> "Why the heck do I only have $2?!? I got paid last week!"
+> "Why the heck do I only have $10?!? I got paid last week!"
 
 So you go and check your banking app's transactions.
 
-> "There's when I got paid from last week, paid the bills for the month,
-> Cinema on Tuesday..."
+| Date               | Description                | Amount  | Balance |
+| ------------------ | -------------------------- | ------- | ------- |
+| 31/10/2021 @ 12:00 | Paid                       | $2,500  | $3,000  |
+| 1/11/2021 @ 06:00  | Bills                      | -$700   | $2,300  |
+| 4/11/2021 @ 20:00  | Cinema                     | -$40    | $2,260  |
+| 6/11/2021 @ 21:18  | 2 x Beers                  | -$20    | $2,240  |
+| 6/11/2021 @ 22:51  | 2 x Beers + Crisp          | -$25    | $2,215  |
+| 6/11/2021 @ 23:20  | Bob's money for last round | $25     | $2,240  |
+| 6/11/2021 @ 23:32  | Whiskey                    | -$50    | $2,190  |
+| 7/11/2021 @ 01:48  | Ebay (1989 Mazda MX5)      | -$2,180 | $10     |
 
-Then you uncover that after you went out for drinks last night you've
-drunkenly ordered yourself an `1989 Mazda MX5`.
+Where you uncover you've drunkenly bought yourself an `1989 Mazda MX5`.
 
 > "Uh oh..."
 
-The only reason you found out what happened is because you can see each
-transaction, if it was only your balance you would be clueless.
+Thanks to the transaction history you've worked out what happened.
 
-## PLace Oriented Programming (PLOP)
+## Transaction Incoming and Outgoing (Projection)
 
-Here's a bank account database table.
+Using the transaction history we can also view our total income/outgoings
+by only totaling the deposit/withdrawal transactions separately.
 
-| Id  | Name    | Balance |
-| --- | ------- | ------- |
-| 1   | Alice   | $250    |
-| 2   | Bob     | $80     |
-| 3   | Charlie | $420    |
+We are using the same data (transaction log) for each total but getting
+different results as we are only processing the events related.
 
-However, this is only a snapshot of the current state at the moment,
-if you looked again in `2 weeks` it would look different as we are updating
-the rows in place (PLOP).
-So we can't ask questions like
-`How did we get here?` or `What was the previous state?`.
+| Date               | Description                | Amount |
+| ------------------ | -------------------------- | ------ |
+| 31/10/2021 @ 12:00 | Paid                       | $2,500 |
+| 6/11/2021 @ 23:20  | Bob's money for last round | $25    |
 
-Instead `Event sourcing` records each `event` that has occurred and `projects`
-the `current state` by replaying all of those `events`.
+> Income: **$2,525**
 
-## (WIP) Event sourcing
+| Date              | Description           | Amount  |
+| ----------------- | --------------------- | ------- |
+| 1/11/2021 @ 06:00 | Bills                 | -$700   |
+| 4/11/2021 @ 20:00 | Cinema                | -$40    |
+| 6/11/2021 @ 21:18 | 2 x Beers             | -$20    |
+| 6/11/2021 @ 22:51 | 2 x Beers + Crisp     | -$25    |
+| 6/11/2021 @ 23:32 | Whiskey               | -$50    |
+| 7/11/2021 @ 01:48 | Ebay (1989 Mazda MX5) | -$2,180 |
 
-Recording each transaction that occurred (Double Entry book keeping) is
-`Event sourcing` whereas applying `PLOP` and not recording
+> Outgoings: **$3,015**
 
-## Usage: Chess Notation
+## Chess Notation (Replay)
 
-The Chess world use `Chess notation` to record each move so games can be
-replayed and reviewed.
-`"Where did I go wrong?", "What move should I have played?"`.
+The Chess world uses `Chess notation` to record each move within a game
+so games can be replayed later for review where you can ask questions like
+`"Where did I go wrong?", "What move should I have played at move 9?"` and
+experiment playing different lines from different points in the game.
+`What happens if I play Qb2 for move 6 instead?`
+
 In `Event sourcing` terms, `Chess notation` is the `event log`,
 each move is an `event`, and the chess board is the
 `projection` (current state) depending on what moves you've played so far.
@@ -59,6 +70,31 @@ each move is an `event`, and the chess board is the
 ```
 
 ![Chess notation](img/chess.jpeg)
+
+## PLace Oriented Programming (PLOP)
+
+An example bank account database table.
+
+| Id  | Name    | Balance |
+| --- | ------- | ------- |
+| 1   | Alice   | $250    |
+| 2   | Bob     | $80     |
+| 3   | Charlie | $19,820 |
+
+However this is only a snapshot of the current state of each account at the moment.
+If we looked again in `2 weeks` it will look different as transactions have
+occurred since.
+
+| Id  | Name    | Balance |
+| --- | ------- | ------- |
+| 1   | Alice   | $40,850 |
+| 2   | Bob     | $94     |
+| 3   | Charlie | $20     |
+
+However, each transaction isn't recorded individually instead rows are updated
+after each transaction (new information is replacing old information (PLOP)).
+
+So we can't ask `Why is my balance X?` or `Did I receive X amount?`.
 
 ## Pros
 
