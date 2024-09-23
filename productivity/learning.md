@@ -2,59 +2,62 @@
 
 Some basic techniques on how to learn more effectively
 
-## Mindset
+## Focus
 
-> “Whether you think you can, or you think you can't--you're right.”
-> ― Henry Ford
+- Get into the zone / Flow state
+  - Fully focused on the task
+  - Preemptively remove distractions (Phones)
+- Enjoy the process
+  - What would this look like if it were fun?
+  - Change environment, Turn it into a challenge
+  - Do more of what matters to me
+  - Lot's of your work will bad but you learn from your mistakes so just enjoy
+- Be Invested
 
-- Avoid negative thoughts
-
-  - If you think you can't do it how are you ever going to learn
-
-- Feed good
-
-  - Be curious about topic
-  - Enjoy learning (Change environment, remove distractions)
-  - Enjoy the process (Lot's of work is bad/wrong but you learn from it)
+  - Set goals and view progress
+  - Get feedback on your work
+  - Know Why you are learning
 
 - References
-  - Freedom [^FLOW]
-  - Curious [^MWE]
-  - Stay true to yourself [^TAOL]
-  - Mindset + Motivation [^LJK]
-  - Believe + Enjoy + Self Talk [^TCM]
+  - Flow [^FLOW]
+  - Focus [^USY]
+  - Curious | Connection | Confidence [^MWE]
+  - BEST Believe + Enjoy + Self Talk [^TCM]
   - Enjoy the process [^TPSG]
-  - See [^GBAA]
 
 ## Goal
 
+- Set a vision of what you want to be? / What word encompasses that vision?
 - Prioritize what you learn
-  - 80/20 rule - Small subset will get you 80% of the way
-  - Gaps in knowledge
-  - What your likely to encounter
-  - What do I need to memorize
-- Set a vision of what you want to be
-- Priming (Get a gist of what you want to learning first)
+  - 80/20 rule - 80% of outcome come fro 20% of causes - Find that 20%
+  - What your likely to encounter? (Asking for taxi in Spanish not grammar)
+  - What do I need to memorize?
+  - Prioritize gaps in knowledge
+  - What one thing can I do such that by doing it, makes everything else easier or unnecessary? [^TOQTAY]
+  - Ask experts in that field
+    - What the most important skills to learn?
+    - What is the biggest waste of time?
+    - Quiz them on their thought process? (Why did you do this?)
 - Questions you should ask
-  - Why is it useful?
-  - How can I use this?
-  - How does compare with other solutions?
-  - What one thing can I do such that by doing it, makes everything else easier or unnecessary?
-- Ask experts
-  - What the most important skills to learn?
-  - What is the biggest waste of time?
+  - What's the problem?
+  - Why is this solution useful?
+  - How can I use this to solve my problem?
+  - How does this compare with other solutions?
 
 * References
   - Metalearning map [^USY]
+  - See [^GBAA]
   - Feel the fundamentals [^TAOL]
   - Find the root cause [^PRD]
-  - Your one word [^YOW]
-  - What one thing can I do such that by doing it, makes everything else easier or unnecessary? [^TOQTAY]
   - Primary focus [^TFHC]
-  - Remove roadblocks + Simplify the game [^CTSP]
-  - Do It + Get Good feedback [^GBAA]
+  - Your one word [^YOW]
+  - The one question [^TOQTAY]
 
-## Learning resources
+## Study
+
+- Priming
+
+  - Get a gist of what you want to learning first
 
 - Use books, blogs, videos, podcasts
 
@@ -68,52 +71,44 @@ Some basic techniques on how to learn more effectively
 
 - References
   - Brute force learning [^TOSTM]
-  - Multi-Learning [^TOSTM]
-  - Drill [^USY]
-  - Pomodoro [^LHTL]
 
-## Deliberate Practice
+## Practice
 
 - Set goal specific goal (Sweet spot - not too easy, not too hard)
-- Feedback (Quickly check if you're right)
+  - Build something with what you've just learned
+- Feedback (Quickly check if you're right or wrong)
+  - Mock tests
+  - Flash cards
+  - Recall as much can you remember of what you just learned
+  - Write down your confidence level then compare after the session
+  - Examples
+    - Draw face from memory then compare with reference
+    - Recall number then check if correct
+    - Pause chess game and guess next move
+    - Hear start of Spanish phrase and complete it
 - Focused (No distractions, nice environment)
 - Time box (25 minutes - Pomodoro)
 
 ![pomodoro](../resources/pomodoro.png)
 
-- References
-  - Purposful Practice [^Peak]
-    - Recall long number and compare
-  - Focus + Feedback + Challenge [^FLOW]
-  - Drill [^USY]
-    - Sketch face then overlay with references photos to spot mistakes
-  - Pomodoro [^LHTL]
-    - Short focused intense sessions of learning
-  - Distraction free [^DEEPWORK]
-  - Invest in Loss [^TAOL]
-    - You learn more from your mistakes (Feedback)
-  - Pain + Reflection = Progress [^PRD]
-
-## Challenge understanding
-
 - Feynman technique
 
-  - Finds gaps in knowledge
   - "If you can't explain it simply, you don't understand it well enough" - Albert Einstein
+  - Finds gaps in your knowledge
   - Apply to real world scenario
   - Compare with other solutions
   - Diagrams
 
 ![Feynman](../resources/feynman-technique.jpg)
 
-- Mock tests
-- Flash cards
-- Recall (How much can you remember what you just learned)
-- Build something with what you just learned
-
-* References
-  - [^LHTL] Test yourself
-  - [^TOSTM] Push yourself up the learning pyramid
+- References
+  - Purposful Practice [^PEAK]
+  - Feedback + Challenge [^FLOW]
+  - Completion exercises [^GBAA]
+  - Drill [^USY]
+  - Pomodoro + Test Yourself [^LHTL]
+  - Pain + Reflection = Progress [^PRD]
+  - Push yourself up the learning pyramid [^TOSTM]
 
 ## Stuck [^LHTL]
 
@@ -124,18 +119,18 @@ Some basic techniques on how to learn more effectively
 * References
   - Diffused thinking [^LHTL]
 
-## Remember what you learn
+## Remember (Use it or lose it)
 
 - Spaced repetition (6hr, 24hr, 3d, 7d, 14d) [ LHTL ]
-- Flashcards
+  - Flashcards
+  - Quiz
+  - Build something
 
 ## References
 
 [^LHTL]: [Learning how to learn](https://www.youtube.com/watch?v=O96fE1E-rf8)
 
 [^TOSTM]: [The only skill that matters](https://www.youtube.com/watch?v=Gjb-o9VKBfQ)
-
-[^LJK]: [LIMITLESS by Jim Kwik](https://www.youtube.com/watch?v=yggcHDWyrHQ)
 
 [^TCM]: [THE CHAMPION'S MIND](https://www.youtube.com/watch?v=z_N4dfrLZiU)
 
@@ -160,7 +155,5 @@ Some basic techniques on how to learn more effectively
 [^TFHC]: [THE 4-HOUR CHEF](https://www.youtube.com/watch?v=7k0698v02ow)
 
 [^TPSG]: [The Practice](https://www.youtube.com/watch?v=1Zh4x8lPbnM)
-
-[^CTSP]: [Clear Thinking](https://www.youtube.com/watch?v=0u6Q7tP6aYI)
 
 [^GBAA]: [GET BETTER AT ANYTHING by Scott Young](https://www.youtube.com/watch?v=lz6tMyYp2UI)
