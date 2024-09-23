@@ -28,6 +28,8 @@ Some basic techniques on how to learn more effectively
 ## Goal
 
 - Set a vision of what you want to be? / What word encompasses that vision?
+- I want to build <X>
+  - Promotes exploration and asking further questions to build <X>
 - Prioritize what you learn
   - 80/20 rule - 80% of outcome come fro 20% of causes - Find that 20%
   - What your likely to encounter? (Asking for taxi in Spanish not grammar)
