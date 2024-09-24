@@ -3,23 +3,23 @@
 All about `focus`, `getting into the zone` or a `flow state` where you know
 what you are doing and has your full attention.
 
-## Aim
+## Motive
 
-Get invested so you want to work.
+Get invested to motivate and enjoy the journey.
 
-- Be Invested / Passion / Have a purpose / Vision / North Star
+- Be Invested / Passion / Have a purpose / Vision
 
-  - Know Why you are learning <X>
   - Set a vision of what you want to be?
   - What word encompasses that vision?
+  - Do more of what matters to me
+  - Know Why you are learning <X>
 
 - Enjoy the process
 
   - What would this look like if it were fun?
-  - Change environment
-  - Turn task it into a challenge
-  - Do more of what matters to me
-  - Lot's of your work will bad but you learn from your mistakes so just enjoy it
+    - Change environment
+    - Turn task it into a challenge
+  - Lot's of your work will bad but you learn from mistakes so have fun
 
 - References
   - Flow [^FLOW]
@@ -30,19 +30,18 @@ Get invested so you want to work.
 
 ## Target
 
-- I want to build <X>
-  - Promotes exploration and asking further questions to build <X>
 - Prioritize what you learn
-  - 80/20 rule - 80% of outcome come fro 20% of causes - Find that 20%
-  - What you're likely to encounter?
-    - Learning Spanish: Asking for taxi, not grammatical nuances
-  - What do I need to memorize?
+  - 80/20 rule - 80% of outcome come fro 20% of causes
   - Prioritize gaps/weaknesses in knowledge
   - What one thing can I do such that by doing it, makes everything else easier or unnecessary? [^TOQTAY]
-  - Ask experts in that field
-    - What the most important skills to learn?
-    - What is the biggest waste of time?
-    - Quiz them on their thought process? (Why did you do this?)
+  - What do I need to memorize?
+  - What you're likely to encounter?
+    - I want to build <X>: Promotes exploration and asking further questions
+    - Learning Spanish: Asking for taxi, not grammatical nuances
+    - Ask experts in that field
+      - What the most important skills to learn?
+      - What is the biggest waste of time?
+      - Quiz them on their thought process? (Why did you do this?)
 - Questions you should ask
   - What's the problem?
   - Why is this solution useful?
@@ -62,7 +61,7 @@ Get invested so you want to work.
 
 - Priming
 
-  - Get a gist of what you want to learning first
+  - Get a gist of what your learning
 
 - Use books, blogs, videos, podcasts
 
@@ -77,20 +76,20 @@ Get invested so you want to work.
 - References
   - Brute force learning [^TOSTM]
 
-## Practice
+## Practice (Work smart, not harder)
 
-- Set goal specific goal (Sweet spot - not too easy, not too hard)
-  - Build something with what you've just learned
-- Feedback (Quickly check if you're right or wrong)
+- Sweet spot Goal for Feedback (Quickly check if you're right or wrong)
+  - Sweet spot (Not too easy, not to hard)
   - Mock tests
   - Flash cards
   - Recall as much can you remember of what you just learned
   - Write down your confidence level then compare after the session
   - Examples
-    - Draw face from memory then compare with reference
-    - Recall number then check if correct
-    - Pause chess game and guess next move
-    - Hear start of Spanish phrase and complete it
+    - Drawing: Draw face from memory then compare with reference
+    - Reading: Recall what you've just read from memory
+    - Chess: Guess next move
+    - Spanish: Hear start of Spanish phrase, then try and finish it
+    - 100m run: How can I take off faster?
 - Focused (No distractions, nice environment)
 - Time box (25 minutes - Pomodoro)
 
@@ -107,7 +106,7 @@ Get invested so you want to work.
 ![Feynman](../resources/feynman-technique.jpg)
 
 - References
-  - Purposful Practice [^PEAK]
+  - Purposeful Practice [^PEAK]
   - Feedback + Challenge [^FLOW]
   - Completion exercises [^GBAA]
   - Drill [^USY]
@@ -115,7 +114,7 @@ Get invested so you want to work.
   - Pain + Reflection = Progress [^PRD]
   - Push yourself up the learning pyramid [^TOSTM]
 
-## Stuck [^LHTL]
+## Stuck (Take a break)
 
 - Diffused mode / Hammock time
   - Diffused mode = Shower thoughts
