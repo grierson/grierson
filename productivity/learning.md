@@ -1,22 +1,25 @@
 # (WIP) How to learn
 
-Some basic techniques on how to learn more effectively
+All about `focus`, `getting into the zone` or a `flow state` where you know
+what you are doing and has your full attention.
 
-## Focus
+## Aim
 
-- Get into the zone / Flow state
-  - Fully focused on the task
-  - Preemptively remove distractions (Phones)
+Get invested so you want to work.
+
+- Be Invested / Passion / Have a purpose / Vision / North Star
+
+  - Know Why you are learning <X>
+  - Set a vision of what you want to be?
+  - What word encompasses that vision?
+
 - Enjoy the process
-  - What would this look like if it were fun?
-  - Change environment, Turn it into a challenge
-  - Do more of what matters to me
-  - Lot's of your work will bad but you learn from your mistakes so just enjoy
-- Be Invested
 
-  - Set goals and view progress
-  - Get feedback on your work
-  - Know Why you are learning
+  - What would this look like if it were fun?
+  - Change environment
+  - Turn task it into a challenge
+  - Do more of what matters to me
+  - Lot's of your work will bad but you learn from your mistakes so just enjoy it
 
 - References
   - Flow [^FLOW]
@@ -25,16 +28,16 @@ Some basic techniques on how to learn more effectively
   - BEST Believe + Enjoy + Self Talk [^TCM]
   - Enjoy the process [^TPSG]
 
-## Goal
+## Target
 
-- Set a vision of what you want to be? / What word encompasses that vision?
 - I want to build <X>
   - Promotes exploration and asking further questions to build <X>
 - Prioritize what you learn
   - 80/20 rule - 80% of outcome come fro 20% of causes - Find that 20%
-  - What your likely to encounter? (Asking for taxi in Spanish not grammar)
+  - What you're likely to encounter?
+    - Learning Spanish: Asking for taxi, not grammatical nuances
   - What do I need to memorize?
-  - Prioritize gaps in knowledge
+  - Prioritize gaps/weaknesses in knowledge
   - What one thing can I do such that by doing it, makes everything else easier or unnecessary? [^TOQTAY]
   - Ask experts in that field
     - What the most important skills to learn?
@@ -55,7 +58,7 @@ Some basic techniques on how to learn more effectively
   - Your one word [^YOW]
   - The one question [^TOQTAY]
 
-## Study
+## Pre-Practice
 
 - Priming
 
