@@ -2,21 +2,24 @@
 
 - Work in small steps so you can course-correct and prevent unnecessary work
 - Determine the value of the work first. Is it even worth doing?
-  * If it is, what does success look like, and how do we measure it?
-    * Where are you currently?
-    * Where do you want to be?
+  - If it is, what does success look like, and how do we measure it?
+    - Where are you currently?
+    - Where do you want to be?
 - Drop anything that gets in the way of productivity.
 - Take pride in your work.
 
 # Continuously delivering small value
 
 > Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.
+>
 > - Agile Manifesto
 
 > Best value comes from small, value-focused features delivered frequently.
+>
 > - The nature of software development
 
 > Deliver as fast as possible
+>
 > - Lean Software Development
 
 ## Take small steps to avoid the Sunk-cost fallacy
@@ -24,6 +27,7 @@
 > the phenomenon whereby a person is reluctant to abandon a strategy or course
 > of action because they have invested heavily in it, even when it is clear that
 > abandonment would be more beneficial.
+>
 > - Sunk-cost fallacy
 
 If you have a one-month plan but find out after a week that demand has changed,
@@ -53,6 +57,7 @@ upfront planning.
 ## Evidence driven
 
 > If you don't know where you are going, you might wind up someplace else
+>
 > - Yogi Berra
 
 Not having a goal or working on features that don't provide feedback on your
@@ -65,10 +70,10 @@ that test assumptions and use the results to direct you towards your goal.
 - (Lean) Improvement kata
 - (Lean) A3 Process
 - (Rich Hickey) - Father Wattson's questions
-  * Where are you at?
-  * Where are you going?
-  * What do you know?
-  * What do you need to know?
+  - Where are you at?
+  - Where are you going?
+  - What do you know?
+  - What do you need to know?
 
 ## Small steps guided by evidence
 
@@ -109,22 +114,25 @@ If you were Elon Musk in the early 2000s and wanted to build an electric car
 company, what type of car would you choose first?
 
 - Strawman
-  * Some strawman example.
+
+  - Some strawman example.
 
 - Motorbike
-  * Manufacturing motorcycles would be less complicated and more affordable than
+
+  - Manufacturing motorcycles would be less complicated and more affordable than
     car production, allowing Tesla to start manufacturing. However, the target
     audience is car drivers; manufacturing motorcycles isn't creating accurate
     data towards the goal of electric cars.
 
 - Mass produce Sedan
-  * Tesla could have started with a mass-produced Sedan car as it's the most
+
+  - Tesla could have started with a mass-produced Sedan car as it's the most
     popular type in the USA; however, that requires mass-producing cars when
     they haven't even built one. And they are competing in a market with
     companies with solid footholds.
 
 - Sports car
-  * Instead, Tesla manufactured a small batch of Sports cars (Roadster),
+  - Instead, Tesla manufactured a small batch of Sports cars (Roadster),
     allowing Tesla to start manufacturing on a smaller scale and aim at a
     smaller target market with less competition.
 
@@ -157,10 +165,10 @@ Tools:
 
 - Value Stream Mapping so you can identify inefficiencies
 - Kanban
-  * Visualise workflow
-  * Tracks lead time on tickets and helps identify how it can be optimised
-  * Limits unfinished work and Context-switching
-  * Helps identify bottlenecks to eliminate waste
+  - Visualise workflow
+  - Tracks lead time on tickets and helps identify how it can be optimised
+  - Limits unfinished work and Context-switching
+  - Helps identify bottlenecks to eliminate waste
 
 ## Decide as late as possible (Lean)
 
@@ -186,14 +194,15 @@ Technical debt will creep back up as a bigger problem
   developers, and users should be able to maintain a constant pace indefinitely.
 
 - Feedback loops
-  * Pair Programming
-  * Test Driven Development
-  * Continuous Delivery
-  * Review customer feedback
+
+  - Pair Programming
+  - Test Driven Development
+  - Continuous Delivery
+  - Review customer feedback
 
 - Mistake proofing
-  * Infrastructure as code
-  * Component tests
+  - Infrastructure as code
+  - Component tests
 
 ## Communication (XP)
 

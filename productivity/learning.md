@@ -20,6 +20,7 @@ Get invested to motivate and enjoy the journey.
     - Change environment
     - Turn task it into a challenge
   - Lot's of your work will bad but you learn from mistakes so have fun
+  - Make tasks small so you get easy wins
 
 - References
   - Flow [^FLOW]
@@ -38,10 +39,11 @@ Get invested to motivate and enjoy the journey.
   - What you're likely to encounter?
     - I want to build <X>: Promotes exploration and asking further questions
     - Learning Spanish: Asking for taxi, not grammatical nuances
-    - Ask experts in that field
-      - What the most important skills to learn?
-      - What is the biggest waste of time?
-      - Quiz them on their thought process? (Why did you do this?)
+  - Ask experts in that field
+    - What the most important skills to learn?
+    - What is the biggest waste of time?
+    - Quiz them on their thought process? (Why did you do this?)
+    - Make sure they explain their thought process in baby steps
 - Questions you should ask
   - What's the problem?
   - Why is this solution useful?
@@ -63,7 +65,7 @@ Get invested to motivate and enjoy the journey.
 
   - Get a gist of what your learning
 
-- Use books, blogs, videos, podcasts
+- Prior Art: Use books, blogs, videos, podcasts
 
   - Anything that helps you understand the topic
   - View the topic from a different perspective
@@ -78,8 +80,9 @@ Get invested to motivate and enjoy the journey.
 
 ## Practice (Work smart, not harder)
 
-- Sweet spot Goal for Feedback (Quickly check if you're right or wrong)
+- Small challenges towards goal with feedback (Quickly check if you're right or wrong)
   - Sweet spot (Not too easy, not to hard)
+  - Build stuff
   - Mock tests
   - Flash cards
   - Recall as much can you remember of what you just learned
@@ -143,8 +146,6 @@ Get invested to motivate and enjoy the journey.
 [^PEAK]: [How to master anything: PEAK](https://www.youtube.com/watch?v=uoUHlZP094Q)
 
 [^USY]: [Ultralearning by Scott Young](https://www.youtube.com/watch?v=4xCiHppPfEs)
-
-[^DEEPWORK]: [DEEPWORK](https://www.youtube.com/watch?v=gTaJhjQHcf8)
 
 [^FLOW]: [The 4 Fs of Flow](https://www.youtube.com/watch?v=DXD8QjpQrFc)
 
