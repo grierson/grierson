@@ -1,8 +1,43 @@
-# (WIP) Event sourcing
+# Why Event sourcing?
 
-Record everything that happens.
+| Id  | Name    | Balance |
+| --- | ------- | ------- |
+| 1   | Alice   | $250    |
+| 2   | Bob     | $80     |
+| 3   | Charlie | $19,820 |
 
-## Where's my money? (Transaction History)
+Above is a basic straw man CRUD update in place banking database.
+However that's just a snapshot of the current state of accounts.
+If we looked again in `2 weeks` the results (below) will be different as
+transactions have occurred since.
+
+| Id  | Name    | Balance |
+| --- | ------- | ------- |
+| 1   | Alice   | $40,850 |
+| 2   | Bob     | $94     |
+| 3   | Charlie | $20     |
+
+Transactions are not recorded. Instead accounts are updated in place,
+overwriting the original balance with a new balance after each transaction.
+
+Which means we can't ask questions like
+
+* Why is my balance now $0, What did I spend it on?
+* How much did I spend over Christmas?
+* How much was I paid this month?
+
+**Event Sourcing** aims to resolve those limitations by
+instead recording each **event** that occurs to an **event log**
+and creating a **projection** based of those **events**.
+
+## TL;DR Event Sourcing
+
+Think Double-entry bookkeeping/Git/Redux and you're half way there.
+
+Event sourcing is about recording each "event" that occurs then
+playing over each to create a "projection"
+
+## Pro (Debugging)
 
 You wake up and discover you only have $10 left in your account.
 
@@ -21,19 +56,24 @@ So you go and check your banking app's transactions.
 | 6/11/2021 @ 23:32  | Whiskey                    | -$50    | $2,190  |
 | 7/11/2021 @ 01:48  | Ebay (1989 Mazda MX5)      | -$2,180 | $10     |
 
-Where you uncover you've drunkenly bought yourself an `1989 Mazda MX5`.
+Where you uncover you've drunkenly bought yourself an `1989 Mazda MX5`. "Uh oh..."
 
-> "Uh oh..."
+> [!NOTE]
+> As your bank has recorded each transaction you can view whats happend and when
 
-Thanks to the transaction history you've worked out what happened.
+* Transaction = Event
+* Transaction history = Event log
+* Current Balance = Projection
 
-## Transaction Incoming and Outgoing (Projection)
+## Pro (Temporal Query)
 
-Using the transaction history we can also view our total income/outgoings
-by only totaling the deposit/withdrawal transactions separately.
+Your banking app shows your **current** balance by totaling
+all of your deposit and withdrawal transactions.
 
-We are using the same data (transaction log) for each total but getting
-different results as we are only processing the events related.
+However, using the exact same transaction log we can interpret the
+data for different purposes, such as only totaling your **monthly** spend
+or overall **annual** income so we can query over our data in
+different ways whilst also taking time into account.
 
 | Date               | Description                | Amount |
 | ------------------ | -------------------------- | ------ |
@@ -53,53 +93,24 @@ different results as we are only processing the events related.
 
 > Outgoings: **$3,015**
 
-## Chess Notation (Replay)
+## Pro (Replayability)
 
 The Chess world uses `Chess notation` to record each move within a game
-so games can be replayed later for review where you can ask questions like
+so games can be replayed later for review, where you can ask questions like
 `"Where did I go wrong?", "What move should I have played at move 9?"` and
 experiment playing different lines from different points in the game.
-`What happens if I play Qb2 for move 6 instead?`
+`What happens if I play Qb2 for move 6?`
 
-In `Event sourcing` terms, `Chess notation` is the `event log`,
-each move is an `event`, and the chess board is the
-`projection` (current state) depending on what moves you've played so far.
+* Chess Notation = Event
+* Chess notation for game = Event Log
+* Current board = Projection
 
-```text
+```JSON
 1. Nf3 Nf6 2. c4 g6 3. Nc3 Bg7 4. d4 O-O 5. Bf4 d5 6. Qb3 dxc4 7. Qxc4 c6 8. e4 Nbd7 9. Rd1 Nb6 10. Qc5 Bg4 11. Bg5 Na4 12. Qa3 Nxc3 13. bxc3 Nxe4 14. Bxe7 Qb6 15. Bc4 Nxc3 16. Bc5 Rfe8+ 17. Kf1 Be6 18. Bxb6 Bxc4+ 19. Kg1 Ne2+ 20. Kf1 Nxd4+ 21. Kg1 Ne2+ 22. Kf1 Nc3+ 23. Kg1 axb6 24. Qb4 Ra4 25. Qxb6 Nxd1 26. h3 Rxa2 27. Kh2 Nxf2 28. Re1 Rxe1 29. Qd8+ Bf8 30. Nxe1 Bd5 31. Nf3 Ne4 32. Qb8 b5 33. h4 h5 34. Ne5 Kg7 35. Kg1 Bc5+ 36. Kf1 Ng3+ 37. Ke1 Bb4+ 38. Kd1 Bb3+ 39. Kc1 Ne2+ 40. Kb1 Nc3+ 41. Kc1 Rc2# 0-1
 ```
 
 ![Chess notation](img/chess.jpeg)
 
-## PLace Oriented Programming (PLOP)
+## Pro/Con (More specific code)
 
-An example bank account database table.
-
-| Id  | Name    | Balance |
-| --- | ------- | ------- |
-| 1   | Alice   | $250    |
-| 2   | Bob     | $80     |
-| 3   | Charlie | $19,820 |
-
-However this is only a snapshot of the current state of each account at the moment.
-If we looked again in `2 weeks` it will look different as transactions have
-occurred since.
-
-| Id  | Name    | Balance |
-| --- | ------- | ------- |
-| 1   | Alice   | $40,850 |
-| 2   | Bob     | $94     |
-| 3   | Charlie | $20     |
-
-However, each transaction isn't recorded individually instead rows are updated
-after each transaction (new information is replacing old information (PLOP)).
-
-So we can't ask `Why is my balance X?` or `Did I receive X amount?`.
-
-## Pros
-
-- Record everything that happened
-
-## Cons
-
-- More effort
+Forces you to write specific concrete business logic for each usecase which is great for code matching business flow but also leads to specific code for everything
