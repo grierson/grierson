@@ -8,27 +8,28 @@
 - Drop anything that gets in the way of productivity.
 - Take pride in your work.
 
-# Continuously delivering small value
+## Continuously delivering small value
 
-> Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.
->
-> - Agile Manifesto
+> Our highest priority is to satisfy the customer through early and
+continuous delivery of valuable software.
+
+- Agile Manifesto
 
 > Best value comes from small, value-focused features delivered frequently.
->
-> - The nature of software development
+
+- The nature of software development
 
 > Deliver as fast as possible
->
-> - Lean Software Development
+
+- Lean Software Development
 
 ## Take small steps to avoid the Sunk-cost fallacy
 
 > the phenomenon whereby a person is reluctant to abandon a strategy or course
 > of action because they have invested heavily in it, even when it is clear that
 > abandonment would be more beneficial.
->
-> - Sunk-cost fallacy
+
+- Sunk-cost fallacy
 
 If you have a one-month plan but find out after a week that demand has changed,
 or you've learned more about the problem and realised the plan is wrong. Do you
@@ -57,8 +58,8 @@ upfront planning.
 ## Evidence driven
 
 > If you don't know where you are going, you might wind up someplace else
->
-> - Yogi Berra
+
+- Yogi Berra
 
 Not having a goal or working on features that don't provide feedback on your
 progress towards a goal is aimless.

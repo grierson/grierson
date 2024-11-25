@@ -22,9 +22,9 @@ Examples of data:
 
 > The reality is that a good project manager understands that these four attributes
 > have coefficients. A good manager drives a project to be good enough, fast enough,
-> cheap enough, and done as much as necessary. A good manager manages the coefficients on these
-> attributes rather than demanding that all these coefficients are 100%. It is this kind
-> of management that Agile strives to enable.
+> cheap enough, and done as much as necessary. A good manager manages the coefficients
+> on these attributes rather than demanding that all these coefficients are 100%.
+> It is this kind of management that Agile strives to enable.
 
 Can only Pick 3
 
@@ -36,7 +36,8 @@ Can only Pick 3
 Changes Project manager can try to make
 
 - Schedule
-  - Business has usually set deadline for a reason (First to market, Contractual obligations, Match 3rd party release, etc.).
+  - Business has usually set deadline for a reason (First to market,
+  Contractual obligations, Match 3rd party release, etc.).
 - Add staff
   - Not Cheap and slows team down (Brooks - Mythical Man Month)
 - Decrease Quality

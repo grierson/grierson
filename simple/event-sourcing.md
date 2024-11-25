@@ -30,20 +30,28 @@ Which means we can't ask questions like
 instead recording each **event** that occurs to an **event log**
 and creating a **projection** based of those **events**.
 
-## TL;DR Event Sourcing
+## What is Event Sourcing?
 
-Think Double-entry bookkeeping/Git/Redux and you're half way there.
+> [!CAUTION]
+> Think Double-entry bookkeeping/Git/Redux and you're half way there.
 
-Event sourcing is about recording each "event" that occurs then
-playing over each to create a "projection"
+Event sourcing is about recording each `Event` that occurs to an `Event Log`
+then applying those `Events` to create a `Projection`, making the `Event Log`
+the `Source of Truth`.
 
-## Pro (Debugging)
+### Glossary
+
+* Event - Record of something that :fire: **happend** :fire:
+* Event Log - Append-only Sequence of `Events` in order they occurred
+* Projection - Applying select `Events` from `Event Log` to create state
+
+## Benefit (Temporal Query)
 
 You wake up and discover you only have $10 left in your account.
 
 > "Why the heck do I only have $10?!? I got paid last week!"
 
-So you go and check your banking app's transactions.
+So you go and check your banking app's transactions from the **past couple days**.
 
 | Date               | Description                | Amount  | Balance |
 | ------------------ | -------------------------- | ------- | ------- |
@@ -59,21 +67,14 @@ So you go and check your banking app's transactions.
 Where you uncover you've drunkenly bought yourself an `1989 Mazda MX5`. "Uh oh..."
 
 > [!NOTE]
-> As your bank has recorded each transaction you can view whats happend and when
+> As your bank has recorded each transaction you can view whats happened
 
-* Transaction = Event
-* Transaction history = Event log
-* Current Balance = Projection
-
-## Pro (Temporal Query)
-
-Your banking app shows your **current** balance by totaling
-all of your deposit and withdrawal transactions.
-
-However, using the exact same transaction log we can interpret the
-data for different purposes, such as only totaling your **monthly** spend
-or overall **annual** income so we can query over our data in
-different ways whilst also taking time into account.
+A Transaction log also means we can query transactions based on time.
+In the example above to get the **current** balance we just totaled up each deposit
+and withdrawal transaction.
+But we could also ask questions like "How much did I spend this **month**"
+or "How much did I make this **year**" and get different results from
+the same data.
 
 | Date               | Description                | Amount |
 | ------------------ | -------------------------- | ------ |
@@ -93,6 +94,10 @@ different ways whilst also taking time into account.
 
 > Outgoings: **$3,015**
 
+* Transaction = Event
+* Transaction Log = Event Log
+* Total = Projection
+
 ## Pro (Replayability)
 
 The Chess world uses `Chess notation` to record each move within a game
@@ -111,6 +116,11 @@ experiment playing different lines from different points in the game.
 
 ![Chess notation](img/chess.jpeg)
 
-## Pro/Con (More specific code)
+## Benefit (Retrofitting )
 
-Forces you to write specific concrete business logic for each usecase which is great for code matching business flow but also leads to specific code for everything
+Forces you to write specific `Events` for each usecase which is great for code matching business flow but also leads to specific code for everything
+
+## References
+
+[Datomic: Event Sourcing without the hassle]([https://vvvvalvalval.github.io/posts/2018-11-12-datomic-event-sourcing-without-the-hassle.html#why_event_sourcing?]
+)

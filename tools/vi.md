@@ -1,65 +1,68 @@
 # Vi
 
-## Global rename
+## Substitution
 
-- Populate Quickfix list
-  - Telescope live grep
-  - `tab` the instances you want
-  - `<C-q>` to send to Quickfix list
-- `:cdo s/<find>/<replace>/gc`
-  - `gc` to confirm each change
+Using regex for search and replace
 
-## Rename services for env
+Problem: Rename environment variables
 
-Rename list of services for config env file
-
+```diff
+-foo
+-bar
+-baz
++FOO_URL
++BAR_URL
++BAZ_URL
 ```
+
+Can be achieve like this
+
+`:s/\(\w\+\)/\U\1_URL/`
+
+```text
+-- try for yourself
+-- highlight the lines below lines below
 foo
 bar
 baz
 ```
 
-- `:s/\(.*\)/\U\1\e: "%hiera{'\1'}"/g` (One eyed fighting kirby)
-- `:s/\v.*/\U\0\e: "%hiera{'\0'}"/g` (`\v` very magic) (`\0` group)
+- `:s/` - Substitution
+- `\(\w\+\)` - Select all characters
+- `/` - Escape search
+- `\U` - Uppercase following characters
+- `\1` - Use capture group (\(\w\+\))
+- `_URL` - Manually add after capture group
+- `/` - Escape replace
 
+You can instead use `very magic (\v)` mode to remove some of the
+escape characters to make it a little easier to read.
+
+`:s/\v(\w+)/\U\1_URL/`
+
+```text
+-- try for yourself
+-- highlight the lines below lines below
+foo
+bar
+baz
 ```
+
+### Example: Rename environment variables
+
+Rename list of variables within an environment file
+
+```text
+foo
+bar
+baz
+```
+
+- `:s/\v(.*)/\U\1\e: "%hiera{'\1'}"/g`
+- (`\v` very magic) (`.*` select everything) (`\e` Escape uppercase)
+
+```text
 FOO: "%hiera{'foo'}"
 BAR: "%hiera{'bar'}"
 BAZ: "%hiera{'baz'}"
-```
-
-## Insert end of multiple lines
-
-```
-hello
-foo
-world
-bar
-```
-
-- `:s/.*/\0_url`
-
-```
-hello_url
-foo_url
-world_url
-bar_url
-```
-
-## Insert in line
-
-```
-hello: "http://foo.bar"
-foo: "http://foo.bar"
-world: "http://foo.bar"
-bar: "http://foo.bar"
-```
-
-- `:s/\v(\w+)/\0_url`
-
-```
-hello_url: "http://foo.bar"
-foo_url: "http://foo.bar"
-world_url: "http://foo.bar"
-bar_url: "http://foo.bar"
 ```
