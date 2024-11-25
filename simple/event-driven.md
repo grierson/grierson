@@ -23,7 +23,8 @@ flowchart LR
 ## Resilience
 
 > [!WARNING]
-> What happens if any of these steps fail? As `place order`, `payment`, `ship`, or `send confirmation` could all fail.
+> What happens if any of these steps fail?
+> As `place order`, `payment`, `ship`, or `send confirmation` could all fail.
 
 ```mermaid
 flowchart LR

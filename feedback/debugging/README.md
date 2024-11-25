@@ -1,4 +1,4 @@
-# TL;DR
+# Debugging
 
 - (Rich Hickey) - Father Wattson's questions
   - Where are you at?
@@ -6,23 +6,23 @@
   - What do you know?
   - What do you need to know?
 - Apply the scientific method in small steps
-  * Write down your experiments and results
+  - Write down your experiments and results
 - Breakdown and simplify the problem.
 
-# Mindset
+## Mindset
 
-![Sherlock Holmes](img/sherlock-holmes.png)
+![Sherlock Holmes](/resources/sherlock-holmes.png)
 
 - Being stuck is only temporary
-    - There is always a logical explanation
+  - There is always a logical explanation
 - Iterative process
   - Progressively ask less stupid questions
-- Timebox
-  * Avoid wasting hours in a rabbit hole
-- Priortise
+- Time box
+  - Avoid wasting hours in a rabbit hole
+- Prioritise
   - An unlikely bug with little consequence doesn't need to be fixed right away
 
-# Steps
+### Steps
 
 ```mermaid
 flowchart LR
@@ -41,9 +41,10 @@ Something isn't working as expected.
 ### 🔥🔥🔥 STATE THE PROBLEM 🔥🔥🔥
 
 > If you don't know where you are going, you might wind up someplace else.
+>
 > - Yogi Berra
 
-![Writing](img/writing.png)
+![Writing](/resources/writing.png)
 
 - Feynman technique (Rubber duck method)
   - Explain the problem (Write it down, Talk to rubber duck)
@@ -70,6 +71,7 @@ Be skeptical of what's presented to you
 ```
 
 > "The error occurs on Cassandra but not H2"
+>
 > - Someone
 
 Don't take their word for it, **test it**!
@@ -78,18 +80,18 @@ and it was a miscommunication issue all along.
 
 ### Sequence of events
 
-![Sequence](img/sequence.png)
+![Sequence](/resources/sequence.png)
 
 - 🔥 Map the sequence of events that lead to bug
-    - Draw it
-        - Sequence (Backed with logs)
-        - Network
-        - State
+  - Draw it
+    - Sequence (Backed with logs)
+    - Network
+    - State
 - What did you/they expect compared to what happened?
-    - Analyse the evidence
-        - Get a screen recording/screenshot.
-        - Read the logs/stack trace **carefully!!!**
-        - Check the database/event feed/queue
+  - Analyse the evidence
+    - Get a screen recording/screenshot.
+    - Read the logs/stack trace **carefully!!!**
+    - Check the database/event feed/queue
 - Check recent commits (Git bisect)
 
 ### Can you reproduce the bug?
@@ -100,7 +102,7 @@ and it was a miscommunication issue all along.
 
 ### Print statements
 
-![Pressure](img/pressure.png)
+![Pressure](/resources/pressure.png)
 
 Just like gauges in mechanical systems, add instrumentation to
 your system so you can see what happening
@@ -133,7 +135,7 @@ Or better yet just evaluate each expression in the REPL
 
 ### Research
 
-![User guide](img/user-guide.png)
+![User guide](/resources/user-guide.png)
 
 - RTFM
 - Google
@@ -179,7 +181,7 @@ flowchart LR
 
 An event preceding an effect without which the effect would not have occurred
 
-![Think](img/think.png)
+![Think](/resources/think.png)
 
 - 🔥 Write down your hypothesises
 - Include silly ideas
@@ -207,25 +209,25 @@ An event preceding an effect without which the effect would not have occurred
 3. Small
 4. Change only one thing
 
-![Experiment](img/experiment.png)
+![Experiment](/resources/experiment.png)
 
 - 🔥 **Write down your experiments**
-  * What variable did you test?
-  * What did you expect? What was the actual result?
-  * Why does the experiment make sense?
+  - What variable did you test?
+  - What did you expect? What was the actual result?
+  - Why does the experiment make sense?
 - Short feedback loop
-  * REPL
-  * Unit test
-  * Try good and bad inputs to demonstrate the defect
+  - REPL
+  - Unit test
+  - Try good and bad inputs to demonstrate the defect
 
 ## 4. Observation
 
-![Report](img/report.png)
+![Report](/resources/report.png)
 
 - Understand all the outputs
-    - Don't know the output? How do you know if it's related to the problem or not
+  - Don't know the output? How do you know if it's related to the problem or not
 - Use good tools (More outputs)
-    - Debuggers, Logging, Print, Metrics
+  - Debuggers, Logging, Print, Metrics
 
 ```markdown
 IF EXPERIMENT supports HYPOTHESIS
@@ -235,7 +237,7 @@ ELSE reject HYPOTHESIS
 
 ## 5. Theory (Diagnosis)
 
-![Lightbulb](img/lightbulb.png)
+![Lightbulb](/resources/lightbulb.png)
 
 - A hypothesis offering valid predictions that can be observed
 - Blog/tell a friend what you learned

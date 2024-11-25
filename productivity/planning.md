@@ -23,8 +23,8 @@
 
 ## Planning
 
-![natural_planning_model](../resources/natural_planning_model.jpg)
+![natural_planning_model](/resources/natural_planning_model.jpg)
 
 ## Novelty
 
-![GTD](../resources/gtd_workflow.png)
+![GTD](/resources/gtd_workflow.png)

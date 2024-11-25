@@ -1,4 +1,4 @@
-# TL;DR Agile
+# Agile
 
 - Work in small steps so you can course-correct and prevent unnecessary work
 - Determine the value of the work first. Is it even worth doing?

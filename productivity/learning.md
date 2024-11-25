@@ -1,4 +1,4 @@
-# (WIP) How to learn
+# Learning
 
 All about `focus`, `getting into the zone` or a `flow state` where you know
 what you are doing and has your full attention.
@@ -12,7 +12,7 @@ Get invested to motivate and enjoy the journey.
   - Set a vision of what you want to be?
   - What word encompasses that vision?
   - Do more of what matters to me
-  - Know Why you are learning <X>
+  - Know Why you are learning `X`
 
 - Enjoy the process
 
@@ -34,7 +34,8 @@ Get invested to motivate and enjoy the journey.
 - Prioritize what you learn
   - 80/20 rule - 80% of outcome come fro 20% of causes
   - Prioritize gaps/weaknesses in knowledge
-  - What one thing can I do such that by doing it, makes everything else easier or unnecessary? [^TOQTAY]
+  - What one thing can I do such that by doing it,
+  makes everything else easier or unnecessary? [^TOQTAY]
   - What do I need to memorize?
   - What you're likely to encounter?
     - I want to build <X>: Promotes exploration and asking further questions
@@ -50,7 +51,7 @@ Get invested to motivate and enjoy the journey.
   - How can I use this to solve my problem?
   - How does this compare with other solutions?
 
-* References
+- References
   - Metalearning map [^USY]
   - See [^GBAA]
   - Feel the fundamentals [^TAOL]
@@ -96,17 +97,19 @@ Get invested to motivate and enjoy the journey.
 - Focused (No distractions, nice environment)
 - Time box (25 minutes - Pomodoro)
 
-![pomodoro](../resources/pomodoro.png)
+![pomodoro](/resources/pomodoro.png)
+
+>"If you can't explain it simply, you don't understand it well enough"
+
+- Albert Einstein
 
 - Feynman technique
-
-  - "If you can't explain it simply, you don't understand it well enough" - Albert Einstein
   - Finds gaps in your knowledge
   - Apply to real world scenario
   - Compare with other solutions
   - Diagrams
 
-![Feynman](../resources/feynman-technique.jpg)
+![Feynman](/resources/feynman-technique.jpg)
 
 - References
   - Purposeful Practice [^PEAK]
@@ -123,7 +126,7 @@ Get invested to motivate and enjoy the journey.
   - Diffused mode = Shower thoughts
   - Focused mode = Active thinking
 
-* References
+- References
   - Diffused thinking [^LHTL]
 
 ## Remember (Use it or lose it)
