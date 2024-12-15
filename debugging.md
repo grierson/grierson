@@ -44,7 +44,7 @@ Something isn't working as expected.
 >
 > - Yogi Berra
 
-![Writing](/resources/writing.png)
+![Writing](./resources/writing.png)
 
 - Feynman technique (Rubber duck method)
   - Explain the problem (Write it down, Talk to rubber duck)
@@ -80,7 +80,7 @@ and it was a miscommunication issue all along.
 
 ### Sequence of events
 
-![Sequence](/resources/sequence.png)
+![Sequence](./resources/sequence.png)
 
 - 🔥 Map the sequence of events that lead to bug
   - Draw it
@@ -102,7 +102,7 @@ and it was a miscommunication issue all along.
 
 ### Print statements
 
-![Pressure](/resources/pressure.png)
+![Pressure](./resources/pressure.png)
 
 Just like gauges in mechanical systems, add instrumentation to
 your system so you can see what happening
@@ -135,7 +135,7 @@ Or better yet just evaluate each expression in the REPL
 
 ### Research
 
-![User guide](/resources/user-guide.png)
+![User guide](./resources/user-guide.png)
 
 - RTFM
 - Google
@@ -181,7 +181,7 @@ flowchart LR
 
 An event preceding an effect without which the effect would not have occurred
 
-![Think](/resources/think.png)
+![Think](./resources/think.png)
 
 - 🔥 Write down your hypothesises
 - Include silly ideas
@@ -209,7 +209,7 @@ An event preceding an effect without which the effect would not have occurred
 3. Small
 4. Change only one thing
 
-![Experiment](/resources/experiment.png)
+![Experiment](./resources/experiment.png)
 
 - 🔥 **Write down your experiments**
   - What variable did you test?
@@ -222,7 +222,7 @@ An event preceding an effect without which the effect would not have occurred
 
 ## 4. Observation
 
-![Report](/resources/report.png)
+![Report](./resources/report.png)
 
 - Understand all the outputs
   - Don't know the output? How do you know if it's related to the problem or not
@@ -237,7 +237,7 @@ ELSE reject HYPOTHESIS
 
 ## 5. Theory (Diagnosis)
 
-![Lightbulb](/resources/lightbulb.png)
+![Lightbulb](./resources/lightbulb.png)
 
 - A hypothesis offering valid predictions that can be observed
 - Blog/tell a friend what you learned
