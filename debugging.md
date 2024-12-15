@@ -244,7 +244,7 @@ ELSE reject HYPOTHESIS
 - Does theory cover all of your problems
 - Take a break
 
-# Tools
+## Tools
 
 - Debugger
 - Profilers - perf
