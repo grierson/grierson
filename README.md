@@ -1,14 +1,19 @@
 # Kyle Grierson
 
-- Feedback
-  - Gather evidence quickly for future planning
-- Simple
-  - Decoupling current work from future work
-- Tools
-  - Helpful tools
-- Productivity
-  - Advice for when I procrastinate
-- WIP
-  - Useless notes
-- Resources
-  - Pictures and stuff
+```mermaid
+mindmap
+root((Root))
+  Cohesion
+    Bounded Context
+    Aggregate
+  Communication
+    Sync
+      HATEOAS
+    Async
+      Events
+  Feedback
+    TDD 
+    Agile
+    CI/CD
+    Debugging
+```

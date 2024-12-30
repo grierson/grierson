@@ -1,7 +1,7 @@
 # Why Event sourcing?
 
 Below is a straw man CRUD (update in place) banking database.
-Which is basically only a snapshot of the current balances' of each account.
+A snapshot of each account's current balances'.
 
 | Id  | Name    | Balance |
 | --- | ------- | ------- |
@@ -18,8 +18,8 @@ transactions have occurred since.
 | 2   | Bob     | $94     |
 | 3   | Charlie | $20     |
 
-No transactions are recorded. Accounts are updated in place,
-so original balance is overwritten with the new balance after each transaction.
+Since no transactions are recorded and instead the original balance is overwritten
+with the new balance after each transaction we lose the evidence of what happened.
 
 Which means we can't ask questions like
 
@@ -36,7 +36,8 @@ so we have a historical record of everything that happened.
 > [!NOTE]
 > Think Double-entry bookkeeping/Git/Redux and you're half way there.
 
-Event sourcing is about recording each `Event` that occurs to an `Event Log` making it the `Source of Truth`.
+Event sourcing is about recording each `Event` that occurs to an `Event Log`
+making it the `Source of Truth`.
 
 ## Event Sourcing in action (Chess)
 
@@ -50,11 +51,14 @@ experiment playing different lines from different points in the game.
 * Chess notation for game = Event Log
 * Current board = Projection
 
-```JSON
-1. Nf3 Nf6 2. c4 g6 3. Nc3 Bg7 4. d4 O-O 5. Bf4 d5 6. Qb3 dxc4 7. Qxc4 c6 8. e4 Nbd7 9. Rd1 Nb6 10. Qc5 Bg4 11. Bg5 Na4 12. Qa3 Nxc3 13. bxc3 Nxe4 14. Bxe7 Qb6 15. Bc4 Nxc3 16. Bc5 Rfe8+ 17. Kf1 Be6 18. Bxb6 Bxc4+ 19. Kg1 Ne2+ 20. Kf1 Nxd4+ 21. Kg1 Ne2+ 22. Kf1 Nc3+ 23. Kg1 axb6 24. Qb4 Ra4 25. Qxb6 Nxd1 26. h3 Rxa2 27. Kh2 Nxf2 28. Re1 Rxe1 29. Qd8+ Bf8 30. Nxe1 Bd5 31. Nf3 Ne4 32. Qb8 b5 33. h4 h5 34. Ne5 Kg7 35. Kg1 Bc5+ 36. Kf1 Ng3+ 37. Ke1 Bb4+ 38. Kd1 Bb3+ 39. Kc1 Ne2+ 40. Kb1 Nc3+ 41. Kc1 Rc2# 0-1
+```text
+1. Nf3 Nf6 
+2. c4 g6 
+3. Nc3 Bg7 
+4. ...
 ```
 
-![Chess notation](img/chess.jpeg)
+![Chess notation](./resources/chess.jpeg)
 
 ## Benefit (Temporal Query)
 
