@@ -4,13 +4,17 @@
 mindmap
 root((Root))
   Cohesion
-    Bounded Context [DDD - Bounded Context]
-    Aggregate [DDD - Aggregate]
-  Communication
-    Sync
-      HATEOAS [Hypermedia as the Engine of Application State]
-    Async
-      Outbox pattern
+    Small
+      Aggregate Root [DDD - Aggregate Root]
+    Large 
+      Bounded Context [DDD - Bounded Context]
+  Coupling
+    Communication
+      Large
+        Sync
+          HATEOAS [Hypermedia as the Engine of Application State]
+        Async
+          Outbox pattern
   Feedback
     TDD [Test Driven Development]
     Agile

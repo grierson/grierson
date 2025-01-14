@@ -18,18 +18,16 @@ transactions have occurred since.
 | 2   | Bob     | $94     |
 | 3   | Charlie | $20     |
 
-Since no transactions are recorded and instead the original balance is overwritten
-with the new balance after each transaction we lose the evidence of what happened.
+Since transactions aren't recorded and balances' overwritten
+we lose any evidence of what happened.
 
-Which means we can't ask questions like
+So we can't ask questions like
 
-* Why is my balance now $0, What did I spend it on?
-* How much did I spend over Christmas?
-* How much was I paid this month?
+* Why is my balance $0, What did I spend it on?
+* Why is my bank account locked?
 
-**Event Sourcing** aims to resolve those limitations by
-instead recording each **event** that occurs to an **event log**
-so we have a historical record of everything that happened.
+**Event Sourcing** resolves this by recording each **event**
+to an **event log** to maintain a historical record.
 
 ## What is Event Sourcing?
 
@@ -59,6 +57,24 @@ experiment playing different lines from different points in the game.
 ```
 
 ![Chess notation](./resources/chess.jpeg)
+
+## Event Sourcing (Drawn)
+
+```mermaid
+flowchart LR
+    style Command fill:blue
+    style Aggregate fill:yellow
+    style Event fill:orange
+    style Projector fill:green
+    style Injector fill:pink
+    style Notifier fill:purple
+    Command --> Aggregate
+    Aggregate --> Event
+    Injector --> Event
+    Event --> Events[(Event Log)]
+    Events --> Projector
+    Events --> Notifier
+```
 
 ## Benefit (Temporal Query)
 
@@ -128,17 +144,21 @@ Can create `notifier` to consume events and forward to no process
 
 Can create projections from previous data.
 You might realise a new opportunity from the data you've already collected since
-we havn't binned anything we can still use that data.
+we haven't binned anything we can still use that data.
 
 ## Glossary
 
+* Command - Request for something to happen (Operation can fail)
 * Event - Record of something that :fire: **happend** :fire: (past-tense)
 * Event Log - Append-only Sequence of `Events` ordered by occurred
-* Projection - Applying select `Events` from the `Event Log` to create a report
-* Aggregate - Manage creation of `events` for something that has a Life cycle
+* Aggregate - Groups related `events` from `Event Log` together to
+represent some business object. Use's internal state to validate incoming commands.
+(Can't withdraw when account balance is $0)
+* Projection - Groups related `events` from the `Event Log` together to
+create a report. Use's Internal state to help generate report.
 * Injector - Consume `events` from an external services
-* Notifier - Emit `events` to external services
-* Process manager (Sage) - Manage process that requires many `events`
+* Notifier - Reads `Event log` and emit `events` to external services
+* Process manager (Saga) - Manage process that requires many `events`
 * Gateway - External service
 
 ## References
