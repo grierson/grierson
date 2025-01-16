@@ -1,7 +1,7 @@
-# Why Event sourcing?
+# (WIP) Event sourcing
 
-Below is a straw man CRUD (update in place) banking database.
-A snapshot of each account's current balances'.
+Below is a basic `Stateful` CRUD (update in place) banking database.
+Essentially, it is a snapshot of each account's :fire:**current**:fire: balances.
 
 | Id  | Name    | Balance |
 | --- | ------- | ------- |
@@ -18,16 +18,12 @@ transactions have occurred since.
 | 2   | Bob     | $94     |
 | 3   | Charlie | $20     |
 
-Since transactions aren't recorded and balances' overwritten
-we lose any evidence of what happened.
+Without transaction records and overwritten balances, we lose all evidence.
 
 So we can't ask questions like
 
 * Why is my balance $0, What did I spend it on?
 * Why is my bank account locked?
-
-**Event Sourcing** resolves this by recording each **event**
-to an **event log** to maintain a historical record.
 
 ## What is Event Sourcing?
 
@@ -37,7 +33,55 @@ to an **event log** to maintain a historical record.
 Event sourcing is about recording each `Event` that occurs to an `Event Log`
 making it the `Source of Truth`.
 
-## Event Sourcing in action (Chess)
+```mermaid
+flowchart LR
+    style Command fill:LightSkyBlue,color:black
+    style Aggregate fill:Khaki,color:black
+    style Event fill:Orange,color:black
+    style Projector fill:DarkSeaGreen,color:black
+    style Injector fill:HotPink,color:black
+    style Notifier fill:MediumSlateBlue,color:black
+    style Saga fill:Salmon,color:black
+    Command --> Aggregate
+    Aggregate --> Event
+    Event --> Aggregate
+    Injector --> Event
+    Event --> Events[(Event Log)]
+    Events --> Projector
+    Events --> Notifier
+    Events --> Saga[Process Manager]
+```
+
+```csharp
+class BankAccountAggregate(Events events) {
+  private int _balance = 0;  
+
+  public void Apply(Deposited event) {
+    this._balance += event.value;
+  }
+
+  public void Apply(Withdrew event) {
+    this._balance -= event.value;
+  }
+
+  public void Handle(Withdraw command) {
+    if (this._balance >= command.amount) {
+      events.Raise(new Withdrew(command.amount))
+    }
+  }
+}
+
+class Projection(Events events) {
+  public int SpendingProjection() {
+    return events.reduce(state, event => {
+      if (event.type == "Withdrew")
+        state += event.value
+    });
+  }
+}
+```
+
+## Event Sourcing used else where (Chess)
 
 The Chess world uses `Chess notation` to record each move within a game
 so games can be replayed later for review, where you can ask questions like
@@ -57,24 +101,6 @@ experiment playing different lines from different points in the game.
 ```
 
 ![Chess notation](./resources/chess.jpeg)
-
-## Event Sourcing (Drawn)
-
-```mermaid
-flowchart LR
-    style Command fill:blue
-    style Aggregate fill:yellow
-    style Event fill:orange
-    style Projector fill:green
-    style Injector fill:pink
-    style Notifier fill:purple
-    Command --> Aggregate
-    Aggregate --> Event
-    Injector --> Event
-    Event --> Events[(Event Log)]
-    Events --> Projector
-    Events --> Notifier
-```
 
 ## Benefit (Temporal Query)
 
