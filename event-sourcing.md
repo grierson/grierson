@@ -1,7 +1,7 @@
 # (WIP) Event sourcing
 
-Below is a basic `Stateful` CRUD (update in place) banking database.
-Essentially, it is a snapshot of each account's :fire:**current**:fire: balances.
+Here is a basic `Stateful` CRUD (update in place) banking database.
+It serves as a snapshot of each account's :fire: **current** :fire: balances.
 
 | Id  | Name    | Balance |
 | --- | ------- | ------- |
@@ -155,12 +155,44 @@ the same data.
 * Transaction Log = Event Log
 * Total = Projection
 
-## Benefit (Error handling)
+## Benefit (Resiliency)
 
-Can model each step within a process individually.
+A naive approach would be to put both processes in one `handler`.
 
-* Process all files (Success or Fail)
-* ES - Create event for each file, retry any failed event
+```javascript
+function handlePlaceOrder() {
+  const transaction = createTransaction();
+  const shipping = createShippingLabelAsync();
+  const email = emailCustomerConfirmationAsync();
+
+  await shipping.catch(e => transaction.revert());
+}
+```
+
+But what happens if
+
+1. Shipping label fails? We've already sent an email confirmation out.
+1. Email fails? We can't retry as that would create another shipping label.
+
+```mermaid
+flowchart LR
+    style Event fill:Orange,color:black
+    style Notifier fill:MediumSlateBlue,color:black
+    style Saga fill:Salmon,color:black
+    style Command fill:LightSkyBlue,color:black
+    Event[OrderCreated] --> Events[(Event Log)]
+    Events --> Notifier[Email]
+    Events --> Saga[Order Process Manager] -- Create Shipping Label --> Command
+```
+<!-- TODO: Expand -->
+By having an `Event log` and committing each state change as an `Event`
+we're known that step has occurred and other processes can operate from
+that
+
+So with the earlier what if's
+
+1. Shipping label fails? We can retry independently
+1. Email fails? We can retry independently
 
 ## Benefit (Extensible)
 
@@ -184,6 +216,7 @@ represent some business object. Use's internal state to validate incoming comman
 create a report. Use's Internal state to help generate report.
 * Injector - Consume `events` from an external services
 * Notifier - Reads `Event log` and emit `events` to external services
+
 * Process manager (Saga) - Manage process that requires many `events`
 * Gateway - External service
 
