@@ -1,36 +1,100 @@
 # (WIP) Structure
+<!-- mtoc-start -->
 
-How should you structure your codebase?
+* [Pure code](#pure-code)
+  * [Pure code examples](#pure-code-examples)
+  * [Why pure code](#why-pure-code)
+* [Impure code](#impure-code)
+  * [Impure code examples](#impure-code-examples)
+  * [Why impure code](#why-impure-code)
+* [Maximise `Pure` and Minimise `Impure`](#maximise-pure-and-minimise-impure)
+* [Move details to edge (Port and Adapters, Persistence ignorance)](#move-details-to-edge-port-and-adapters-persistence-ignorance)
+  * [Persistence ignorance](#persistence-ignorance)
+  * [Testing](#testing)
+* [Why Pure and Impure](#why-pure-and-impure)
+* [References](#references)
+* [Feature Cohesion](#feature-cohesion)
+  * [Feature Cohesion Examples](#feature-cohesion-examples)
+* [Glossary](#glossary)
 
-## Impure and Pure
+<!-- mtoc-end -->
 
-Bad code :fire: **interleaves** :fire: `pure` and `impure` code.
+## Pure code
 
 `Pure` = Deterministic (Same input, Same output)
 
-* Function (Calculate tax, Add Item to cart)
+```mermaid
+flowchart LR
+  style Add fill:ForestGreen
+  Addend1 --> Add
+  Addend2 --> Add
+  Add --> Sum
+```
+
+### Pure code examples
+
+* `add(int int) => int` - Given the same input you will always receive the same output
+* `addItem(cart item) => cart` - Item might be added depending logic but it's consistent
+
+### Why pure code
+
+* Deterministic - Same Input, Same output. Doesn't matter when call is made
+* Easy to test - No `Stubs`/`Mocks` required, just data for input.
+
+## Impure code
 
 `Impure` = Non-deterministic (Might have input, Might have output)
-interacts with external system
 
-* Database (db.query() -> rows **might** be there)
-* File system (file.get(file) -> file **might** be there)
-* Gateway (provider.Pay() -> provider **might** accept payment)
-* Email (email.Send() -> email server **might** be down)
-* Completely different (service.Update(order) ->
-sends missile in the middle of updating order)
+```mermaid
+---
+title: Today's call
+---
+flowchart LR
+  style Now fill:FireBrick
+  Now["now()"] --> 27/01/2017
+```
 
-### Impure/Pure Sandwich
+```mermaid
+---
+title: Tomorrow's call
+---
+flowchart LR
+  style Now fill:FireBrick
+  Now["now()"] --> 20/01/2021
+```
 
-Why `Pure` code?
+### Impure code examples
 
-* Deterministic (Same input, Same output)
-  * `add(2 + 2) => 4` doesn't matter when call is made
-* Easy to test
-  * `Pure` code doesn't require `Stubs`/`Mocks`
-  * `Unit` tests can be run in isolation
+* Function is `stateful` like a counter
+  * `counter() -> 1`
+  * `counter() -> 2`
+  * `counter() -> ...`
+* Calling external service (I/O) like a Gateway
+  * `paymentProvider.Pay(token, itemId)`
+    * Provider **might** accept payment
+      * Token could be expired
+      * Account might have insufficient funds
+      * Item might be out of stock
+      * The payment provider is down
+* Does additional steps within the function
+  * `orderService.Update(order)`
+    * Sends email in the middle of updating order
+    * Updates stock in the Stock service
 
-Mixing `Pure` and `Impure` together makes code
+### Why impure code
+
+We still need to interact with the real `impure` world, Like
+
+* Sending emails
+* Working with Database and Gateways
+
+So things actually get done. `Pure` functions by themselves will
+won't actually achieve anything usefully except heat up your room
+as it runs on your computer.
+
+## Maximise `Pure` and Minimise `Impure`
+
+Maximise the amount of `Pure` code and minimise the amount of `Impure` code
 
 * Harder to read as `Impure` specific code is mixed with `Pure` domain workflows.
   * Connecting to database
@@ -117,7 +181,7 @@ function application() {
 } 
 ```
 
-### (WIP) Port and Adapters
+## Move details to edge (Port and Adapters, Persistence ignorance)
 
 Realistically you need to interact with outside `Impure` world
 so you can actually get stuff done.
@@ -293,6 +357,8 @@ flowchart LR
   Pure[Pure Functional core] --> ShellOut[Adapter Out]
 ```
 
+## Why Pure and Impure
+
 > The overriding rule that makes this architecture work is The Dependency Rule.
 > This rule says that source code dependencies can only point inwards.
 > Nothing in an inner circle can know anything at all about
@@ -312,7 +378,7 @@ flowchart LR
   * Testable
     * Can test `Domain` without `I/O` (Database, HTTP, Service)
 
-References
+## References
 
 * [Moving IO to the edges of your app: Functional Core, Imperative Shell - Scott Wlaschin](https://www.youtube.com/watch?v=P1vES9AgfC4)
 * [Functional core, Imperative shell - Gary Bernhardt](https://www.destroyallsoftware.com/screencasts/catalog/functional-core-imperative-shell)
@@ -323,10 +389,31 @@ References
 
 ## Feature Cohesion
 
-* Examples
-  * Screaming Architecture
-  * Vertical Slice Architecture
-  * Modular Monolith
+No
+
+* Models/
+* Controllers/
+* Views/
+* Services/
+
+Yes
+
+* Orders
+  * Get/
+    * handler.clj
+    * spec.clj
+  * Delete/
+    * handler.clj
+* Cart
+  * cartAggregate.clj
+  * AddItem/
+    * handler.clj
+
+### Feature Cohesion Examples
+
+* Screaming Architecture
+* Vertical Slice Architecture
+* Modular Monolith
 
 ## Glossary
 
