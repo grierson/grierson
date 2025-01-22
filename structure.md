@@ -4,9 +4,9 @@
 * [Decouple Pure and Impure code](#decouple-pure-and-impure-code)
   * [What is Pure code](#what-is-pure-code)
   * [What is Impure code](#what-is-impure-code)
+  * [Why the `Pure` and `Impure` language](#why-the-pure-and-impure-language)
   * [Maximise `Pure` and Minimise `Impure`](#maximise-pure-and-minimise-impure)
   * [Move details to edge (Port and Adapters, Persistence ignorance)](#move-details-to-edge-port-and-adapters-persistence-ignorance)
-  * [Persistence ignorance](#persistence-ignorance)
   * [Testing](#testing)
   * [Decouple Pure and Impure - Appeal to Authority](#decouple-pure-and-impure---appeal-to-authority)
   * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
@@ -105,6 +105,11 @@ flowchart LR
   Now["pay(token)"] --> Success["Success: Payment taken"]
 ```
 
+### Why the `Pure` and `Impure` language
+
+[TODO:] Impure can call Pure and Pure still Pure.
+Pure can't call Impure as it makes it too Impure
+
 ### Maximise `Pure` and Minimise `Impure`
 
 Maximise the amount of `Pure` code and minimise the amount of `Impure` code
@@ -198,6 +203,11 @@ function application() {
 
 Realistically you need to interact with outside `Impure` world
 so you can actually get stuff done.
+
+[TODO: WIP]
+
+Don't want `HTTP` coming into `Pure`.
+Don't want `Pure` know how to write to DB
 
 ```mermaid
 flowchart LR
@@ -344,13 +354,6 @@ flowchart LR
   INotify --> Gateway
   Gateway --> ThirdParty
 ```
-
-### Persistence ignorance
-
-[TODO: WIP]
-
-Don't want `HTTP` coming into `Pure`.
-Don't want `Pure` know how to write to DB
 
 ### Testing
 
