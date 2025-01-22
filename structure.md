@@ -1,29 +1,38 @@
 # (WIP) Structure
 <!-- mtoc-start -->
 
-* [Pure code](#pure-code)
-  * [Pure code examples](#pure-code-examples)
-  * [Why pure code](#why-pure-code)
-* [Impure code](#impure-code)
-  * [Impure code examples](#impure-code-examples)
-  * [Why impure code](#why-impure-code)
-* [Maximise `Pure` and Minimise `Impure`](#maximise-pure-and-minimise-impure)
-* [Move details to edge (Port and Adapters, Persistence ignorance)](#move-details-to-edge-port-and-adapters-persistence-ignorance)
+* [Decouple Pure and Impure code](#decouple-pure-and-impure-code)
+  * [What is Pure code](#what-is-pure-code)
+  * [What is Impure code](#what-is-impure-code)
+  * [Maximise `Pure` and Minimise `Impure`](#maximise-pure-and-minimise-impure)
+  * [Move details to edge (Port and Adapters, Persistence ignorance)](#move-details-to-edge-port-and-adapters-persistence-ignorance)
   * [Persistence ignorance](#persistence-ignorance)
   * [Testing](#testing)
-* [Why Pure and Impure](#why-pure-and-impure)
-* [References](#references)
+  * [Decouple Pure and Impure - Appeal to Authority](#decouple-pure-and-impure---appeal-to-authority)
+  * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
 * [Feature Cohesion](#feature-cohesion)
   * [Feature Cohesion Examples](#feature-cohesion-examples)
 * [Glossary](#glossary)
 
 <!-- mtoc-end -->
 
-## Pure code
+## Decouple Pure and Impure code
 
-`Pure` = Deterministic (Same input, Same output)
+[TODO]: Why decoupling Pure and Impure code is important
+
+### What is Pure code
+
+`Pure` = Deterministic
+
+* Deterministic
+  * Given the same input you will always receive the same output,
+  regardless of how many times it's called or when it's called.
+* Easy to test - No `Stubs`/`Mocks` required, just data for input.
 
 ```mermaid
+---
+title: Same input, Same Output
+---
 flowchart LR
   style Add fill:ForestGreen
   Addend1 --> Add
@@ -31,57 +40,30 @@ flowchart LR
   Add --> Sum
 ```
 
-### Pure code examples
-
-* `add(int int) => int` - Given the same input you will always receive the same output
-* `addItem(cart item) => cart` - Item might be added depending logic but it's consistent
-
-### Why pure code
-
-* Deterministic - Same Input, Same output. Doesn't matter when call is made
-* Easy to test - No `Stubs`/`Mocks` required, just data for input.
-
-## Impure code
-
-`Impure` = Non-deterministic (Might have input, Might have output)
-
 ```mermaid
 ---
-title: Today's call
+title: Same input, Same Output
 ---
 flowchart LR
-  style Now fill:FireBrick
-  Now["now()"] --> 27/01/2017
+  style AddItem fill:ForestGreen
+  Cart["Cart (Empty)"] --> AddItem
+  Item --> AddItem --> CartResult["Cart with added item"]
+
 ```
 
 ```mermaid
 ---
-title: Tomorrow's call
+title: Same input, Same Output
 ---
 flowchart LR
-  style Now fill:FireBrick
-  Now["now()"] --> 20/01/2021
+  style AddItem fill:ForestGreen
+  Cart["Cart (Full)"] --> AddItem
+  Item --> AddItem --> CartResult["Cart without item added because it was full"]
 ```
 
-### Impure code examples
+### What is Impure code
 
-* Function is `stateful` like a counter
-  * `counter() -> 1`
-  * `counter() -> 2`
-  * `counter() -> ...`
-* Calling external service (I/O) like a Gateway
-  * `paymentProvider.Pay(token, itemId)`
-    * Provider **might** accept payment
-      * Token could be expired
-      * Account might have insufficient funds
-      * Item might be out of stock
-      * The payment provider is down
-* Does additional steps within the function
-  * `orderService.Update(order)`
-    * Sends email in the middle of updating order
-    * Updates stock in the Stock service
-
-### Why impure code
+`Impure` = Non-deterministic
 
 We still need to interact with the real `impure` world, Like
 
@@ -92,7 +74,38 @@ So things actually get done. `Pure` functions by themselves will
 won't actually achieve anything usefully except heat up your room
 as it runs on your computer.
 
-## Maximise `Pure` and Minimise `Impure`
+```mermaid
+---
+title: Non-deterministic - Same call different results
+---
+flowchart LR
+  style Now fill:FireBrick
+  Now["now()"] --> 27/01/2017
+  style Now2 fill:FireBrick
+  Now2["now()"] --> 20/01/2021
+```
+
+```mermaid
+---
+title: No return - What happened?
+---
+flowchart LR
+  style Now fill:FireBrick
+  Now["update()"] --> Nothing
+```
+
+```mermaid
+---
+title: Might work
+---
+flowchart LR
+  style Now fill:FireBrick
+  Now["pay(token)"] --> Error["Error: Insufficient funds"]
+  Now["pay(token)"] --> Error2["Error: service down"]
+  Now["pay(token)"] --> Success["Success: Payment taken"]
+```
+
+### Maximise `Pure` and Minimise `Impure`
 
 Maximise the amount of `Pure` code and minimise the amount of `Impure` code
 
@@ -181,7 +194,7 @@ function application() {
 } 
 ```
 
-## Move details to edge (Port and Adapters, Persistence ignorance)
+### Move details to edge (Port and Adapters, Persistence ignorance)
 
 Realistically you need to interact with outside `Impure` world
 so you can actually get stuff done.
@@ -357,7 +370,7 @@ flowchart LR
   Pure[Pure Functional core] --> ShellOut[Adapter Out]
 ```
 
-## Why Pure and Impure
+### Decouple Pure and Impure - Appeal to Authority
 
 > The overriding rule that makes this architecture work is The Dependency Rule.
 > This rule says that source code dependencies can only point inwards.
@@ -378,7 +391,7 @@ flowchart LR
   * Testable
     * Can test `Domain` without `I/O` (Database, HTTP, Service)
 
-## References
+### Decouple Pure and Impure References
 
 * [Moving IO to the edges of your app: Functional Core, Imperative Shell - Scott Wlaschin](https://www.youtube.com/watch?v=P1vES9AgfC4)
 * [Functional core, Imperative shell - Gary Bernhardt](https://www.destroyallsoftware.com/screencasts/catalog/functional-core-imperative-shell)
