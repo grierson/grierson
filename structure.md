@@ -5,8 +5,9 @@
   * [What is Pure code](#what-is-pure-code)
   * [What is Impure code](#what-is-impure-code)
   * [Why the `Pure` and `Impure` language](#why-the-pure-and-impure-language)
-  * [Maximise `Pure` and Minimise `Impure`](#maximise-pure-and-minimise-impure)
+  * [(WIP) Prefer pure](#wip-prefer-pure)
   * [Move details to edge (Port and Adapters, Persistence ignorance)](#move-details-to-edge-port-and-adapters-persistence-ignorance)
+  * [Dependency Injection](#dependency-injection)
   * [Testing](#testing)
   * [Decouple Pure and Impure - Appeal to Authority](#decouple-pure-and-impure---appeal-to-authority)
   * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
@@ -22,12 +23,14 @@
 
 ### What is Pure code
 
-`Pure` = Deterministic
+`Pure` = Deterministic + No side effects
 
-* Deterministic
-  * Given the same input you will always receive the same output,
-  regardless of how many times it's called or when it's called.
-* Easy to test - No `Stubs`/`Mocks` required, just data for input.
+Given the same input you will always receive the same output,
+regardless of how many times it's called or when it's called.
+
+It also means it doesn't perform any side effects.
+Haskell defaults to `Pure` functions via the type system unless
+specified otherwise (`IO`).
 
 ```mermaid
 ---
@@ -42,37 +45,34 @@ flowchart LR
 
 ```mermaid
 ---
-title: Same input, Same Output
+title: Add item to cart
 ---
 flowchart LR
   style AddItem fill:ForestGreen
   Cart["Cart (Empty)"] --> AddItem
-  Item --> AddItem --> CartResult["Cart with added item"]
+  Item --> AddItem --> CartResult["Cart (with item added)"]
 
 ```
 
 ```mermaid
 ---
-title: Same input, Same Output
+title: Item not added to cart because of pure logic
 ---
 flowchart LR
   style AddItem fill:ForestGreen
   Cart["Cart (Full)"] --> AddItem
-  Item --> AddItem --> CartResult["Cart without item added because it was full"]
+  Item --> AddItem --> CartResult["Cart (item not added because full)"]
 ```
 
 ### What is Impure code
 
 `Impure` = Non-deterministic
 
-We still need to interact with the real `impure` world, Like
+We still need to interact with the real `impure` world to get stuff done.
 
+* Working with Databases and Gateways
 * Sending emails
-* Working with Database and Gateways
-
-So things actually get done. `Pure` functions by themselves will
-won't actually achieve anything usefully except heat up your room
-as it runs on your computer.
+* Getting the current time
 
 ```mermaid
 ---
@@ -87,7 +87,7 @@ flowchart LR
 
 ```mermaid
 ---
-title: No return - What happened?
+title: Side effect - What happened? What changed? Did it work?
 ---
 flowchart LR
   style Now fill:FireBrick
@@ -107,10 +107,37 @@ flowchart LR
 
 ### Why the `Pure` and `Impure` language
 
-[TODO:] Impure can call Pure and Pure still Pure.
-Pure can't call Impure as it makes it too Impure
+`Impure` code calling `Pure` code remains `Pure`.
+`Pure` code calling `Impure` code becomes `Impure`,
+as the call is non-deterministic, making it non-deterministic.
 
-### Maximise `Pure` and Minimise `Impure`
+```mermaid
+---
+title: Impure infection Before
+---
+flowchart LR
+  style Run fill:FireBrick
+  style Pure1 fill:ForestGreen
+  style Pure2 fill:ForestGreen
+  style Pure3 fill:ForestGreen
+  Run --> Pure1 --> Pure3
+  Run --> Pure2
+```
+
+```mermaid
+---
+title: Impure infection - After
+---
+flowchart LR
+  style Run fill:FireBrick
+  style Impure1 fill:FireBrick
+  style Pure2 fill:ForestGreen
+  style Impure3 fill:FireBrick
+  Run --> Impure1 --> Impure3["now()"]
+  Run --> Pure2
+```
+
+### (WIP) Prefer pure
 
 Maximise the amount of `Pure` code and minimise the amount of `Impure` code
 
@@ -131,10 +158,13 @@ Maximise the amount of `Pure` code and minimise the amount of `Impure` code
 flowchart LR
   style pure1 fill:ForestGreen
   style pure2 fill:ForestGreen
+  style pure3 fill:ForestGreen
   style i/o1 fill:FireBrick
   style i/o2 fill:FireBrick
   style i/o3 fill:FireBrick
-  i/o1[I/O] --> pure1[Pure] --> i/o2[I/O] --> pure2[Pure] --> i/o3[I/O]
+  i/o1[HTTP Request] --> pure1[Validate + Map] --> i/o2[Read Database] 
+  i/o2 --> pure2[Domain Logic] --> i/o3[Write Database]
+  i/o3 -->  pure3[Map to Http response]
 ```
 
 ```diff
@@ -201,13 +231,15 @@ function application() {
 
 ### Move details to edge (Port and Adapters, Persistence ignorance)
 
-Realistically you need to interact with outside `Impure` world
-so you can actually get stuff done.
+[TODO: Split into Port & Adapters, and Dependency injection]
 
-[TODO: WIP]
+* Adapter - Adapts `Impure` -> `Pure` and `Pure` -> `Impure`
 
-Don't want `HTTP` coming into `Pure`.
-Don't want `Pure` know how to write to DB
+Technical concerns may change in future and you don't want your `Domain logic`
+to to depend on it.
+
+* Don't want `HTTP` details contaminating your `Domain Logic`.
+* Don't want `Domain Logic` knowing how to write to a `Database`
 
 ```mermaid
 flowchart LR
@@ -354,6 +386,8 @@ flowchart LR
   INotify --> Gateway
   Gateway --> ThirdParty
 ```
+
+### Dependency Injection
 
 ### Testing
 
