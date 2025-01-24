@@ -28,9 +28,7 @@
 Given the same input you will always receive the same output,
 regardless of how many times it's called or when it's called.
 
-It also means it doesn't perform any side effects.
-Haskell defaults to `Pure` functions via the type system unless
-specified otherwise (`IO`).
+It also means it doesn't perform any `Side effects` ([more](#what-is-impure-code)).
 
 ```mermaid
 ---
@@ -66,13 +64,7 @@ flowchart LR
 
 ### What is Impure code
 
-`Impure` = Non-deterministic
-
-We still need to interact with the real `impure` world to get stuff done.
-
-* Working with Databases and Gateways
-* Sending emails
-* Getting the current time
+`Impure` = Non-deterministic and/or performs `Side effect`
 
 ```mermaid
 ---
@@ -85,25 +77,31 @@ flowchart LR
   Now2["now()"] --> 20/01/2021
 ```
 
-```mermaid
----
-title: Side effect - What happened? What changed? Did it work?
----
-flowchart LR
-  style Now fill:FireBrick
-  Now["update()"] --> Nothing
-```
+`Side effect` = Interacts with the outside world and/or change state
 
 ```mermaid
 ---
-title: Might work
+title: Side effectful - Interacts with outside world and/or changes state
 ---
-flowchart LR
-  style Now fill:FireBrick
-  Now["pay(token)"] --> Error["Error: Insufficient funds"]
-  Now["pay(token)"] --> Error2["Error: service down"]
-  Now["pay(token)"] --> Success["Success: Payment taken"]
+flowchart TD
+  style Impure fill:FireBrick
+  Enviroment -- Reads from --> Impure
+  Impure["Update()"] -- Calls --> Email["counter.add(EnviromentAmount)"]
 ```
+
+We still need to interact with the real `impure` world to get stuff done.
+
+* Working with Databases and Gateways
+* Sending emails
+* Getting the current time
+
+A method that changes an objects state is an example of an `impure` operation
+
+* Calling `user.GetName()` returns `Alice`
+* `user.UpdateName(Bob)` changes the state of the `user` object
+* Calling `user.GetName()` again now returns a different result `Bob`
+* Making `user.GetName()` non-deterministic
+* `user.UpdateName()` is `impure` as it changed the state of `user`
 
 ### Why the `Pure` and `Impure` language
 
@@ -139,47 +137,47 @@ flowchart LR
 
 ### (WIP) Prefer pure
 
-Maximise the amount of `Pure` code and minimise the amount of `Impure` code
+With all that in mind, prefer `Pure` code over `Impure` code.
+As it's easier to reason and test because it's deterministic.
 
-* Harder to read as `Impure` specific code is mixed with `Pure` domain workflows.
-  * Connecting to database
-  * Establishing a secure connection with a gateway
-* Difficult to change if you later swap `I/O`.
-  * Yesterday we use Payment service `A`
-  * Today Payment service `A` want 50% of every sale
-  * Tomorrow we need to swap out every instance of `A` with `B`
-* Difficult to test as `I/O` is called directly.
-  * Our Payment service charges $1 for every call
-  * We don't want to pay $1 to run tests
-* Error prone, Can fail and have to handle exceptions.
-  * Payment service could be down
+I've created a silly simple code example that mixes the two.
+It's game were you have to guess if the next card is higher or lower.
+(Like Play Your Cards Right)
 
-```mermaid
-flowchart LR
-  style pure1 fill:ForestGreen
-  style pure2 fill:ForestGreen
-  style pure3 fill:ForestGreen
-  style i/o1 fill:FireBrick
-  style i/o2 fill:FireBrick
-  style i/o3 fill:FireBrick
-  i/o1[HTTP Request] --> pure1[Validate + Map] --> i/o2[Read Database] 
-  i/o2 --> pure2[Domain Logic] --> i/o3[Write Database]
-  i/o3 -->  pure3[Map to Http response]
-```
+I've highlighted which parts are `Pure` and `Impure`
+
+* Red - `Impure` code
+* Green - `Pure` code
 
 ```diff
-function application() {
--    var randomNumber = Random.generate(1, 100);
--    var now = DateTime.Now;
-+    var randomDay = now.AddDays(randomNumber);
+// Function to generate a random card value between 1 and 13
+- function generateCard() {
+-  return Math.floor(Math.random() * 13) + 1;
+-}
 
-+    if (now.DayOfWeek == randomDay.DayOfWeek)
--       Console.WriteLine("Correct");
-+    else {
-+       var daysOut = Math.Abs((int)now.DayOfWeek - (int)randomDay.DayOfWeek);
--       Console.WriteLine($"Wrong, out by {daysOut} days");
-    }
-} 
+// Function to start the game
+function playGame() {
+-  let currentCard = generateCard();
+-  console.log(`Current card: ${currentCard}`);
+
+  // User's guess
+-  const userGuess = prompt("Will the next card be higher or lower? (h/l)");
+
+-  let nextCard = generateCard();
+-  console.log(`Next card: ${nextCard}`);
+
++  if ((userGuess === 'h' && nextCard > currentCard) || 
++      (userGuess === 'l' && nextCard < currentCard)) {
+-    console.log("You guessed it right!");
++  } else if (nextCard === currentCard) {
+-    console.log("It's a tie! The cards are equal.");
++  } else {
+-    console.log("Sorry, you guessed it wrong.");
+  }
+}
+
+// Call the playGame function to start the game
+playGame();
 ```
 
 Instead separate `pure` code out so it's all in the middle. (Like a Sandwich).
@@ -238,6 +236,13 @@ function application() {
 Technical concerns may change in future and you don't want your `Domain logic`
 to to depend on it.
 
+* Difficult to change if you later swap `I/O`.
+  * Yesterday we use Payment service `A`
+  * Today Payment service `A` want 50% of every sale
+  * Tomorrow we need to swap out every instance of `A` with `B`
+* Difficult to test as `I/O` is called directly.
+  * Our Payment service charges $1 for every call
+  * We don't want to pay $1 to run tests
 * Don't want `HTTP` details contaminating your `Domain Logic`.
 * Don't want `Domain Logic` knowing how to write to a `Database`
 
