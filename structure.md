@@ -5,10 +5,8 @@
   * [What is Pure code](#what-is-pure-code)
   * [What is Impure code](#what-is-impure-code)
   * [Why the `Pure` and `Impure` language](#why-the-pure-and-impure-language)
-  * [(WIP) Prefer pure](#wip-prefer-pure)
+  * [Prefer pure](#prefer-pure)
   * [Move details to edge (Port and Adapters, Persistence ignorance)](#move-details-to-edge-port-and-adapters-persistence-ignorance)
-  * [Dependency Injection](#dependency-injection)
-  * [Testing](#testing)
   * [Decouple Pure and Impure - Appeal to Authority](#decouple-pure-and-impure---appeal-to-authority)
   * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
 * [Feature Cohesion](#feature-cohesion)
@@ -135,7 +133,7 @@ flowchart LR
   Run --> Pure2
 ```
 
-### (WIP) Prefer pure
+### Prefer pure
 
 With all that in mind, prefer `Pure` code over `Impure` code.
 As it's easier to reason and test because it's deterministic.
@@ -157,13 +155,13 @@ I've highlighted which parts are `Pure` and `Impure`
 
 // Function to start the game
 function playGame() {
--  let currentCard = generateCard();
+-  const currentCard = generateCard();
 -  console.log(`Current card: ${currentCard}`);
 
   // User's guess
 -  const userGuess = prompt("Will the next card be higher or lower? (h/l)");
 
--  let nextCard = generateCard();
+-  const nextCard = generateCard();
 -  console.log(`Next card: ${nextCard}`);
 
 +  if ((userGuess === 'h' && nextCard > currentCard) || 
@@ -180,51 +178,58 @@ function playGame() {
 playGame();
 ```
 
-Instead separate `pure` code out so it's all in the middle. (Like a Sandwich).
+There are `169` (`13x13`) permutations when comparing the cards.
+Furthermore handling the user's guess adds additional complexity.
 
-Query the `Database`, perform `Pure` domain logic, save to `Database`
+Adding tests for this code is difficult as it requires a `Console`.
 
-```mermaid
-flowchart LR
-  style pure1 fill:ForestGreen
-  style i/o1 fill:FireBrick
-  style i/o2 fill:FireBrick
-  i/o1[I/O] --> pure1[Pure] --> i/o2[I/O]
-```
+Instead by splitting out the `Pure` code makes it
 
-Splitting out the `Pure` code makes it
-
-* Easier to read as no `Impure` code required. (Database, Date.Now, File system)
-  * No setup code for Database or making network calls
-* Easier to test (No Console, Date.Now, File system, Gateway)
-  * Just pass data in, no need to Stub/Mock `Impure` code
-* Reuse `Pure` code in different contexts.
-  * Use in another application which uses CLI input.
-  * Then use it in another application which uses HATEOAS instead.
+* Easier to read
+  * Can read `Pure` logic without any `Impure` context surrounding it
+* Easier to automated test
+  * No Console required (Avoids manual testing)
+  * No stubbing the random card generator (Avoids setup complexity when testing logic)
+* Reuse `compare` in different contexts
+  * Currently uses `Console`
+  * Could be used in a `RESTFUL` API instead
 * No unexpected results
   * Deterministic
   * Same input, Same output
 
 ```diff
-function check(now, randomOffset) {
-+    var randomDay = now.AddDays(randomNumber);
-
-+    if (now.DayOfWeek == randomDay.DayOfWeek)
-+       return "Correct";
-+    else {
-+       var daysOut = Math.Abs((int)now.DayOfWeek - (int)randomDay.DayOfWeek);
-+       return $"Wrong, out by {daysOut} days";
-    }
+function compare(userGuess, currentCard, nextCard) {
++  if (userGuess === 'h' && nextCard > currentCard ||
++      userGuess === 'l' && nextCard < currentCard)
++   return "Correct";
++  if (nextCard === currentCard)
++   return "Same"
++  return "Sorry, you guessed wrong"
 }
 
-function application() {
--    var randomNumber = Random.generate(1, 100);
--    var now = DateTime.Now;
+function playGame() {
+-  const currentCard = generateCard();
+-  console.log(`Current card: ${currentCard}`);
 
-+    var result = pure(now, randomNumber);
+  // User's guess
+-  const userGuess = prompt("Will the next card be higher or lower? (h/l)");
+-  const nextCard = generateCard();
+-  console.log(`Next card: ${nextCard}`);
 
--   Console.WriteLine(result)
-} 
++  const result = compare(userGuess, currentCard, nextCard);
+
+-  console.log(result);
+  }
+}
+
+// Tests
++ [2, 1, "l"]
++ [1, 2, "h"]
++ .. many more test cases here ...
++ test("Invalid guesses", (guess, current, next) => {
++  const actual = compare(guess, current, next)
++  expect(actual).is("Sorry, you guessed wrong")
++})
 ```
 
 ### Move details to edge (Port and Adapters, Persistence ignorance)
@@ -390,26 +395,6 @@ flowchart LR
   Usecase --> INotify
   INotify --> Gateway
   Gateway --> ThirdParty
-```
-
-### Dependency Injection
-
-### Testing
-
-```mermaid
-flowchart LR
-  style Pure fill:ForestGreen
-  style ShellIn fill:Indigo
-  style ShellOut fill:Indigo
-  subgraph Integration[Integration Test]
-    ShellIn
-    ShellOut
-    subgraph Unit[Unit Test]
-      Pure
-    end
-  end
-  ShellIn[Adapter In] --> Pure 
-  Pure[Pure Functional core] --> ShellOut[Adapter Out]
 ```
 
 ### Decouple Pure and Impure - Appeal to Authority
