@@ -6,7 +6,7 @@
   * [What is Impure code](#what-is-impure-code)
   * [Why the `Pure` and `Impure` language](#why-the-pure-and-impure-language)
   * [Prefer pure](#prefer-pure)
-  * [Move details to edge (Port and Adapters, Persistence ignorance)](#move-details-to-edge-port-and-adapters-persistence-ignorance)
+  * [Prefer Pure architecture (Port and Adapters, Persistence ignorance)](#prefer-pure-architecture-port-and-adapters-persistence-ignorance)
   * [Decouple Pure and Impure - Appeal to Authority](#decouple-pure-and-impure---appeal-to-authority)
   * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
 * [Feature Cohesion](#feature-cohesion)
@@ -232,24 +232,9 @@ function playGame() {
 +})
 ```
 
-### Move details to edge (Port and Adapters, Persistence ignorance)
+### Prefer Pure architecture (Port and Adapters, Persistence ignorance)
 
-[TODO: Split into Port & Adapters, and Dependency injection]
-
-* Adapter - Adapts `Impure` -> `Pure` and `Pure` -> `Impure`
-
-Technical concerns may change in future and you don't want your `Domain logic`
-to to depend on it.
-
-* Difficult to change if you later swap `I/O`.
-  * Yesterday we use Payment service `A`
-  * Today Payment service `A` want 50% of every sale
-  * Tomorrow we need to swap out every instance of `A` with `B`
-* Difficult to test as `I/O` is called directly.
-  * Our Payment service charges $1 for every call
-  * We don't want to pay $1 to run tests
-* Don't want `HTTP` details contaminating your `Domain Logic`.
-* Don't want `Domain Logic` knowing how to write to a `Database`
+* `Adapter` - Adapts `Impure` -> `Pure` and `Pure` -> `Impure`
 
 ```mermaid
 flowchart LR
@@ -264,9 +249,14 @@ flowchart LR
 
 ```c_sharp
 public class Workflow {
-  public void Handle(Guid customerId, List<Guid> productIds) {
-    var database = new Database("connection-string");
-    var customer = database.get(customerId); 
+  public void Handle(HttpRequest request) {
+    var customerId = request.body.GetCustomerId();
+    var productIds = request.body.GetProductIds();
+    var database = new SQLDatabase("connection-string");
+    var customer = database.query(
+      "SELECT * 
+       FROM customer 
+       WHERE id = ${customerId}"); 
 
     var httpClient = new HttpClient();
     var raw_result = await httpClient.get("${productApi}?productIds=[productIds]");
@@ -284,23 +274,37 @@ public class Workflow {
 }
 ```
 
-We have the problem of the interleaved `Pure` and `Impure` code.
-But there's even more problems.
+We have the problem of the interleaved `Pure` and `Impure`
+code like above ([Prefer pure](#prefer-pure)). But there's even more problems.
 
-* It's hard to read what the function is even doing as there's so much code just
-setting up our `Impure` code.
+* It's hard to read what the function is doing
+  * As there's so much code just setting up our `Impure` code.
 * What if the `products` API changes address or response data?
-Now we need to update every instance of the api throughout our application
+  * Now we need to update every instance of the api throughout our application
 * How do we test this function?
-Do we need to setup a Database and have access to payments API?
+  * Do we need to setup a Database and have access to payments API?
+  * Is it easy to create a `HTTP` request in `C#`?
 * It's non-deterministic?
   * What if the products API doesn't return all the products?
   * What if the price has changed?
   * What if the customer doesn't exist anymore?
+* We use a `HttpRequest` as input but what it want to use a different API in future?
 
 This is where `Ports and Adapters` comes in.
-We create `Adapters` that specifically handle `Impure` operations and pass
-those into our `Pure` code (not pure now technically).
+We create `Adapters` that specifically handle `Impure` operations and
+map them for `Pure` operations and vice versa.
+
+`Technical` concerns may change but `Domain logic` should not be impacted.
+
+* Difficult to change if you later swap `I/O`.
+  * Yesterday we use Payment service `A`
+  * Today Payment service `A` want 50% of every sale
+  * Now we need to swap out every instance of `A` with `B`
+* Difficult to test as `I/O` is called directly.
+  * Our Payment service charges $1 for every call
+  * We don't want to pay $1 to run tests
+* Don't want `HTTP` details contaminating `Domain Logic`.
+* Don't want `Domain Logic` knowing how to write to a `Database`
 
 ```mermaid
 flowchart LR
