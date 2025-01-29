@@ -3,7 +3,8 @@
 > A REST client needs little to no prior knowledge about how to interact with an application or server beyond a generic understanding of hypermedia.
 > The restrictions imposed by HATEOAS decouples client and server.
 > This enables server functionality to evolve independently.
-> - https://htmx.org/essays/hateoas
+>
+> - <https://htmx.org/essays/hateoas>
 
 To demonstate I've created a strawman bank account response to demonstrate the benefits of HATEOAS.
 
@@ -52,7 +53,7 @@ Then clients' use the `withdraw` link instead of a hard-coded URL.
     (http/post (get-in discovery [:_links :withdraw]))))
 ```
 
-The `withdraw` URL can now change like in the `v2` example without breaking changes as we’ve added a layer of indirection via the links. 
+The `withdraw` URL can now change like in the `v2` example without breaking changes as we’ve added a layer of indirection via the links.
 The server is telling the client what the URL is, not the client having out-of-band knowledge from the API docs.
 
 ## Resource references
@@ -137,7 +138,6 @@ Simplifying UIs by having one single source of truth for business logic which cl
 }
 ```
 
-
 ```javascript
 // With balance
 {
@@ -158,5 +158,5 @@ if (hateos/has-link response "withdraw")
 
 # References
 
-- https://htmx.org/essays/hateoas/[HATEOAS by HTMX]
-- https://medium.com/kroo/how-kroo-maintains-sanity-in-distributed-systems-part-1-adad8cf095bf[How Kroo maintains sanity in distributed systems — Part 1 By Jonas Svalin]
+- <https://htmx.org/essays/hateoas/[HATEOAS> by HTMX]
+- <https://medium.com/kroo/how-kroo-maintains-sanity-in-distributed-systems-part-1-adad8cf095bf[How> Kroo maintains sanity in distributed systems — Part 1 By Jonas Svalin]

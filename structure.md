@@ -6,10 +6,10 @@
   * [What is Impure code](#what-is-impure-code)
   * [Why the `Pure` and `Impure` language](#why-the-pure-and-impure-language)
   * [Prefer pure](#prefer-pure)
-  * [Prefer Pure architecture (Port and Adapters, Persistence ignorance)](#prefer-pure-architecture-port-and-adapters-persistence-ignorance)
-  * [Decouple Pure and Impure - Appeal to Authority](#decouple-pure-and-impure---appeal-to-authority)
+  * [(WIP) Prefer Pure architecture (Port and Adapters, Persistence ignorance)](#wip-prefer-pure-architecture-port-and-adapters-persistence-ignorance)
+  * [(WIP) Decouple Pure and Impure - Appeal to Authority](#wip-decouple-pure-and-impure---appeal-to-authority)
   * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
-* [Feature Cohesion](#feature-cohesion)
+* [(WIP) Feature Cohesion](#wip-feature-cohesion)
   * [Feature Cohesion Examples](#feature-cohesion-examples)
 * [Glossary](#glossary)
 
@@ -52,7 +52,7 @@ flowchart LR
 
 ```mermaid
 ---
-title: Item not added to cart because of pure logic
+title: Item not added to cart because cart is full
 ---
 flowchart LR
   style AddItem fill:ForestGreen
@@ -75,7 +75,7 @@ flowchart LR
   Now2["now()"] --> 20/01/2021
 ```
 
-`Side effect` = Interacts with the outside world and/or change state
+`Side effect` = Interacts with the outside world and/or changes state
 
 ```mermaid
 ---
@@ -93,7 +93,7 @@ We still need to interact with the real `impure` world to get stuff done.
 * Sending emails
 * Getting the current time
 
-A method that changes an objects state is an example of an `impure` operation
+A method that changes an objects state is another example of an `impure` operation
 
 * Calling `user.GetName()` returns `Alice`
 * `user.UpdateName(Bob)` changes the state of the `user` object
@@ -159,16 +159,15 @@ function playGame() {
 -  console.log(`Current card: ${currentCard}`);
 
   // User's guess
--  const userGuess = prompt("Will the next card be higher or lower? (h/l)");
+-  const userGuess = prompt("Will the next card be higher or lower or same? (h/l/s)");
 
 -  const nextCard = generateCard();
 -  console.log(`Next card: ${nextCard}`);
 
 +  if ((userGuess === 'h' && nextCard > currentCard) || 
-+      (userGuess === 'l' && nextCard < currentCard)) {
++      (userGuess === 'l' && nextCard < currentCard) ||
++      (userGuess === 's' && next == currentCard) {
 -    console.log("You guessed it right!");
-+  } else if (nextCard === currentCard) {
--    console.log("It's a tie! The cards are equal.");
 +  } else {
 -    console.log("Sorry, you guessed it wrong.");
   }
@@ -178,10 +177,31 @@ function playGame() {
 playGame();
 ```
 
-There are `169` (`13x13`) permutations when comparing the cards.
-Furthermore handling the user's guess adds additional complexity.
+So the above `playGame` holds a lot of complexity.
 
-Adding tests for this code is difficult as it requires a `Console`.
+* Handling user input
+  * `3` (`h|l|invalid`) permutations
+* Generating random cards
+  * `13` (`1,2,..,13`) permutations
+* Comparing the cards
+  * `169` (`13x13`) distinct pairs
+* Comparing the user input with the comparison
+  * `507` (`169 * 3`) guesses higher or lower
+
+Making a total of `507` outcomes.
+So we need to test some of the edge cases
+
+| Guess | Card1 | Card2 | Expected |
+| ------------- | -------------- | -------------- | ----- |
+| Higher | 1 | 2 | Yes |
+| Lower | 1 | 2 | No |
+| Same | 1 | 2 | No |
+| ... | ... | ... | ... |
+
+However, adding tests for this code is difficult
+
+* `Console` is required
+* The code generates random cards
 
 Instead by splitting out the `Pure` code makes it
 
@@ -190,6 +210,7 @@ Instead by splitting out the `Pure` code makes it
 * Easier to automated test
   * No Console required (Avoids manual testing)
   * No stubbing the random card generator (Avoids setup complexity when testing logic)
+  * Just input and expected output
 * Reuse `compare` in different contexts
   * Currently uses `Console`
   * Could be used in a `RESTFUL` API instead
@@ -200,10 +221,9 @@ Instead by splitting out the `Pure` code makes it
 ```diff
 function compare(userGuess, currentCard, nextCard) {
 +  if (userGuess === 'h' && nextCard > currentCard ||
-+      userGuess === 'l' && nextCard < currentCard)
++      userGuess === 'l' && nextCard < currentCard ||
++      userGuess === 's' && nextCart == currentCard)
 +   return "Correct";
-+  if (nextCard === currentCard)
-+   return "Same"
 +  return "Sorry, you guessed wrong"
 }
 
@@ -232,7 +252,7 @@ function playGame() {
 +})
 ```
 
-### Prefer Pure architecture (Port and Adapters, Persistence ignorance)
+### (WIP) Prefer Pure architecture (Port and Adapters, Persistence ignorance)
 
 * `Adapter` - Adapts `Impure` -> `Pure` and `Pure` -> `Impure`
 
@@ -401,7 +421,7 @@ flowchart LR
   Gateway --> ThirdParty
 ```
 
-### Decouple Pure and Impure - Appeal to Authority
+### (WIP) Decouple Pure and Impure - Appeal to Authority
 
 > The overriding rule that makes this architecture work is The Dependency Rule.
 > This rule says that source code dependencies can only point inwards.
@@ -431,7 +451,7 @@ flowchart LR
 * [Clean Architecture - Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 * [Port and Adapters - Alistair Cockburn](https://alistair.cockburn.us/hexagonal-architecture/)
 
-## Feature Cohesion
+## (WIP) Feature Cohesion
 
 No
 

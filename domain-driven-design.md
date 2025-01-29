@@ -1,7 +1,5 @@
 # Domain Driven Design
 
-## What
-
 Patterns to help model a solution to a problem.
 
 Identify current business processes and design solutions that follow those
@@ -26,5 +24,44 @@ not adding your own implementations and terms.
 * Entity - Unique Identifier with Data and Behaviour
 * Value Object - Not unique, Additional constraints over primitives, Immutable
   * Email address - A string could be anything, but Emails have specific constraints
-  * "foo" is a valid string but not a valid email
-  * "<foo@email.com>" is a valid string and a valid email
+    * "foo" is a valid string but not a valid email
+    * "<foo@email.com>" is a valid string and a valid email
+
+## Language matters
+
+`FooFactory` programming lingo
+
+## Aggregate Root
+
+What? Grouping of associated objects
+
+Why
+
+* Consistency boundary
+  * All commands are managed by the `Aggregate Root` acts as the API for the aggregate
+* Ensures `invariants`
+  * Ensures `invariants` are maintained across all `Objects` within the `Aggregate`
+
+```mermaid
+flowchart LR
+  subgraph Aggregate
+    Root
+    Entity
+    ValueObject["Value Object"]
+  end
+  Consumer -- Command --> Root
+  Root --> Entity
+  Root --> ValueObject
+
+```
+
+Rules
+
+* Maintains `Invariants` across `Objects`
+* Cohesive
+* Only referrers to other `Aggregates` by `ID`
+* Updates to other `Aggregates` is `Eventual Consistency`
+
+## Bounded Context
+
+## Context Mapping
