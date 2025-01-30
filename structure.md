@@ -6,7 +6,7 @@
   * [What is Impure code](#what-is-impure-code)
   * [Why the `Pure` and `Impure` language](#why-the-pure-and-impure-language)
   * [Prefer pure](#prefer-pure)
-  * [(WIP) Prefer Pure architecture (Port and Adapters, Persistence ignorance)](#wip-prefer-pure-architecture-port-and-adapters-persistence-ignorance)
+  * [Adapters (Port and Adapters, Persistence ignorance)](#adapters-port-and-adapters-persistence-ignorance)
   * [(WIP) Decouple Pure and Impure - Appeal to Authority](#wip-decouple-pure-and-impure---appeal-to-authority)
   * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
 * [(WIP) Feature Cohesion](#wip-feature-cohesion)
@@ -138,7 +138,7 @@ flowchart LR
 With all that in mind, prefer `Pure` code over `Impure` code.
 As it's easier to reason and test because it's deterministic.
 
-I've created a silly simple code example that mixes the two.
+I've created a simple code example that mixes the two.
 It's game were you have to guess if the next card is higher or lower.
 (Like Play Your Cards Right)
 
@@ -180,18 +180,18 @@ playGame();
 So the above `playGame` holds a lot of complexity.
 
 * Handling user input
-  * `3` (`h|l|invalid`) permutations
+  * `3` (`h|l|s`) permutations
 * Generating random cards
   * `13` (`1,2,..,13`) permutations
 * Comparing the cards
   * `169` (`13x13`) distinct pairs
 * Comparing the user input with the comparison
-  * `507` (`169 * 3`) guesses higher or lower
+  * `507` (`169 * 3`) guesses and comparisons
 
-Making a total of `507` outcomes.
-So we need to test some of the edge cases
+`507` possible outcomes (that's even ignoring errors).
+Ideally we should test the edge cases to make sure it works.
 
-| Guess | Card1 | Card2 | Expected |
+| Guess | Current Card | Next Card | Correct? |
 | ------------- | -------------- | -------------- | ----- |
 | Higher | 1 | 2 | Yes |
 | Lower | 1 | 2 | No |
@@ -200,23 +200,11 @@ So we need to test some of the edge cases
 
 However, adding tests for this code is difficult
 
-* `Console` is required
-* The code generates random cards
+* `Console` is required for input and output
+* Code generates random cards making it non-deterministic
 
-Instead by splitting out the `Pure` code makes it
-
-* Easier to read
-  * Can read `Pure` logic without any `Impure` context surrounding it
-* Easier to automated test
-  * No Console required (Avoids manual testing)
-  * No stubbing the random card generator (Avoids setup complexity when testing logic)
-  * Just input and expected output
-* Reuse `compare` in different contexts
-  * Currently uses `Console`
-  * Could be used in a `RESTFUL` API instead
-* No unexpected results
-  * Deterministic
-  * Same input, Same output
+Instead by splitting out the `Pure` logic from
+the `Impure` code it makes it easier to test.
 
 ```diff
 function compare(userGuess, currentCard, nextCard) {
@@ -243,8 +231,9 @@ function playGame() {
 }
 
 // Tests
-+ [2, 1, "l"]
-+ [1, 2, "h"]
++ [2, 1, "h"]
++ [1, 2, "l"]
++ [1, 2, "s"]
 + .. many more test cases here ...
 + test("Invalid guesses", (guess, current, next) => {
 +  const actual = compare(guess, current, next)
@@ -252,9 +241,22 @@ function playGame() {
 +})
 ```
 
-### (WIP) Prefer Pure architecture (Port and Adapters, Persistence ignorance)
+* Easier to read
+  * Can read `compare (Pure)` logic without any `Impure` context
+* Easier to automated test
+  * No Console required (Avoids manual testing)
+  * No stubbing of random card generator
+  * Just input and expected output. (Parameterized tests)
+* Reuse `compare` in different contexts
+  * Currently uses `Console`
+  * Could be used in a `RESTFUL` API instead
+* No unexpected results
+  * Deterministic
+  * Same input, Same output
 
-* `Adapter` - Adapts `Impure` -> `Pure` and `Pure` -> `Impure`
+### Adapters (Port and Adapters, Persistence ignorance)
+
+* `Adapter` - Adapts `Details` -> `Domain` and `Domain` -> `Details`
 
 ```mermaid
 flowchart LR
@@ -267,64 +269,52 @@ flowchart LR
   i/oIn[I/O] --> Mixed --> i/oOut[I/O] 
 ```
 
-```c_sharp
-public class Workflow {
-  public void Handle(HttpRequest request) {
-    var customerId = request.body.GetCustomerId();
-    var productIds = request.body.GetProductIds();
-    var database = new SQLDatabase("connection-string");
-    var customer = database.query(
-      "SELECT * 
-       FROM customer 
-       WHERE id = ${customerId}"); 
+Here's another example to demonstrate `Adapters`.
+Using the same game as before but this time for `HTTP` and saving
+to `PostGres`.
 
-    var httpClient = new HttpClient();
-    var raw_result = await httpClient.get("${productApi}?productIds=[productIds]");
-    var products = raw_result.parse_products();
-    
-    var sum_products = products.reduce(product => product.price, 0);
+I've highlighted which parts are `Domain` and `Details`
 
-    if (sum_products > customer.balance) {
-      customer.balance -= sum_products;
-      database.SaveChanges();
-    } else {
-      await EmailServer.Send(customer.Email, "Insufficient funds");
-    }
-  }
+* Red - `Details`
+* Green - `Domain`
+
+```diff
+function compare(HttpRequest request, nextCard) {
+-  const currentCard = request.body.currentCard;
+-  const userGuess = request.body.userGuess;
+
++  if (userGuess === 'h' && nextCard > currentCard ||
++      userGuess === 'l' && nextCard < currentCard ||
++      userGuess === 's' && nextCart == currentCard)
++   return "Correct";
++  return "Sorry, you guessed wrong"
+}
+
+function PlayGameHttp(HttpRequest request) {
+-  const postGres = new PostGres("connection-string")
+   const nextCard = generateCard();
+
++  const result = compare(request, nextCard);
+
+-  postGres.save(result);
+-  return HttpResponse(result);
 }
 ```
 
-We have the problem of the interleaved `Pure` and `Impure`
-code like above ([Prefer pure](#prefer-pure)). But there's even more problems.
+This has problems with `Coupling` specific details about
+`HTTP`, `PostGres` with our `Domain` logic
 
-* It's hard to read what the function is doing
-  * As there's so much code just setting up our `Impure` code.
-* What if the `products` API changes address or response data?
-  * Now we need to update every instance of the api throughout our application
-* How do we test this function?
-  * Do we need to setup a Database and have access to payments API?
-  * Is it easy to create a `HTTP` request in `C#`?
-* It's non-deterministic?
-  * What if the products API doesn't return all the products?
-  * What if the price has changed?
-  * What if the customer doesn't exist anymore?
-* We use a `HttpRequest` as input but what it want to use a different API in future?
+* What if we stop using `Http` or `PostGres`.
+* What if we want to use `GRPC` and `Mongo`
+* We don't want `HTTP` details contaminating our `Domain Logic`.
+* We don't want `Domain Logic` knowing how to write to a `Database`
+
+> [!NOTE]
+> `Technical details` should be decoupled from the `Domain`
 
 This is where `Ports and Adapters` comes in.
-We create `Adapters` that specifically handle `Impure` operations and
-map them for `Pure` operations and vice versa.
-
-`Technical` concerns may change but `Domain logic` should not be impacted.
-
-* Difficult to change if you later swap `I/O`.
-  * Yesterday we use Payment service `A`
-  * Today Payment service `A` want 50% of every sale
-  * Now we need to swap out every instance of `A` with `B`
-* Difficult to test as `I/O` is called directly.
-  * Our Payment service charges $1 for every call
-  * We don't want to pay $1 to run tests
-* Don't want `HTTP` details contaminating `Domain Logic`.
-* Don't want `Domain Logic` knowing how to write to a `Database`
+We create `Adapters` that handle `specific implementation details` and
+converts them to `Domain` concepts and vice versa.
 
 ```mermaid
 flowchart LR
@@ -342,46 +332,56 @@ flowchart LR
   Pure[Pure] --> ShellOut[Adapter] --> i/oOut[I/O]
 ```
 
-```c_sharp
-public class Workflow(
-  CustomerDatabase customerDatabase, 
-  PaymentClient paymentClient
-) {
-  public Result<ProcessedOrder> Handle(Guid customerId, List<Guid> productIds) {
-    var customer = await customreDatabase.get(customerId); 
-    var products = await paymentClient.get(productIds);
-    
-    var result = UpdateBalance(customer, products);
+```diff
+function postGresDatabase() {
+-  const postGres = new PostGres("connection-string")
 
-    if (result != null) {
-      await database.SaveChanges();
-      return ProcessedOrder.Complete;
-    } else {
-      await EmailServer.Send(customer.Email, "Insufficient funds");
-      return ProcessedOrder.Failed;
-    }
-  }
+-  return {
+-    save: (fn [data] postGres.save(data))
+-  }
+}
 
-  private Customer? UpdateBalance(Customer customer, List<Product> products) {
-    var sum_products = products.reduce(product => product.price, 0);
+function compare(userGuess, currentCard, nextCard) {
++  if (userGuess === 'h' && nextCard > currentCard ||
++      userGuess === 'l' && nextCard < currentCard ||
++      userGuess === 's' && nextCart == currentCard)
++   return "Correct";
++  return "Sorry, you guessed wrong"
+}
 
-    if (sum_products > customer.balance) {
-      customer.balance -= sum_products;
-      return customer; 
-    } else {
-      return null;
-    }
-  }
+function play(Database database, HttpRequest request) {
+  const nextCard = generateCard();
+- const currentCard = getCard(request.body);
+- const userGuess = getGuess(request.body);
+
++  const result = playgame(userGuess, currentCard, nextCard);
+
+-  database.save(game, report);
+}
+
+function main(){
+  var database = postGresDatabase();
+  
+  route("/play", (request) => {
+    play(database, request);
+  })
 }
 ```
 
-Here the `CustomerDatabase` and `paymentClient` are both `Adapters`
-abstracting how we deal with `Impure` code.
-So it doesn't interfere with the main `Pure` domain workflow.
+Now `compare` doesn't know anything about `HttpRequest` it just takes
+data, so it can be used in different contexts like a `RPC` application instead.
+It also makes it easier to test as we don't have to create a `HttpRequest`
+for our tests.
 
-Fully fleshed out version below
+We also pass in a `Database` implementation so we can use different implementations.
+Especially useful for when testing as you can pass in a `Mock` instead when testing
+the `play` function.
+`Strategy Pattern/Dependency Injection`
 
 ```mermaid
+---
+title: Full application example
+---
 flowchart LR
   subgraph Application
     style Domain fill:ForestGreen
