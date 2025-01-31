@@ -6,9 +6,13 @@
   * [What is Impure code](#what-is-impure-code)
   * [Why the `Pure` and `Impure` language](#why-the-pure-and-impure-language)
   * [Prefer pure](#prefer-pure)
-  * [Adapters (Port and Adapters, Persistence ignorance)](#adapters-port-and-adapters-persistence-ignorance)
-  * [(WIP) Decouple Pure and Impure - Appeal to Authority](#wip-decouple-pure-and-impure---appeal-to-authority)
   * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
+* [(WIP) Decouple Domain from the Outside world (Ports & Adapters, Domain Driven Design)](#wip-decouple-domain-from-the-outside-world-ports--adapters-domain-driven-design)
+  * [Port and Adapters (Persistence ignorance, Anti-Corruption layer)](#port-and-adapters-persistence-ignorance-anti-corruption-layer)
+  * [General architecture (Clean, Port and Adapters)](#general-architecture-clean-port-and-adapters)
+  * [Gateways](#gateways)
+  * [(WIP) Decouple Domain from External Implementation Details - Appeal to Authority](#wip-decouple-domain-from-external-implementation-details---appeal-to-authority)
+  * [Decouple Domain and External Implementation Details](#decouple-domain-and-external-implementation-details)
 * [(WIP) Feature Cohesion](#wip-feature-cohesion)
   * [Feature Cohesion Examples](#feature-cohesion-examples)
 * [Glossary](#glossary)
@@ -62,11 +66,12 @@ flowchart LR
 
 ### What is Impure code
 
-`Impure` = Non-deterministic and/or performs `Side effect`
+`Impure` = Non-deterministic because of external dependencies
+and/or performs `Side effect`
 
 ```mermaid
 ---
-title: Non-deterministic - Same call different results
+title: Non-deterministic because of System clock - Same call different results
 ---
 flowchart LR
   style Now fill:FireBrick
@@ -75,16 +80,16 @@ flowchart LR
   Now2["now()"] --> 20/01/2021
 ```
 
-`Side effect` = Interacts with the outside world and/or changes state
+`Side effect` = Interacts with the external system and/or changes state
 
 ```mermaid
 ---
-title: Side effectful - Interacts with outside world and/or changes state
+title: Side effect - Changes state of database
 ---
 flowchart TD
   style Impure fill:FireBrick
   Enviroment -- Reads from --> Impure
-  Impure["Update()"] -- Calls --> Email["counter.add(EnviromentAmount)"]
+  Impure["Update()"] -- Calls --> Database["database.update(entity)"]
 ```
 
 We still need to interact with the real `impure` world to get stuff done.
@@ -254,9 +259,64 @@ function playGame() {
   * Deterministic
   * Same input, Same output
 
-### Adapters (Port and Adapters, Persistence ignorance)
+### Decouple Pure and Impure References
 
-* `Adapter` - Adapts `Details` -> `Domain` and `Domain` -> `Details`
+* [Moving IO to the edges of your app: Functional Core, Imperative Shell - Scott Wlaschin](https://www.youtube.com/watch?v=P1vES9AgfC4)
+* [Functional core, Imperative shell - Gary Bernhardt](https://www.destroyallsoftware.com/screencasts/catalog/functional-core-imperative-shell)
+* [Sandwich  architecture - Mark Seemann](https://blog.ploeh.dk/2023/10/09/whats-a-sandwich/)
+* [Solving Problems the Clojure Way - Rafal Dittwald](https://www.youtube.com/watch?v=vK1DazRK_a0)
+
+## (WIP) Decouple Domain from the Outside world (Ports & Adapters, Domain Driven Design)
+
+> The whole point of the Ports & Adapters architecture is that the
+> application is oblivious to the external connections
+>
+> * Hexagonal Architecture Explained
+
+* Database `Entity` for `ORM`
+* `HttpRequest` for `HTTP`
+* `Data Model` from `Third party` API or Library
+  * `Stripe` has a `Session object`
+  * `Fast Healthcare Interoperability Resources (FHIR)`
+  is a standard for storing healthcare records
+
+Glossary
+
+1. Application (App) - Business logic. No reference to any technologies
+1. Port - Required interface. Port captures the Idea of a conversation
+1. Driving and Driven actors -
+1. Adapters - Needed at each port
+1. Configurator - Composes all together
+
+* Testing - Run Workflow tests without production (Purer and Faster)
+* Prevents leakage - Prevents UI or technology details into business logic
+* Swappable - Swap one `Adapter` with another `Adapter` to support a different technology
+* Domain Driven Design - Focus on Domain design without technology details distractions
+
+```mermaid
+flowchart LR
+  style i/oIn fill:FireBrick
+  style i/oOut fill:FireBrick
+  style AdapterIn fill:DarkOrchid
+  style AdapterOut fill:DarkOrchid
+  subgraph Hexagon
+    subgraph Application
+      PortIn["Port"] --> Core
+      Core --> PortOut["Port"]
+    end
+  AdapterIn["Adapter"] --> PortIn
+  PortOut --> AdapterOut["Adapter"] 
+  end
+  i/oIn[I/O] --> AdapterIn
+  AdapterOut --> i/oOut["I/O"]
+```
+
+### Port and Adapters (Persistence ignorance, Anti-Corruption layer)
+
+`Adapter`
+
+* Adapts `External Details` -> `Domain`
+* Adapts `Domain` -> `External Details`
 
 ```mermaid
 flowchart LR
@@ -310,27 +370,11 @@ This has problems with `Coupling` specific details about
 * We don't want `Domain Logic` knowing how to write to a `Database`
 
 > [!NOTE]
-> `Technical details` should be decoupled from the `Domain`
+> `External technical details` should be decoupled from our `Domain`
 
 This is where `Ports and Adapters` comes in.
 We create `Adapters` that handle `specific implementation details` and
 converts them to `Domain` concepts and vice versa.
-
-```mermaid
-flowchart LR
-  style Pure fill:ForestGreen
-  style ShellIn fill:Indigo
-  style ShellOut fill:Indigo
-  style i/oIn fill:FireBrick
-  style i/oOut fill:FireBrick
-  subgraph Application
-    ShellIn
-    ShellOut
-    Pure
-  end
-  i/oIn[I/O] --> ShellIn[Adapter] --> Pure 
-  Pure[Pure] --> ShellOut[Adapter] --> i/oOut[I/O]
-```
 
 ```diff
 function postGresDatabase() {
@@ -378,6 +422,8 @@ Especially useful for when testing as you can pass in a `Mock` instead when test
 the `play` function.
 `Strategy Pattern/Dependency Injection`
 
+### General architecture (Clean, Port and Adapters)
+
 ```mermaid
 ---
 title: Full application example
@@ -421,7 +467,11 @@ flowchart LR
   Gateway --> ThirdParty
 ```
 
-### (WIP) Decouple Pure and Impure - Appeal to Authority
+### Gateways
+
+>[!NOTE] TODO: Something about Gateways here
+
+### (WIP) Decouple Domain from External Implementation Details - Appeal to Authority
 
 > The overriding rule that makes this architecture work is The Dependency Rule.
 > This rule says that source code dependencies can only point inwards.
@@ -431,10 +481,6 @@ flowchart LR
 > We don’t want anything in an outer circle to impact the inner circles.
 >
 > [Uncle Bob - The Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-> [!NOTE]
-> Test at the boundaries of a system. Not the internals.
-> Tests should be done at the `workflow` level.
-> `Unit` produces no side effects and runs in isolation
 
 * Benefits
   * Framework agnostic
@@ -442,12 +488,9 @@ flowchart LR
   * Testable
     * Can test `Domain` without `I/O` (Database, HTTP, Service)
 
-### Decouple Pure and Impure References
+### Decouple Domain and External Implementation Details
 
-* [Moving IO to the edges of your app: Functional Core, Imperative Shell - Scott Wlaschin](https://www.youtube.com/watch?v=P1vES9AgfC4)
-* [Functional core, Imperative shell - Gary Bernhardt](https://www.destroyallsoftware.com/screencasts/catalog/functional-core-imperative-shell)
 * [Sandwich  architecture - Mark Seemann](https://blog.ploeh.dk/2023/10/09/whats-a-sandwich/)
-* [Solving Problems the Clojure Way - Rafal Dittwald](https://www.youtube.com/watch?v=vK1DazRK_a0)
 * [Clean Architecture - Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 * [Port and Adapters - Alistair Cockburn](https://alistair.cockburn.us/hexagonal-architecture/)
 
