@@ -7,7 +7,7 @@
   * [Why the `Pure` and `Impure` language](#why-the-pure-and-impure-language)
   * [Prefer pure](#prefer-pure)
   * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
-* [(WIP) Decouple Domain from the Outside world (Ports & Adapters, Domain Driven Design)](#wip-decouple-domain-from-the-outside-world-ports--adapters-domain-driven-design)
+* [(WIP) Decouple Domain from the Outside world](#wip-decouple-domain-from-the-outside-world)
   * [Port and Adapters (Persistence ignorance, Anti-Corruption layer)](#port-and-adapters-persistence-ignorance-anti-corruption-layer)
   * [General architecture (Clean, Port and Adapters)](#general-architecture-clean-port-and-adapters)
   * [Gateways](#gateways)
@@ -266,12 +266,35 @@ function playGame() {
 * [Sandwich  architecture - Mark Seemann](https://blog.ploeh.dk/2023/10/09/whats-a-sandwich/)
 * [Solving Problems the Clojure Way - Rafal Dittwald](https://www.youtube.com/watch?v=vK1DazRK_a0)
 
-## (WIP) Decouple Domain from the Outside world (Ports & Adapters, Domain Driven Design)
+## (WIP) Decouple Domain from the Outside world
+
+You want to change internal processes without external dependencies.
+
+* External dependency change impacts Domain model
+* Change `Domain` model without changing contract with consumers
+
+> Don't allow Externals (you don't control) to couple to the
+> internals (you do control)
+>
+> * [CodeOpinion - DTOs & Mapping](https://www.youtube.com/watch?v=FKFxWrwdAWc)
+
+`Http Resource` != `Database record`
 
 > The whole point of the Ports & Adapters architecture is that the
 > application is oblivious to the external connections
 >
 > * Hexagonal Architecture Explained
+
+Uncle Bob's typical overly complicated verbose explanation
+
+> The overriding rule that makes this architecture work is The Dependency Rule.
+> This rule says that source code dependencies can only point inwards.
+> Nothing in an inner circle can know anything at all about
+> something in an outer circle.
+> [...]
+> We don’t want anything in an outer circle to impact the inner circles.
+>
+> [Uncle Bob - The Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
 * Database `Entity` for `ORM`
 * `HttpRequest` for `HTTP`
@@ -485,6 +508,8 @@ flowchart LR
 * Benefits
   * Framework agnostic
     * Can change `Adapters` out without changing `Domain`.
+  * Response agnostic
+    * Can change `Domain` model breaking contract with external consumers
   * Testable
     * Can test `Domain` without `I/O` (Database, HTTP, Service)
 
