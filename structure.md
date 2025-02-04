@@ -7,12 +7,13 @@
   * [Why the `Pure` and `Impure` language](#why-the-pure-and-impure-language)
   * [Prefer pure](#prefer-pure)
   * [Decouple Pure and Impure References](#decouple-pure-and-impure-references)
-* [(WIP) Decouple Domain from the Outside world](#wip-decouple-domain-from-the-outside-world)
-  * [Port and Adapters (Persistence ignorance, Anti-Corruption layer)](#port-and-adapters-persistence-ignorance-anti-corruption-layer)
+* [Decouple Domain from External details](#decouple-domain-from-external-details)
+  * [Appeal to Authority for Decoupling Domain from External](#appeal-to-authority-for-decoupling-domain-from-external)
+  * [Ports and Adapters](#ports-and-adapters)
+  * [Decoupling Driving External Details from Domain](#decoupling-driving-external-details-from-domain)
+  * [Decoupling Domain from outgoing External contract](#decoupling-domain-from-outgoing-external-contract)
   * [General architecture (Clean, Port and Adapters)](#general-architecture-clean-port-and-adapters)
-  * [Gateways](#gateways)
-  * [(WIP) Decouple Domain from External Implementation Details - Appeal to Authority](#wip-decouple-domain-from-external-implementation-details---appeal-to-authority)
-  * [Decouple Domain and External Implementation Details](#decouple-domain-and-external-implementation-details)
+  * [Decouple Domain and External](#decouple-domain-and-external)
 * [(WIP) Feature Cohesion](#wip-feature-cohesion)
   * [Feature Cohesion Examples](#feature-cohesion-examples)
 * [Glossary](#glossary)
@@ -92,19 +93,19 @@ flowchart TD
   Impure["Update()"] -- Calls --> Database["database.update(entity)"]
 ```
 
-We still need to interact with the real `impure` world to get stuff done.
-
-* Working with Databases and Gateways
-* Sending emails
-* Getting the current time
-
-A method that changes an objects state is another example of an `impure` operation
+An object's method that changes its state is another example of an `impure` operation
 
 * Calling `user.GetName()` returns `Alice`
 * `user.UpdateName(Bob)` changes the state of the `user` object
 * Calling `user.GetName()` again now returns a different result `Bob`
 * Making `user.GetName()` non-deterministic
 * `user.UpdateName()` is `impure` as it changed the state of `user`
+
+However, We still need to interact with `Impure` sources to get stuff done.
+
+* Storing/Querying a Databases
+* Sending emails
+* Getting the current time
 
 ### Why the `Pure` and `Impure` language
 
@@ -266,80 +267,90 @@ function playGame() {
 * [Sandwich  architecture - Mark Seemann](https://blog.ploeh.dk/2023/10/09/whats-a-sandwich/)
 * [Solving Problems the Clojure Way - Rafal Dittwald](https://www.youtube.com/watch?v=vK1DazRK_a0)
 
-## (WIP) Decouple Domain from the Outside world
+## Decouple Domain from External details
 
-You want to change internal processes without external dependencies.
+Changes to external processes shouldn't impact internal processes.
 
-* External dependency change impacts Domain model
-* Change `Domain` model without changing contract with consumers
+Changes to internal processes shouldn't impact external processes.
 
-> Don't allow Externals (you don't control) to couple to the
-> internals (you do control)
->
-> * [CodeOpinion - DTOs & Mapping](https://www.youtube.com/watch?v=FKFxWrwdAWc)
+`Internals` = The Domain (DDD).
+The business rules that are important to you.
+(Also called `Application` in Ports & Adapters or `Core` in Clean Architecture)
 
-`Http Resource` != `Database record`
+`External` =
+> An external system is basically one whose interface your team can't change.
+Any off-the-shelf purchased products, third party libraries, databases,
+and subsystems defined by other teams, are external systems.
 
-> The whole point of the Ports & Adapters architecture is that the
-> application is oblivious to the external connections
->
-> * Hexagonal Architecture Explained
+[Alistair Cockburn - Hexagonal Architecture Explained](https://store7710079.company.site/Hexagonal-Architecture-Explained-p655931616)
+Some examples External systems.
 
-Uncle Bob's typical overly complicated verbose explanation
+| Protocol | Media | Structure |
+| --- | --- | --- |
+|  HTTP | JSON | Database Schema |
+|  GRPC | ProtoBuf |  SaaS API model |
+|  SOAP | XML | |
+|  Websocket | | |
 
+Benefits of decoupling `Domain` from `External Systems`
+
+* Design
+  * Focus on `Domain` design without technology detail distractions
+  * Not constrained by `External` systems designs or availability
+  * Create your own preferred interface to working with `External` systems
+  * Change `External` system without changing `Domain`
+  * Change `Domain` model without breaking contract with `External` consumers
+* Testing
+  * Test `Domain` end-to-end without `External` systems (Database, HTTP, API)
+
+### Appeal to Authority for Decoupling Domain from External
+
+> Don't allow Externals (you don't control) to couple to the internals (you do control)
+
+[CodeOpinion - DTOs & Mapping](https://www.youtube.com/watch?v=FKFxWrwdAWc)
+
+* > The whole point of the Ports & Adapters architecture is that the
+application is oblivious to the external connections.
+
+* > The pattern says, "Put an API around everywhere and separate the inside
+from the outside"
+
+* > Ports & Adapters ... Says the `app` can have no knowledge of what its
+`external` connections are made of. [...] All the compile-time dependencies
+point inward to the `app`, with none coming from the `app`to the `external` `actors`
+
+* > Ports & Adapters [...] puts all `external` technologies outside the app,
+so that the inside only contains domain concepts. From there, you can do
+domain-driven design without distraction.
+
+[Alistair Cockburn - Hexagonal Architecture Explained](https://store7710079.company.site/Hexagonal-Architecture-Explained-p655931616)
 > The overriding rule that makes this architecture work is The Dependency Rule.
 > This rule says that source code dependencies can only point inwards.
 > Nothing in an inner circle can know anything at all about
 > something in an outer circle.
 > [...]
 > We don’t want anything in an outer circle to impact the inner circles.
->
-> [Uncle Bob - The Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
-* Database `Entity` for `ORM`
-* `HttpRequest` for `HTTP`
-* `Data Model` from `Third party` API or Library
-  * `Stripe` has a `Session object`
-  * `Fast Healthcare Interoperability Resources (FHIR)`
-  is a standard for storing healthcare records
+[Uncle Bob - The Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+
+### Ports and Adapters
+
+`Adapter` =
+
+* Adapts `External` -> `Domain`
+* Adapts `Domain` -> `External`
 
 Glossary
 
-1. Application (App) - Business logic. No reference to any technologies
-1. Port - Required interface. Port captures the Idea of a conversation
-1. Driving and Driven actors -
-1. Adapters - Needed at each port
-1. Configurator - Composes all together
+* Application (App) - Business logic. No reference to any technologies
+* Port - Interface into Application. Port captures the Idea of a conversation
+* Actors - External entities that interact with the system. (Behaviour)
+  * Driving Actor - Call Application. (UI, Human, System)
+  * Driven Actor - Application calls (System, Database, Gateway)
+* Adapters - Conforms `Actor` to Driving `Port`, Conforms `Domain` to Driven `Port`
+* Configurator - Composes everything together
 
-* Testing - Run Workflow tests without production (Purer and Faster)
-* Prevents leakage - Prevents UI or technology details into business logic
-* Swappable - Swap one `Adapter` with another `Adapter` to support a different technology
-* Domain Driven Design - Focus on Domain design without technology details distractions
-
-```mermaid
-flowchart LR
-  style i/oIn fill:FireBrick
-  style i/oOut fill:FireBrick
-  style AdapterIn fill:DarkOrchid
-  style AdapterOut fill:DarkOrchid
-  subgraph Hexagon
-    subgraph Application
-      PortIn["Port"] --> Core
-      Core --> PortOut["Port"]
-    end
-  AdapterIn["Adapter"] --> PortIn
-  PortOut --> AdapterOut["Adapter"] 
-  end
-  i/oIn[I/O] --> AdapterIn
-  AdapterOut --> i/oOut["I/O"]
-```
-
-### Port and Adapters (Persistence ignorance, Anti-Corruption layer)
-
-`Adapter`
-
-* Adapts `External Details` -> `Domain`
-* Adapts `Domain` -> `External Details`
+### Decoupling Driving External Details from Domain
 
 ```mermaid
 flowchart LR
@@ -352,13 +363,13 @@ flowchart LR
   i/oIn[I/O] --> Mixed --> i/oOut[I/O] 
 ```
 
-Here's another example to demonstrate `Adapters`.
-Using the same game as before but this time for `HTTP` and saving
-to `PostGres`.
+I've created an example to demonstrate Driving `Adapters`.
+Using the same game as before but this time for `HTTP`
+and saving to `PostGres`.
 
-I've highlighted which parts are `Domain` and `Details`
+I've highlighted which parts are `Domain` and `External`
 
-* Red - `Details`
+* Red - `External`
 * Green - `Domain`
 
 ```diff
@@ -387,13 +398,10 @@ function PlayGameHttp(HttpRequest request) {
 This has problems with `Coupling` specific details about
 `HTTP`, `PostGres` with our `Domain` logic
 
-* What if we stop using `Http` or `PostGres`.
+* What if we stop using `Http` or `PostGres`
 * What if we want to use `GRPC` and `Mongo`
-* We don't want `HTTP` details contaminating our `Domain Logic`.
-* We don't want `Domain Logic` knowing how to write to a `Database`
-
-> [!NOTE]
-> `External technical details` should be decoupled from our `Domain`
+* We don't want `HTTP` details contaminating our `Domain`
+* We don't want our `Domain` knowing about `External` details
 
 This is where `Ports and Adapters` comes in.
 We create `Adapters` that handle `specific implementation details` and
@@ -441,15 +449,42 @@ It also makes it easier to test as we don't have to create a `HttpRequest`
 for our tests.
 
 We also pass in a `Database` implementation so we can use different implementations.
-Especially useful for when testing as you can pass in a `Mock` instead when testing
-the `play` function.
+Especially useful for testing as you can pass in a `Mock` instead.
 `Strategy Pattern/Dependency Injection`
+
+### Decoupling Domain from outgoing External contract
+
+If you return your Domain model
+
+* Changing Domain breaks contract with clients
+* Limit your domain model as you have to conform to contract
 
 ### General architecture (Clean, Port and Adapters)
 
 ```mermaid
 ---
-title: Full application example
+title: Ports & Adapters
+---
+flowchart LR
+  style i/oIn fill:FireBrick
+  style i/oOut fill:FireBrick
+  style AdapterIn fill:DarkOrchid
+  style AdapterOut fill:DarkOrchid
+  subgraph System
+    subgraph Application
+      PortIn["Driving Port"] --> Core
+      Core --> PortOut["Driven Port"]
+    end
+  AdapterIn["Adapter"] --> PortIn
+  PortOut --> AdapterOut["Adapter"] 
+  end
+  i/oIn[I/O] --> AdapterIn
+  AdapterOut --> i/oOut["I/O"]
+```
+
+```mermaid
+---
+title: Clean Architecture
 ---
 flowchart LR
   subgraph Application
@@ -490,30 +525,7 @@ flowchart LR
   Gateway --> ThirdParty
 ```
 
-### Gateways
-
->[!NOTE] TODO: Something about Gateways here
-
-### (WIP) Decouple Domain from External Implementation Details - Appeal to Authority
-
-> The overriding rule that makes this architecture work is The Dependency Rule.
-> This rule says that source code dependencies can only point inwards.
-> Nothing in an inner circle can know anything at all about
-> something in an outer circle.
-> [...]
-> We don’t want anything in an outer circle to impact the inner circles.
->
-> [Uncle Bob - The Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-
-* Benefits
-  * Framework agnostic
-    * Can change `Adapters` out without changing `Domain`.
-  * Response agnostic
-    * Can change `Domain` model breaking contract with external consumers
-  * Testable
-    * Can test `Domain` without `I/O` (Database, HTTP, Service)
-
-### Decouple Domain and External Implementation Details
+### Decouple Domain and External
 
 * [Sandwich  architecture - Mark Seemann](https://blog.ploeh.dk/2023/10/09/whats-a-sandwich/)
 * [Clean Architecture - Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
@@ -540,6 +552,18 @@ Yes
   * cartAggregate.clj
   * AddItem/
     * handler.clj
+
+Ports and Adapters suggestion
+
+* App/
+  * BusinessLogic/
+  * DrivingPorts/
+    * for_doing_something.file
+    * for_calculating_taxes.file
+  * DrivenPorts/
+* Test/
+* Driving/
+* Driven/
 
 ### Feature Cohesion Examples
 
