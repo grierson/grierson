@@ -28,8 +28,8 @@
 
 `Pure` = Deterministic + No side effects
 
-Given the same input you will always receive the same output,
-regardless of how many times it's called or when it's called.
+Given the same inputs returns the same output.
+Regardless of how many times it's called or when it's called.
 
 It also means it doesn't perform any `Side effects` ([more](#what-is-impure-code)).
 
@@ -57,7 +57,7 @@ flowchart LR
 
 ```mermaid
 ---
-title: Item not added to cart because cart is full
+title: Item not added to cart because cart it is full
 ---
 flowchart LR
   style AddItem fill:ForestGreen
@@ -72,38 +72,56 @@ and/or performs `Side effect`
 
 ```mermaid
 ---
-title: Non-deterministic because of System clock - Same call different results
+title: Non-deterministic because of External System clock - Same call different results
 ---
 flowchart LR
-  style Now fill:FireBrick
-  Now["now()"] --> 27/01/2017
-  style Now2 fill:FireBrick
-  Now2["now()"] --> 20/01/2021
+  subgraph Application
+    Now
+    Now2
+    Now["now() -> 27/01/2017"]
+    Now2["now() -> 20/01/2021"]
+  end
+  subgraph External
+    System
+  end
+  style System fill:FireBrick
+  System["System Clock"] --> Now
+  System["System Clock"] --> Now2
 ```
-
-`Side effect` = Interacts with the external system and/or changes state
 
 ```mermaid
 ---
 title: Side effect - Changes state of database
 ---
-flowchart TD
-  style Impure fill:FireBrick
-  Enviroment -- Reads from --> Impure
-  Impure["Update()"] -- Calls --> Database["database.update(entity)"]
+flowchart LR
+  subgraph External
+    Database
+  end
+  style Database fill:FireBrick
+  subgraph Application
+    style Create fill:FireBrick
+    Read1["database.read() --> []"] ---> Database
+    Create["database.create(record)"] ---> Database
+    Read2["database.read() --> [record]"] ---> Database
+  end
+  
 ```
 
-An object's method that changes its state is another example of an `impure` operation
+An `Object` is an example of `Impurity`.
+An `Objects` method that changes its state is an example of a `Side effect`
 
 * Calling `user.GetName()` returns `Alice`
 * `user.UpdateName(Bob)` changes the state of the `user` object
 * Calling `user.GetName()` again now returns a different result `Bob`
-* Making `user.GetName()` non-deterministic
-* `user.UpdateName()` is `impure` as it changed the state of `user`
+
+`user.GetName()` is non-deterministic because the result changes
+and `user.UpdateName()` is a `Side-effect` as it changed the state of
+the `user` object.
 
 However, We still need to interact with `Impure` sources to get stuff done.
 
-* Storing/Querying a Databases
+* Storing records to a Database
+* Querying a Database
 * Sending emails
 * Getting the current time
 
@@ -256,9 +274,6 @@ function playGame() {
 * Reuse `compare` in different contexts
   * Currently uses `Console`
   * Could be used in a `RESTFUL` API instead
-* No unexpected results
-  * Deterministic
-  * Same input, Same output
 
 ### Decouple Pure and Impure References
 
