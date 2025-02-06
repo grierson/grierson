@@ -11,12 +11,11 @@
   * [Appeal to Authority for Decoupling Domain from External](#appeal-to-authority-for-decoupling-domain-from-external)
   * [Ports and Adapters](#ports-and-adapters)
   * [Decoupling Driving External Details from Domain](#decoupling-driving-external-details-from-domain)
-  * [Decoupling Domain from outgoing External contract](#decoupling-domain-from-outgoing-external-contract)
+  * [Decoupling Domain from Driven External systems](#decoupling-domain-from-driven-external-systems)
   * [General architecture (Clean, Port and Adapters)](#general-architecture-clean-port-and-adapters)
   * [Decouple Domain and External](#decouple-domain-and-external)
 * [(WIP) Feature Cohesion](#wip-feature-cohesion)
   * [Feature Cohesion Examples](#feature-cohesion-examples)
-* [Glossary](#glossary)
 
 <!-- mtoc-end -->
 
@@ -78,8 +77,8 @@ flowchart LR
   subgraph Application
     Now
     Now2
-    Now["now() -> 27/01/2017"]
-    Now2["now() -> 20/01/2021"]
+    Now["now()"] --> out1["27/01/2017"]
+    Now2["now()"] --> out2["20/01/2021"]
   end
   subgraph External
     System
@@ -100,22 +99,22 @@ flowchart LR
   style Database fill:FireBrick
   subgraph Application
     style Create fill:FireBrick
-    Read1["database.read() --> []"] ---> Database
-    Create["database.create(record)"] ---> Database
-    Read2["database.read() --> [record]"] ---> Database
+    Read1["database.query() --> []"] ---> Database
+    Create["database.create(record)"] --- Database
+    Read2["database.query() --> [record]"] ---> Database
   end
   
 ```
 
-An `Object` is an example of `Impurity`.
-An `Objects` method that changes its state is an example of a `Side effect`
+`Object`'s are another example of `Impurity`.
+As an `Object`'s method changes the state. (`Side effect`)
 
 * Calling `user.GetName()` returns `Alice`
 * `user.UpdateName(Bob)` changes the state of the `user` object
 * Calling `user.GetName()` again now returns a different result `Bob`
 
-`user.GetName()` is non-deterministic because the result changes
-and `user.UpdateName()` is a `Side-effect` as it changed the state of
+`user.GetName()` is `non-deterministic` as the result changed
+and `user.UpdateName()` is a `Side-effect` as it changed the `state` of
 the `user` object.
 
 However, We still need to interact with `Impure` sources to get stuff done.
@@ -210,7 +209,7 @@ So the above `playGame` holds a lot of complexity.
 * Comparing the cards
   * `169` (`13x13`) distinct pairs
 * Comparing the user input with the comparison
-  * `507` (`169 * 3`) guesses and comparisons
+  * `507` (`169 * 3`) pairs and guesses
 
 `507` possible outcomes (that's even ignoring errors).
 Ideally we should test the edge cases to make sure it works.
@@ -227,8 +226,17 @@ However, adding tests for this code is difficult
 * `Console` is required for input and output
 * Code generates random cards making it non-deterministic
 
-Instead by splitting out the `Pure` logic from
-the `Impure` code it makes it easier to test.
+Instead split the `Pure` from the `Impure`
+
+* Easier to read
+  * Can read `compare` (Pure) logic without any `Impure` context
+* Easier to test
+  * No Console required (Avoids manual testing)
+  * No stubbing of random card generator
+  * Just input and expected output. (Parameterized tests)
+* Reuse `compare` in different contexts
+  * Currently uses `Console`
+  * Could be used in a `RESTFUL` API instead
 
 ```diff
 function compare(userGuess, currentCard, nextCard) {
@@ -265,16 +273,6 @@ function playGame() {
 +})
 ```
 
-* Easier to read
-  * Can read `compare (Pure)` logic without any `Impure` context
-* Easier to automated test
-  * No Console required (Avoids manual testing)
-  * No stubbing of random card generator
-  * Just input and expected output. (Parameterized tests)
-* Reuse `compare` in different contexts
-  * Currently uses `Console`
-  * Could be used in a `RESTFUL` API instead
-
 ### Decouple Pure and Impure References
 
 * [Moving IO to the edges of your app: Functional Core, Imperative Shell - Scott Wlaschin](https://www.youtube.com/watch?v=P1vES9AgfC4)
@@ -288,9 +286,8 @@ Changes to external processes shouldn't impact internal processes.
 
 Changes to internal processes shouldn't impact external processes.
 
-`Internals` = The Domain (DDD).
-The business rules that are important to you.
-(Also called `Application` in Ports & Adapters or `Core` in Clean Architecture)
+`Internals/Application` = The Domain (DDD) The business rules.
+(`Application` in Ports & Adapters or `Appliction + Core` in Clean Architecture)
 
 `External` =
 > An external system is basically one whose interface your team can't change.
@@ -298,25 +295,35 @@ Any off-the-shelf purchased products, third party libraries, databases,
 and subsystems defined by other teams, are external systems.
 
 [Alistair Cockburn - Hexagonal Architecture Explained](https://store7710079.company.site/Hexagonal-Architecture-Explained-p655931616)
-Some examples External systems.
 
 | Protocol | Media | Structure |
 | --- | --- | --- |
 |  HTTP | JSON | Database Schema |
-|  GRPC | ProtoBuf |  SaaS API model |
-|  SOAP | XML | |
+|  GRPC | ProtoBuf |  API model |
+|  SOAP | XML | Library model |
 |  Websocket | | |
+| GraphQL | | |
 
 Benefits of decoupling `Domain` from `External Systems`
 
 * Design
   * Focus on `Domain` design without technology detail distractions
-  * Not constrained by `External` systems designs or availability
-  * Create your own preferred interface to working with `External` systems
+  * Not constrained by `External` systems designs
+    * JSON doesn't support `Value Objects` (Date Time, Money, Any Domain models)
+    * Create your own preferred interface to working with `External` systems.
+    `External` system returns data one way but you don't want it dictating
+    your `Domain` model
   * Change `External` system without changing `Domain`
+    * Easily change from one provider to another by creating a new `Adapter`
   * Change `Domain` model without breaking contract with `External` consumers
+    * Returning our `Domain` model directly whilst many `consumers` depend on
+    that model (contract). Prevents improving the `Domain` model
 * Testing
   * Test `Domain` end-to-end without `External` systems (Database, HTTP, API)
+  * Not constrained by `External` systems availability
+    * What if `dev` server is down? You can't run your `Application` locally as
+    it's dependent on the `External` system. You can't pass in `Stubbed` data
+    instead for running locally.
 
 ### Appeal to Authority for Decoupling Domain from External
 
@@ -379,8 +386,7 @@ flowchart LR
 ```
 
 I've created an example to demonstrate Driving `Adapters`.
-Using the same game as before but this time for `HTTP`
-and saving to `PostGres`.
+Using the same game as before but this time for `HTTP`.
 
 I've highlighted which parts are `Domain` and `External`
 
@@ -400,35 +406,28 @@ function compare(HttpRequest request, nextCard) {
 }
 
 function PlayGameHttp(HttpRequest request) {
--  const postGres = new PostGres("connection-string")
    const nextCard = generateCard();
 
 +  const result = compare(request, nextCard);
 
--  postGres.save(result);
 -  return HttpResponse(result);
 }
 ```
 
-This has problems with `Coupling` specific details about
-`HTTP`, `PostGres` with our `Domain` logic
+This has problems with `Coupling` specific details to `HTTP` with our `Domain` logic
 
-* What if we stop using `Http` or `PostGres`
-* What if we want to use `GRPC` and `Mongo`
-* We don't want `HTTP` details contaminating our `Domain`
-* We don't want our `Domain` knowing about `External` details
+* What if we stop using `Http`
+* What if we want to use `GRPC`
+* We don't want `HTTP` details contaminating our `Domain` model
 
 This is where `Ports and Adapters` comes in.
-We create `Adapters` that handle `specific implementation details` and
-converts them to `Domain` concepts and vice versa.
+We create `Adapters` that convert specific `External`
+implementation details to our `Domain` concepts and vice versa.
 
 ```diff
-function postGresDatabase() {
--  const postGres = new PostGres("connection-string")
-
--  return {
--    save: (fn [data] postGres.save(data))
--  }
+function HttpBodyToGameDomainModel(HttpBody body) {
+- // Specifics about extracting data from HTTP body 
+- // and converting to our Domain model
 }
 
 function compare(userGuess, currentCard, nextCard) {
@@ -441,17 +440,14 @@ function compare(userGuess, currentCard, nextCard) {
 
 function play(Database database, HttpRequest request) {
   const nextCard = generateCard();
-- const currentCard = getCard(request.body);
-- const userGuess = getGuess(request.body);
+- const { currentCard, userGuses } = HttpBodyToGameDomainModel(request.body);
 
-+  const result = playgame(userGuess, currentCard, nextCard);
++  const result = compare(userGuess, currentCard, nextCard);
 
 -  database.save(game, report);
 }
 
 function main(){
-  var database = postGresDatabase();
-  
   route("/play", (request) => {
     play(database, request);
   })
@@ -459,15 +455,11 @@ function main(){
 ```
 
 Now `compare` doesn't know anything about `HttpRequest` it just takes
-data, so it can be used in different contexts like a `RPC` application instead.
+data, so it can be used in different contexts like a `GRPC` application.
 It also makes it easier to test as we don't have to create a `HttpRequest`
 for our tests.
 
-We also pass in a `Database` implementation so we can use different implementations.
-Especially useful for testing as you can pass in a `Mock` instead.
-`Strategy Pattern/Dependency Injection`
-
-### Decoupling Domain from outgoing External contract
+### Decoupling Domain from Driven External systems
 
 If you return your Domain model
 
@@ -585,13 +577,3 @@ Ports and Adapters suggestion
 * Screaming Architecture
 * Vertical Slice Architecture
 * Modular Monolith
-
-## Glossary
-
-* Pure
-  * Deterministic - Same input, Same output.
-  * No side effects
-* I/O (Input/Output)
-  * Non-deterministic output, if any.
-* Workflow / Use case / Story
-  * Process that fulfils expected outcome
