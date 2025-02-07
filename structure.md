@@ -10,10 +10,9 @@
 * [Decouple Domain from External details](#decouple-domain-from-external-details)
   * [Appeal to Authority for Decoupling Domain from External](#appeal-to-authority-for-decoupling-domain-from-external)
   * [Ports and Adapters](#ports-and-adapters)
-  * [Decoupling Driving External Details from Domain](#decoupling-driving-external-details-from-domain)
-  * [Decoupling Domain from Driven External systems](#decoupling-domain-from-driven-external-systems)
-  * [General architecture (Clean, Port and Adapters)](#general-architecture-clean-port-and-adapters)
-  * [Decouple Domain and External](#decouple-domain-and-external)
+  * [Decoupling External Driving actors from Domain](#decoupling-external-driving-actors-from-domain)
+  * [Decoupling Domain from Driven External actors](#decoupling-domain-from-driven-external-actors)
+  * [Decouple Domain and External references](#decouple-domain-and-external-references)
 * [(WIP) Feature Cohesion](#wip-feature-cohesion)
   * [Feature Cohesion Examples](#feature-cohesion-examples)
 
@@ -339,7 +338,7 @@ from the outside"
 
 * > Ports & Adapters ... Says the `app` can have no knowledge of what its
 `external` connections are made of. [...] All the compile-time dependencies
-point inward to the `app`, with none coming from the `app`to the `external` `actors`
+point inward to the `app`, with none coming from the `app` to the `external` `actors`
 
 * > Ports & Adapters [...] puts all `external` technologies outside the app,
 so that the inside only contains domain concepts. From there, you can do
@@ -357,32 +356,117 @@ domain-driven design without distraction.
 
 ### Ports and Adapters
 
-`Adapter` =
+`Ports & Adapters` =
+> Create you `Application` to work without either a UI or a database so you
+can run automated regression-tests against it, change connected technologies,
+protect it from leaks between business logic and technologies, work when the
+database becomes unavailable, and link applications together without any user involvement.
 
-* Adapts `External` -> `Domain`
-* Adapts `Domain` -> `External`
+[Alistair Cockburn - Hexagonal Architecture Explained](https://store7710079.company.site/Hexagonal-Architecture-Explained-p655931616)
+
+`Port` =
+> Every interaction between the `app` and the `outside` world happens at a
+`port` interface, using the interface language the `app` itself defines.
+As such, the ports are the demarcation of what is `inside` the app proper,
+and what is `outside`
+
+[Alistair Cockburn - Hexagonal Architecture Explained](https://store7710079.company.site/Hexagonal-Architecture-Explained-p655931616)
+
+* For managing the contents of the shopping cart
+* For configuring the system
+* For sending notifications
+
+The `app` has no knowledge of the technology used outside of the port.
+
+`Adapter` = Adapts `External` <-> `Domain`
+
+* Adapts `Postres`/`Mongo` query results to `Domain` models
+* Adapts `Domain` models to `Third party` API models
 
 Glossary
 
 * Application (App) - Business logic. No reference to any technologies
 * Port - Interface into Application. Port captures the Idea of a conversation
+  * Driving Ports
+    * For Instantiating the configuring the system
+    * For performing administrative work on the system
+    * For using the system to get business work done
+  * Driven Ports
+    * For Getting information from repository
+    * For Notifying someone
+    * For controlling some device
 * Actors - External entities that interact with the system. (Behaviour)
-  * Driving Actor - Call Application. (UI, Human, System)
+  * Driving Actor - Calls Application. (UI, Human, System)
+    * `ForWebUI(application)`
+    * `ForCli(application)`
   * Driven Actor - Application calls (System, Database, Gateway)
-* Adapters - Conforms `Actor` to Driving `Port`, Conforms `Domain` to Driven `Port`
+    * `Application(ForGettingData, ForCallingThirdPart, ForGettingDateTime)`
+* Adapters - Converts `Actor` to Driving `Port`, Coverts `Appliction` to Driven `Port`
 * Configurator - Composes everything together
 
-### Decoupling Driving External Details from Domain
+```mermaid
+---
+title: Ports & Adapters - Concept
+---
+flowchart LR
+  style i/oIn fill:FireBrick
+  style i/oOut fill:FireBrick
+  style AdapterIn fill:DarkOrchid
+  style AdapterOut fill:DarkOrchid
+  subgraph System
+    subgraph Application
+      PortIn["Driving Port"] --> Core
+      Core --> PortOut["Driven Port"]
+    end
+  AdapterIn["Adapter"] --> PortIn
+  PortOut --> AdapterOut["Adapter"] 
+  end
+  i/oIn[I/O] --> AdapterIn
+  AdapterOut --> i/oOut["I/O"]
+```
+
+```mermaid
+---
+title: Ports & Adapters - Example
+---
+flowchart LR
+  style Postgres fill:FireBrick
+  style Redis fill:FireBrick
+  style Internet fill:FireBrick
+  style Postgres.js fill:DarkOrchid
+  style node-redis fill:DarkOrchid
+  style HTTP fill:DarkOrchid
+  style GRPC fill:DarkOrchid
+  subgraph System
+    subgraph Application
+      ForPlacingOrder --> Core
+      Core --> ForGettingOrders
+    end
+    subgraph Test
+      ForGettingOrders --> Stub
+      Data --> ForPlacingOrder
+    end
+    ForGettingOrders --> Postgres.js
+    ForGettingOrders --> node-redis
+    HTTP --> ForPlacingOrder
+    GRPC --> ForPlacingOrder
+  end
+  Postgres.js --> Postgres
+  node-redis --> Redis
+  Internet --> HTTP
+  Internet --> GRPC
+```
+
+### Decoupling External Driving actors from Domain
 
 ```mermaid
 flowchart LR
   style Mixed fill:SaddleBrown
   style i/oIn fill:FireBrick
-  style i/oOut fill:FireBrick
   subgraph Application
     Mixed
   end
-  i/oIn[I/O] --> Mixed --> i/oOut[I/O] 
+  i/oIn[I/O] --> Mixed
 ```
 
 I've created an example to demonstrate Driving `Adapters`.
@@ -414,15 +498,16 @@ function PlayGameHttp(HttpRequest request) {
 }
 ```
 
-This has problems with `Coupling` specific details to `HTTP` with our `Domain` logic
+This has problems with `Coupling` specific details for `HTTP` with our `Domain` logic
 
-* What if we stop using `Http`
+* What if we stop using `HTTP`
 * What if we want to use `GRPC`
 * We don't want `HTTP` details contaminating our `Domain` model
+* Have to create a `HTTP` request to test `Domain` logic
 
 This is where `Ports and Adapters` comes in.
 We create `Adapters` that convert specific `External`
-implementation details to our `Domain` concepts and vice versa.
+implementation details to our `Domain` concepts.
 
 ```diff
 function HttpBodyToGameDomainModel(HttpBody body) {
@@ -438,101 +523,28 @@ function compare(userGuess, currentCard, nextCard) {
 +  return "Sorry, you guessed wrong"
 }
 
-function play(Database database, HttpRequest request) {
-  const nextCard = generateCard();
-- const { currentCard, userGuses } = HttpBodyToGameDomainModel(request.body);
-
-+  const result = compare(userGuess, currentCard, nextCard);
-
--  database.save(game, report);
-}
-
 function main(){
   route("/play", (request) => {
-    play(database, request);
+-   const { currentCard, userGuses } = HttpBodyToGameDomainModel(request.body);
++   const result = compare(userGuess, currentCard, nextCard);
+-   return Ok(result);
   })
 }
 ```
 
 Now `compare` doesn't know anything about `HttpRequest` it just takes
-data, so it can be used in different contexts like a `GRPC` application.
+data. It can now be used in different contexts like a `GRPC` application.
 It also makes it easier to test as we don't have to create a `HttpRequest`
 for our tests.
 
-### Decoupling Domain from Driven External systems
+### Decoupling Domain from Driven External actors
 
 If you return your Domain model
 
 * Changing Domain breaks contract with clients
 * Limit your domain model as you have to conform to contract
 
-### General architecture (Clean, Port and Adapters)
-
-```mermaid
----
-title: Ports & Adapters
----
-flowchart LR
-  style i/oIn fill:FireBrick
-  style i/oOut fill:FireBrick
-  style AdapterIn fill:DarkOrchid
-  style AdapterOut fill:DarkOrchid
-  subgraph System
-    subgraph Application
-      PortIn["Driving Port"] --> Core
-      Core --> PortOut["Driven Port"]
-    end
-  AdapterIn["Adapter"] --> PortIn
-  PortOut --> AdapterOut["Adapter"] 
-  end
-  i/oIn[I/O] --> AdapterIn
-  AdapterOut --> i/oOut["I/O"]
-```
-
-```mermaid
----
-title: Clean Architecture
----
-flowchart LR
-  subgraph Application
-    style Domain fill:ForestGreen
-    subgraph Domain
-      IQuery
-      ICommand
-      INotify
-      Usecase
-    end
-    style AdaptersIn fill:DarkOrchid
-    subgraph AdaptersIn[Adapters In]
-      ORM
-      HATEOAS
-    end
-    style AdaptersOut fill:DarkOrchid
-    subgraph AdaptersOut[Adapters Out]
-      Gateway[Payment Gateway]
-    end
-  end
-  style I/OIn fill:FireBrick
-  subgraph I/OIn[I/O In]
-    Database
-    HTTP
-  end
-  style I/OOut fill:FireBrick
-  subgraph I/OOut[I/O Out]
-    ThirdParty[Payment Service]
-  end
-  HTTP --> HATEOAS
-  Database --> ORM
-  HATEOAS --> ICommand
-  ORM --> IQuery
-  IQuery --> Usecase
-  ICommand --> Usecase
-  Usecase --> INotify
-  INotify --> Gateway
-  Gateway --> ThirdParty
-```
-
-### Decouple Domain and External
+### Decouple Domain and External references
 
 * [Sandwich  architecture - Mark Seemann](https://blog.ploeh.dk/2023/10/09/whats-a-sandwich/)
 * [Clean Architecture - Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
