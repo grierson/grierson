@@ -10,8 +10,8 @@
 * [Decouple Domain from External details](#decouple-domain-from-external-details)
   * [Appeal to Authority for Decoupling Domain from External](#appeal-to-authority-for-decoupling-domain-from-external)
   * [Ports and Adapters](#ports-and-adapters)
-  * [Decoupling External Driving actors from Domain](#decoupling-external-driving-actors-from-domain)
-  * [Decoupling Domain from Driven External actors](#decoupling-domain-from-driven-external-actors)
+  * [Decoupling External Driving Details from Domain](#decoupling-external-driving-details-from-domain)
+  * [Decoupling Domain from Driven External Details](#decoupling-domain-from-driven-external-details)
   * [Decouple Domain and External references](#decouple-domain-and-external-references)
 * [(WIP) Feature Cohesion](#wip-feature-cohesion)
   * [Feature Cohesion Examples](#feature-cohesion-examples)
@@ -371,11 +371,6 @@ As such, the ports are the demarcation of what is `inside` the app proper,
 and what is `outside`
 
 [Alistair Cockburn - Hexagonal Architecture Explained](https://store7710079.company.site/Hexagonal-Architecture-Explained-p655931616)
-
-* For managing the contents of the shopping cart
-* For configuring the system
-* For sending notifications
-
 The `app` has no knowledge of the technology used outside of the port.
 
 `Adapter` = Adapts `External` <-> `Domain`
@@ -383,15 +378,15 @@ The `app` has no knowledge of the technology used outside of the port.
 * Adapts `Postres`/`Mongo` query results to `Domain` models
 * Adapts `Domain` models to `Third party` API models
 
-Glossary
+`Glossary`
 
 * Application (App) - Business logic. No reference to any technologies
 * Port - Interface into Application. Port captures the Idea of a conversation
-  * Driving Ports
+  * Driving Ports (Calls to Application)
     * For Instantiating the configuring the system
     * For performing administrative work on the system
     * For using the system to get business work done
-  * Driven Ports
+  * Driven Ports (Calls by Application)
     * For Getting information from repository
     * For Notifying someone
     * For controlling some device
@@ -457,7 +452,7 @@ flowchart LR
   Internet --> GRPC
 ```
 
-### Decoupling External Driving actors from Domain
+### Decoupling External Driving Details from Domain
 
 ```mermaid
 flowchart LR
@@ -537,7 +532,7 @@ data. It can now be used in different contexts like a `GRPC` application.
 It also makes it easier to test as we don't have to create a `HttpRequest`
 for our tests.
 
-### Decoupling Domain from Driven External actors
+### Decoupling Domain from Driven External Details
 
 If you return your Domain model
 
